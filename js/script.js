@@ -22,23 +22,3 @@ function getCookie(cname){
 	}
 	return "";
 }
-function ajax(file, args){
-	var xhttp = new XMLHttpRequest();
-	if (window.XMLHttpRequest) {
-    	xhttp = new XMLHttpRequest();
- 	} else {
-    	xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("body").innerHTML = this.responseText;
-		}
-	};
-	xhttp.open("POST", file, true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send(args);
-}
-
-document.body.onload = function(){
-	ajax("/navbar.html", "", "body");
-};
