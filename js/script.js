@@ -22,16 +22,16 @@ function getCookie(cname){
 	}
 	return "";
 }
-function ajax(file, args, id){
+function ajax(file, args){
 	var xhttp = new XMLHttpRequest();
 	if (window.XMLHttpRequest) {
-    	xmlhttp = new XMLHttpRequest();
+    	xhttp = new XMLHttpRequest();
  	} else {
-    	xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    	xhttp = new ActiveXObject("Microsoft.XMLHTTP");
 	}
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById(id).innerHTML = this.responseText;
+			document.getElementById("body").innerHTML = this.responseText;
 		}
 	};
 	xhttp.open("POST", file, true);
@@ -39,6 +39,6 @@ function ajax(file, args, id){
 	xhttp.send(args);
 }
 
-document.onload = function(){
+document.body.onload = function(){
 	ajax("/navbar.html", "", "body");
 };
