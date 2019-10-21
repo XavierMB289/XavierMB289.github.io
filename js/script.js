@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 $(document).ready(function(){
 	$('.sidenav').sidenav();
-	if(getCookie("username") == ""){
+	if(getCookie("username") != ""){
 		$(".userHide").hide();
 	}
 });
