@@ -35,7 +35,7 @@ $(document).ready(function(){
 	}
 	$("#body").click(function(){
 		$.ajax({
-			url:"api.html",
+			url:"pages/api.html",
 			success: function(result){
 				console.log(result);
 			}
