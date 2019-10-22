@@ -33,4 +33,12 @@ $(document).ready(function(){
 	if(getCookie("username") != ""){
 		$(".userHide").hide();
 	}
+	$(".nav-wrapper ul li").click(function(){
+		$.ajax({
+			url:"api.html",
+			success: function(result){
+				console.log(result);
+			}
+		});
+	});
 });
