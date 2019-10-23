@@ -34,7 +34,7 @@ $(document).ready(function(){
 		$(".userHide").hide();
 	}
 	$(".nav-wrapper ul li").click(function(){
-		console.log($(this).first().text());
+		console.log($(this).prop("page"));
 		$.ajax({
 			url:"pages/api.html",
 			success: function(result){
