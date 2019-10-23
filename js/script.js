@@ -33,8 +33,8 @@ $(document).ready(function(){
 	if(getCookie("username") != ""){
 		$(".userHide").hide();
 	}
-	$(".nav-wrapper ul li").click(function(){
-		console.log($(this).attr("page"));
+	$(".nav-wrapper ul li").click(function(event){
+		console.log($(event.target).attr("page"));
 		$.ajax({
 			url:"pages/api.html",
 			success: function(result){
