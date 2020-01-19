@@ -23,18 +23,13 @@ function getCookie(cname){
 	return "";
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-	var elems = document.querySelectorAll('.sidenav');
-	var instances = M.Sidenav.init(elems);
-});
-
 $(document).ready(function(){
 	$('.sidenav').sidenav();
 	if(getCookie("username") != ""){
 		$(".userHide").hide();
 	}
 	$(".nav-wrapper ul li").click(function(event){
-		console.log($(event.target).attr("page"));
+		console.log($(event.target).html().trim());
 		$.ajax({
 			url:"pages/api.html",
 			success: function(result){
