@@ -31,8 +31,7 @@ $(document).ready(function(){
 	$(".nav-wrapper ul li").click(function(event){
 		console.log($(event.target).remove(".material-icons").text().trim().split(" ")[1]);
 		$.ajax({
-			method: "POST",
-			url:"pages/api.html",
+			url: "pages/api.html",
 			success: function(result){
 				console.log(result);
 			}
