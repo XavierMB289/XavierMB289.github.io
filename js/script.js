@@ -29,8 +29,9 @@ $(document).ready(function(){
 		$(".userHide").hide();
 	}
 	$(".nav-wrapper ul li").click(function(event){
-		console.log($(event.target).html().trim());
+		console.log($(event.target).text());
 		$.ajax({
+			method: "POST",
 			url:"pages/api.html",
 			success: function(result){
 				console.log(result);
