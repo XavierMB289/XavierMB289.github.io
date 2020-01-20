@@ -23,18 +23,21 @@ function getCookie(cname){
 	return "";
 }
 
+function navbarClick(event){
+	var text = $(event.target).remove(".material-icons").text().trim().split(" ")[1].toLowerCase();
+	$.ajax({
+		url: "pages/"+text+".html",
+		success: function(result){
+			$(".row").html(result);
+		}
+	});
+}
+
 $(document).ready(function(){
 	$('.sidenav').sidenav();
 	if(getCookie("username") != ""){
 		$(".userHide").hide();
 	}
-	$(".nav-wrapper ul li").click(function(event){
-		var text = $(event.target).remove(".material-icons").text().trim().split(" ")[1].toLowerCase();
-		$.ajax({
-			url: "pages/"+text+".html",
-			success: function(result){
-				$(".row").html(result);
-			}
-		});
-	});
+	$(".nav-wrapper ul li").click(navbarClick);
+	$(".sidenav li").click(navbarClick);
 });
