@@ -29,11 +29,11 @@ $(document).ready(function(){
 		$(".userHide").hide();
 	}
 	$(".nav-wrapper ul li").click(function(event){
-		console.log($(event.target).remove(".material-icons").text().trim().split(" ")[1]);
+		var text = $(event.target).remove(".material-icons").text().trim().split(" ")[1].toLowerCase();
 		$.ajax({
-			url: "pages/api.html",
+			url: "pages/"+text+".html",
 			success: function(result){
-				console.log(result);
+				$(".row").html(result);
 			}
 		});
 	});
