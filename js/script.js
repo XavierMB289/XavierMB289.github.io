@@ -29,7 +29,7 @@ $(document).ready(function(){
 		$(".userHide").hide();
 	}
 	$(".nav-wrapper ul li").click(function(event){
-		console.log($(event.target).text().remove(".material-icons").trim());
+		console.log($(event.target).remove(".material-icons").text().trim().split(" ")[1]);
 		$.ajax({
 			method: "POST",
 			url:"pages/api.html",
