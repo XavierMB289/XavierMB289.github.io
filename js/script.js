@@ -29,7 +29,7 @@ function navbarClick(event){
 	$.ajax({
 		url: "pages/"+text+".html",
 		success: function(result){
-			$(".row").html(result);
+			$(".body").html(result);
 		}
 	});
 }
