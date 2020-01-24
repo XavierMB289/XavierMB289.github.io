@@ -25,6 +25,7 @@ function getCookie(cname){
 
 function navbarClick(event){
 	var text = $(event.target).remove(".material-icons").text().trim().split(" ")[1].toLowerCase();
+	console.log("*"+text+"*");
 	$.ajax({
 		url: "pages/"+text+".html",
 		success: function(result){
