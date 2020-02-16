@@ -60,6 +60,7 @@ $(document).ready(function(){
 	var queries = 1;
 	for(var index = 0; index < queries; index++){
 		var item = readFile("/items/items.txt", index);
+		console.log(item);
 		var title = readFile("/items/"+item+"/desc.txt", 0);
 		var desc = readFile("/items/"+item+"/desc.txt", 1);
 		var id = readFile("/items/"+item+"/desc.txt", 2);
