@@ -57,37 +57,28 @@ $(document).ready(function(){
 	
 	
 	//Getting the items and displaying
-	var fs = require('fs');
-	var items = fs.readdirSync('/items/'); // getting all items
-	for(item in items){
-		if(item.contains("..") != true){
-			var t = fs.readdirSync('/items/'+item+"/"); // getting the img/title/desc
-			var img;
-			for(var i = 0; i < t.length; i++){ // getting the img out...
-				if(t[i].contains("..") != true && checkURL(t[i])){
-					img = t[i];
-				}
-			}
-			var title = readFile("/items/"+item+"/desc.txt", 0);
-			var desc = readFile("/items/"+item+"/desc.txt", 1);
-			var id = readFile("/items/"+item+"/desc.txt", 2);
-			$(".body").html(
-				"<div class='col s12 m6 l4'>"+
-					"<div class='card'>"+
-						"<div class='card-image waves-effect waves-block waves-light'>"+
-							"<img class='activator' src='/items/"+item+"/"+img+"'>"+
-						"</div>"+
-						"<div class='card-content'>"+
-							"<span class='card-title activator grey-text text-darken-4'>"+title+"<i class='material-icons right'>more_vert</i></span>"+
-							"<p><a href='/pages/buy.html?id="+id+"'></a></p>"+
-						"</div>"+
-						"<div class='card-reveal'>"+
-							"<span class='card-title grey-text text-darken-4'>"+title+"<i class='material-icons right'>close</i></span>"+
-							"<p>"+desc+"</p>"+
-						"</div>"+
+	var queries = 1;
+	for(var index = 0; index < queries; index++){
+		var item = readFile("/items/items.txt", index);
+		var title = readFile("/items/"+item+"/desc.txt", 0);
+		var desc = readFile("/items/"+item+"/desc.txt", 1);
+		var id = readFile("/items/"+item+"/desc.txt", 2);
+		$(".body").html(
+			"<div class='col s12 m6 l4'>"+
+				"<div class='card'>"+
+					"<div class='card-image waves-effect waves-block waves-light'>"+
+						"<img class='activator' src='/items/"+item+"/icon.png'>"+
 					"</div>"+
-				"</div>"
-			);
-		}
+					"<div class='card-content'>"+
+						"<span class='card-title activator grey-text text-darken-4'>"+title+"<i class='material-icons right'>more_vert</i></span>"+
+						"<p><a href='/pages/buy.html?id="+id+"'></a></p>"+
+					"</div>"+
+					"<div class='card-reveal'>"+
+						"<span class='card-title grey-text text-darken-4'>"+title+"<i class='material-icons right'>close</i></span>"+
+						"<p>"+desc+"</p>"+
+					"</div>"+
+				"</div>"+
+			"</div>"
+		);
 	}
 });
