@@ -1,6 +1,6 @@
 {
 	"name": "Moving on Up",
-	"hints": ["Please use hints for this one...", "WASD to move", "BKSPC to change slot groups", "ENTER to Pickup/Setdown"]
+	"hints": ["Please use hints for this one...", "WASD to move", "BKSPC to change slot groups", "ENTER to Pickup/Setdown"],
 	"level": [
 		["button", "e", 4, 3],
 		["wire", "w,e", 5, 3],
