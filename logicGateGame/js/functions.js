@@ -8,6 +8,7 @@ function getLevel(path, callback){
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var result = this.responseText.trim();
+			console.log(result);
 			callback(JSON.parse(result));
 		}
 	};
