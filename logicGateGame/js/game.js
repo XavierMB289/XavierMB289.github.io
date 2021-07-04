@@ -7,10 +7,10 @@ function gameInit(){
 	unselected = getImage("img/unselected_slot.png");
 	selected = getImage("img/selected_slot.png");
 	
-	level = getLevel("level/"+currentLevel+".json", loadGameLevel);
+	getLevel("level/"+currentLevel+".json", loadGameLevel);
 }
 function loadGameLevel(obj){
-	
+	level = obj;
 }
 function gameUpdate(){
 	
@@ -20,6 +20,7 @@ function slowGameUpdate(){
 	var selW = selected.width;
 	var selH = selected.height;
 	
+	ctx.drawString(level.name, 10, 10);
 	ctx.translate(canvasW/2-3*selW-3,canvasH-selH-10);
 	for(let x = 0; x < 6; x+=1){
 		if(x == userSelect){
