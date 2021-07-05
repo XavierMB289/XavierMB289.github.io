@@ -99,13 +99,13 @@ document.onkeyup = function(e){
 	}
 }
 function drawGatePipes(index){
-	var x = level.level[index][2]-1;
-	var y = level.level[index][3]-1;
+	var x = level.level[index][2];
+	var y = level.level[index][3];
 	var dirs = level.level[index][1];
 	dirs = dirs.includes(",") ? dirs.split(",") : [dirs];
 	for(var j = 0; j < dirs.length; j++){
 		ctx.save();
-		ctx.translate(x*selW+x, y*selH+y);
+		ctx.translate(x*selW+x+(selW/2), y*selH+y+(selH/2));
 		switch(dirs[j]){
 			case "s":
 				ctx.rotate(Math.PI);
@@ -117,7 +117,7 @@ function drawGatePipes(index){
 				ctx.rotate(1.5*Math.PI);
 				break;
 		}
-		ctx.drawImage(gatePipe, 0, 0);
+		ctx.drawImage(gatePipe, -selW/2, -selH/2);
 		ctx.restore();
 	}
 }
