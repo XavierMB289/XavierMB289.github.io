@@ -101,7 +101,7 @@ function drawGatePipes(index){
 	var x = level.level[index][2]-1;
 	var y = level.level[index][3]-1;
 	var dirs = level.level[index][1];
-	dirs = dirs.contains(",") ? dirs.split(",") : [dirs];
+	dirs = dirs.includes(",") ? dirs.split(",") : [dirs];
 		
 	for(var j = 0; j < dirs.length; j++){
 		switch(dirs[j]){
