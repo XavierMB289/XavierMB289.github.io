@@ -105,6 +105,7 @@ function drawGatePipes(index){
 	dirs = dirs.includes(",") ? dirs.split(",") : [dirs];
 	for(var j = 0; j < dirs.length; j++){
 		ctx.save();
+		ctx.translate(x*selW+x, y*selH+y);
 		switch(dirs[j]){
 			case "s":
 				ctx.rotate(Math.PI);
@@ -116,7 +117,7 @@ function drawGatePipes(index){
 				ctx.rotate(1.5*Math.PI);
 				break;
 		}
-		ctx.drawImage(gatePipe, x*selW+x, y*selH+y);
+		ctx.drawImage(gatePipe, 0, 0);
 		ctx.restore();
 	}
 }
