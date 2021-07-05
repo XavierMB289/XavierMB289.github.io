@@ -103,22 +103,20 @@ function drawGatePipes(index){
 	var y = level.level[index][3]-1;
 	var dirs = level.level[index][1];
 	dirs = dirs.includes(",") ? dirs.split(",") : [dirs];
-		
 	for(var j = 0; j < dirs.length; j++){
+		ctx.save();
 		switch(dirs[j]){
-			case "n":
-				gatePipe.style.transform = "rotate(0deg)";
-				break;
 			case "s":
-				gatePipe.style.transform = "rotate(180deg)";
+				ctx.rotate(Math.PI);
 				break;
 			case "e":
-				gatePipe.style.transform = "rotate(90deg)";
+				ctx.rotate(0.5*Math.PI);
 				break;
 			case "w":
-				gatePipe.style.transform = "rotate(-90deg)";
+				ctx.rotate(1.5*Math.PI);
 				break;
 		}
 		ctx.drawImage(gatePipe, x*selW+x, y*selH+y);
+		ctx.restore();
 	}
 }
