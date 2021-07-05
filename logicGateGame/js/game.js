@@ -1,5 +1,6 @@
 //Game Variables
 var unselected, selected, gatePipe, pipe;
+var selW, selH;
 var userSelect = 0, oldUS; //The keypress is handled based on what this is...
 var level, currentLevel = 1;
 
@@ -8,6 +9,9 @@ function gameInit(){
 	selected = getImage("img/selected_slot.png");
 	gatePipe = getImage("img/gate_pipe.png");
 	pipe = getImage("img/pipe.png");
+	
+	selW = selected.width;
+	selH = selected.height;
 	
 	getLevel("level/"+currentLevel+".json", loadGameLevel);
 }
@@ -22,9 +26,6 @@ function slowGameUpdate(){
 	if(level == null){
 		return;
 	}
-	
-	var selW = selected.width;
-	var selH = selected.height;
 	
 	ctx.fillText(level.name, 20, 10);
 	ctx.translate(canvasW/2-3*selW-3,canvasH-selH-10);
