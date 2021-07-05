@@ -41,8 +41,10 @@ function slowGameUpdate(){
 	for(var i = 0; i < level.level.length; i++){
 		var x = level.level[i][2]-1;
 		var y = level.level[i][3]-1;
+		
 		switch(level.level[i][0]){ //Item name
 			case "button":
+				drawGatePipes();
 				ctx.drawImage(getImage("img/button_off.png"), x*selW+x, y*selH+y);
 				break;
 		}
@@ -93,5 +95,29 @@ document.onkeyup = function(e){
 				oldUS = temp;
 				break;
 		}
+	}
+}
+function drawGatePipes(){
+	var x = level.level[i][2]-1;
+	var y = level.level[i][3]-1;
+	var dirs = level.level[i][1];
+	dirs = dirs.contains(",") ? dirs.split(",") : [dirs];
+		
+	for(var j = 0; j < dirs.length; j++){
+		switch(dirs[j]){
+			case "n":
+				gatePipe.style.transform = "rotate(0deg)";
+				break;
+			case "s":
+				gatePipe.style.transform = "rotate(180deg)";
+				break;
+			case "e":
+				gatePipe.style.transform = "rotate(90deg)";
+				break;
+			case "w":
+				gatePipe.style.transform = "rotate(-90deg)";
+				break;
+		}
+		ctx.drawImage(gatePipe, x*selW+x, y*selH+y);
 	}
 }
