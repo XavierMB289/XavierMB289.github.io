@@ -36,7 +36,7 @@ function slowGameUpdate(){
 	ctx.translate(-(canvasW/2-3*selW-3),-(canvasH-selH-10));
 	
 	ctx.translate(canvasW/2-6*selW-6,10);
-	for(var i = 0; i < level.level.length(); i++){
+	for(var i = 0; i < level.level.length; i++){
 		var x = level.level[i][2]-1;
 		var y = level.level[i][3]-1;
 		switch(level.level[i][0]){ //Item name
