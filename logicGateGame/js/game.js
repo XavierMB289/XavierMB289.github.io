@@ -19,12 +19,14 @@ function gameUpdate(){
 }
 function slowGameUpdate(){
 	
+	if(level == null){
+		return;
+	}
+	
 	var selW = selected.width;
 	var selH = selected.height;
 	
-	if(level != null){
-		ctx.fillText(level.name, 20, 10);
-	}
+	ctx.fillText(level.name, 20, 10);
 	ctx.translate(canvasW/2-3*selW-3,canvasH-selH-10);
 	for(let x = 0; x < 6; x+=1){
 		if(x == userSelect){
