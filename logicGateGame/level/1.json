@@ -4,7 +4,7 @@
 	"level": [
 		["button", "e", 3, 2],
 		["wire", "w,e", 4, 2],
-		["wire", "w,e", 5, 2],
+		["wire", "w,e", 5, 6],
 		["wire", "w,e", 6, 2],
 		["wire", "w,e", 7, 2],
 		["battery", "w", 8, 2]
