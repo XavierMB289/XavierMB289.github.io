@@ -1,5 +1,5 @@
 //Game Variables
-var unselected, selected, gatePipe, pipe;
+var unselected, selected, gatePipe, pipe, buttonSwitch, battery;
 var selW, selH;
 var userSelect = 0, oldUS, userItem = null; //The keypress is handled based on what this is... userItem = [name, direction, oldCoords]
 var level, currentLevel = 1;
@@ -9,6 +9,8 @@ function gameInit(){
 	selected = getImage("img/selected_slot.png");
 	gatePipe = getImage("img/gate_pipe.png");
 	pipe = getImage("img/pipe.png");
+	buttonSwitch = [getImage("img/button_off.png"), getImage("img/button_on.png")];
+	battery = [getImage("img/battery_empty.png"), getImage("img/battery_close.png"), getImage("img/battery_half.png"), getImage("img/battery_full.png")];
 	
 	selected.onload = function(){ //allows for download and play on desktop
 		selW = selected.width;
@@ -42,8 +44,8 @@ function slowGameUpdate(){
 	
 	ctx.translate(canvasW/2-6*selW-6,10);
 	for(var i = 0; i < level.level.length; i++){
-		var x = level.level[i][2]-1;
-		var y = level.level[i][3]-1;
+		var x = level.level[i][2];
+		var y = level.level[i][3];
 		var dirs = level.level[i][1];
 		
 		drawItem(level.level[i][0], x, y, dirs);
@@ -54,7 +56,7 @@ function slowGameUpdate(){
 		var y = Math.floor(temp/12);
 		ctx.drawImage(selected, x*selW+x, y*selH+y);
 		if(userItem != null){
-			drawItem(userItem[0]. x, y, userItem[1]);
+			drawItem(userItem[0], x, y, userItem[1]);
 		}
 	}
 	ctx.translate(-(canvasW/2-6*selW-6),-10);
@@ -95,7 +97,14 @@ document.onkeyup = function(e){
 				userSelect += (temp + 1) % 12 != 0 ? 1 : 0; 
 				break;
 			case "enter":
-				userItem = getItem(level, userSelect);
+				var temp = getItem(level, userSelect);
+				if(temp != null){ //if you're on an item, go ahead and remove it
+					userItem = temp;
+					temp = userSelect - 6;
+					var x = temp % 12;
+					var y = Math.floor(temp/12);
+					level = removeItem(level, x, y);
+				}
 				break;
 			case "backspace":
 				temp = userSelect;
@@ -111,14 +120,14 @@ document.onkeyup = function(e){
 function drawItem(name, x, y, dirs){
 	switch(name){ //Item name
 		case "button":
-			ctx.drawImage(getImage("img/button_off.png"), x*selW+x, y*selH+y);
+			ctx.drawImage(buttonSwitch[0], x*selW+x, y*selH+y);
 			drawPipes(x, y, dirs);
 			break;
 		case "wire":
 			drawPipes(x, y, dirs, false);
 			break;
 		case "battery":
-			ctx.drawImage(getImage("img/battery_empty.png"), x*selW+x, y*selH+y);
+			ctx.drawImage(battery[0], x*selW+x, y*selH+y);
 			drawPipes(x, y, dirs);
 			break;
 	}
