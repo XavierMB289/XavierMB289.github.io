@@ -1,7 +1,7 @@
 //Game Variables
 var unselected, selected, gatePipe, pipe;
 var selW, selH;
-var userSelect = 0, oldUS; //The keypress is handled based on what this is...
+var userSelect = 0, oldUS, userItem = null; //The keypress is handled based on what this is... userItem = [name, direction, oldCoords]
 var level, currentLevel = 1;
 
 function gameInit(){
@@ -10,8 +10,10 @@ function gameInit(){
 	gatePipe = getImage("img/gate_pipe.png");
 	pipe = getImage("img/pipe.png");
 	
-	selW = selected.width;
-	selH = selected.height;
+	selected.onload = function(){ //allows for download and play on desktop
+		selW = selected.width;
+		selH = selected.height;
+	}
 	
 	getLevel("level/"+currentLevel+".json", loadGameLevel);
 }
@@ -42,19 +44,18 @@ function slowGameUpdate(){
 	for(var i = 0; i < level.level.length; i++){
 		var x = level.level[i][2]-1;
 		var y = level.level[i][3]-1;
+		var dirs = level.level[i][1];
 		
-		switch(level.level[i][0]){ //Item name
-			case "button":
-				drawGatePipes(i);
-				ctx.drawImage(getImage("img/button_off.png"), x*selW+x, y*selH+y);
-				break;
-		}
+		drawItem(level.level[i][0], x, y, dirs);
 	}
 	if(userSelect >= 6){
 		var temp = userSelect - 6;
 		var x = temp % 12;
 		var y = Math.floor(temp/12);
 		ctx.drawImage(selected, x*selW+x, y*selH+y);
+		if(userItem != null){
+			drawItem(userItem[0]. x, y, userItem[1]);
+		}
 	}
 	ctx.translate(-(canvasW/2-6*selW-6),-10);
 	
@@ -74,6 +75,9 @@ document.onkeyup = function(e){
 				userSelect = oldUS > 5 ? oldUS : 6;
 				oldUS = temp;
 				break;
+			default:
+				console.log(letter);
+				break;
 		}
 	}else{ //if on the board...
 		var temp = userSelect - 6;
@@ -90,18 +94,36 @@ document.onkeyup = function(e){
 			case "d":
 				userSelect += (temp + 1) % 12 != 0 ? 1 : 0; 
 				break;
+			case "enter":
+				userItem = getItem(level, userSelect);
+				break;
 			case "backspace":
 				temp = userSelect;
 				userSelect = oldUS;
 				oldUS = temp;
 				break;
+			default:
+				console.log(letter);
+				break;
 		}
 	}
 }
-function drawGatePipes(index){
-	var x = level.level[index][2];
-	var y = level.level[index][3];
-	var dirs = level.level[index][1];
+function drawItem(name, x, y, dirs){
+	switch(name){ //Item name
+		case "button":
+			ctx.drawImage(getImage("img/button_off.png"), x*selW+x, y*selH+y);
+			drawPipes(x, y, dirs);
+			break;
+		case "wire":
+			drawPipes(x, y, dirs, false);
+			break;
+		case "battery":
+			ctx.drawImage(getImage("img/battery_empty.png"), x*selW+x, y*selH+y);
+			drawPipes(x, y, dirs);
+			break;
+	}
+}
+function drawPipes(x, y, dirs, gate = true){
 	dirs = dirs.includes(",") ? dirs.split(",") : [dirs];
 	for(var j = 0; j < dirs.length; j++){
 		ctx.save();
@@ -117,7 +139,11 @@ function drawGatePipes(index){
 				ctx.rotate(1.5*Math.PI);
 				break;
 		}
-		ctx.drawImage(gatePipe, -selW/2, -selH/2);
+		if(gate != false){
+			ctx.drawImage(gatePipe, -selW/2, -selH/2);
+		}else{
+			ctx.drawImage(pipe, -selW/2, -selH/2);
+		}
 		ctx.restore();
 	}
 }
