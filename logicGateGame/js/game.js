@@ -98,15 +98,28 @@ document.onkeyup = function(e){
 				break;
 			case "enter":
 				var temp = getItem(level, userSelect);
-				if(temp != null){ //if you're on an item, go ahead and remove it
+				if(temp != null && (temp[2] == "inv" || temp[0] == "wire")){ //if you're on an item, go ahead and remove it
+					if(userItem != null){
+						level = returnItem(level, userItem);
+						userItem = null;
+					}
 					userItem = temp;
 					temp = userSelect - 6;
 					var x = temp % 12;
 					var y = Math.floor(temp/12);
 					level = removeItem(level, x, y);
+				}else if(temp == null){
+					temp = userSelect - 6;
+					var x = temp % 12;
+					var y = Math.floor(temp/12);
+					level = addItem(level, userItem, x, y);
 				}
 				break;
 			case "backspace":
+				if(userItem != null){
+					level = returnItem(level, userItem);
+					userItem = null;
+				}
 				temp = userSelect;
 				userSelect = oldUS;
 				oldUS = temp;

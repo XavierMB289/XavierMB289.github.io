@@ -1,3 +1,3 @@
 TODO:
-need to setup trying to select a new item with an item in hand
-moving back to inventory should revert item's position
+allow buttons to be pressed
+add in the lightning...

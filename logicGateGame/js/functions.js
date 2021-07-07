@@ -62,7 +62,8 @@ function removeItem(level, x, y, inventory=false){
 	}
 }
 function addItem(level, userItem, x, y){
-	level.level.push([userItem[0], userItem[1], x, y]);
+	var temp = [userItem[0], userItem[1], x, y];
+	level.level.push(temp);
 	return level;
 }
 function addToInv(level, userItem){
@@ -75,4 +76,11 @@ function addToInv(level, userItem){
 	}
 	level.inv.push([userItem[0], userItem[1], x+y, 1]); //If not, add it...
 	return level;
+}
+function returnItem(level, userItem){
+	if(userItem[2]=="inv"){
+		return addToInv(level, userItem);
+	}
+	var coords = userItem[2].split(",");
+	return addItem(level, userItem, parseInt(coords[0]), parseInt(coords[1]));
 }
