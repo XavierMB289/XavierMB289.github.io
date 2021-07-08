@@ -20,7 +20,10 @@ function gameInit(){
 	getLevel("level/"+currentLevel+".json", loadGameLevel);
 }
 function loadGameLevel(obj){
+	//getting the level obj from ajax workaround
 	level = obj;
+	//setting up the images for the level...
+	
 }
 function gameUpdate(){
 	
@@ -108,11 +111,14 @@ document.onkeyup = function(e){
 					var x = temp % 12;
 					var y = Math.floor(temp/12);
 					level = removeItem(level, x, y);
+				}else if(temp != null && temp[0] == "button"){
+					
 				}else if(temp == null){
 					temp = userSelect - 6;
 					var x = temp % 12;
 					var y = Math.floor(temp/12);
 					level = addItem(level, userItem, x, y);
+					userItem = null;
 				}
 				break;
 			case "backspace":
