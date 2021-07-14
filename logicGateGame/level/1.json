@@ -9,5 +9,12 @@
 		["wire", "w,e", 7, 2, "img"],
 		["battery", "w", 8, 2, "img"]
 	],
-	"inv": []
+	"inv": [
+		null,
+		null,
+		null,
+		null,
+		null,
+		null
+	]
 }

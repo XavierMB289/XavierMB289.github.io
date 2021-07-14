@@ -39,6 +39,16 @@ function getItem(level, userSelect, inventory=false){ //TODO: fix the pickup
 	}
 	return null;
 }
+function getItemImage(level, x, y){
+	var list = level.level;
+	for(var z = 0; z < list.length; z++){
+		var item = list[z];
+		if(item[2] == x && item[3] == y){
+			return item[4];
+		}
+	}
+	return null;
+}
 function removeItem(level, x, y, inventory=false){
 	var list = null;
 	if(inventory != true){
@@ -83,4 +93,26 @@ function returnItem(level, userItem){
 	}
 	var coords = userItem[2].split(",");
 	return addItem(level, userItem, parseInt(coords[0]), parseInt(coords[1]));
+}
+function alterItem(level, userItem, newImages){
+	if(userItem[2]!="inv"){
+		for(var i = 0; i < level.level.length; i++){
+			var coords = userItem[2].split(",");
+			if(level.level[i][2] == parseInt(coords[0]) && level.level[i][3] == parseInt(coords[1])){
+				var passed = false;
+				for(var j = 0; j < newImages.length; j++){
+					if(newImages[j] == level.level[i][4] && !passed && j != newImages.length-1){ //That way it can't "pass" the last image
+						passed = true;
+					}else if(passed != false){
+						level.level[i][4] = newImages[j];
+						return level;
+					}
+				}
+				if(passed != true){
+					level.level[i][4] = newImages[0];
+				}
+			}
+		}
+	}
+	return level;
 }
