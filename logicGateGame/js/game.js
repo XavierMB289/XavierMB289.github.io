@@ -46,8 +46,7 @@ function slowGameUpdate(){
 	
 	ctx.fillText(level.name, 20, 10);
 	ctx.translate(canvasW/2-3*selW-3,canvasH-selH-10);
-	for(let x = 0; x < level.inv.length; x++){
-		console.log(x);
+	for(let x = 0; x < 6; x++){
 		var item = level.inv[x];
 		if(item!=null){
 			drawItem(item[0], x*selW+x, item[3], item[1], true);
@@ -77,6 +76,7 @@ function slowGameUpdate(){
 			drawItem(userItem[0], x, y, userItem[1]);
 		}
 	}
+	
 	ctx.translate(-(canvasW/2-6*selW-6),-10);
 	
 }
