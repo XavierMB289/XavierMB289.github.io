@@ -1,5 +1,14 @@
 var particles = [];
 
-class Particle(startX, startY){
+class ParticleNode(startX, startY){
+	var x = startX;
+	var y = startY;
+	var path = [];
+	
+	function paint(){
+		
+	}
+}
+class Particle(startX, startY, rot){
 	
 }
