@@ -26,6 +26,7 @@ class ParticleNode{
 		this.speed = spd;
 		this.partImage = img;
 		this.path = path;
+		return this;
 	}
 	
 	paint(){
