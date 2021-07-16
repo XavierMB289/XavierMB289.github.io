@@ -45,7 +45,7 @@ class ParticleNode{
 				this.particles.splice(this.particles.indexOf(part), 1);
 			}
 		}
-		var tempAngle = Math.atan2(path[destination][1] - this.y, path[destination][0] - this.x);
+		var tempAngle = Math.atan2(this.path[destination][1] - this.y, this.path[destination][0] - this.x);
 		this.x += Math.cos(tempAngle) * this.speed;
 		this.y += Math.sin(tempAngle) * this.speed;
 	}
