@@ -1,6 +1,6 @@
 var nodes = [];
 
-function addNode(startX, startY, spd, img, path = [[startX, startY]]){
+function addNode(startX, startY, spd, img, path){ // [[x,y], [x,y], [x,y], ...]
 	nodes.push(new ParticleNode(startX, startY, spd, img, path));
 }
 
@@ -20,7 +20,7 @@ class ParticleNode{
 	particles = [];
 	partImage = null;
 	
-	constructor(startX, startY, spd, img, path){ // [[x,y], [x,y], [x,y], ...]
+	constructor(startX, startY, spd, img, path){ 
 		this.x = startX;
 		this.y = startY;
 		this.speed = spd;
