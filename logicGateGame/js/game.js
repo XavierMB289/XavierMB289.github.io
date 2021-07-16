@@ -34,7 +34,7 @@ function loadGameLevel(obj){
 				break;
 		}
 	}
-	addNode(50, 50, 3, getImage("img/power.png"), [[]]);
+	addNode(50, 50, 3, getImage("img/power.png"), [[100, 100]]);
 }
 function gameUpdate(){
 	
