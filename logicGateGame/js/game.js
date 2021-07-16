@@ -34,6 +34,7 @@ function loadGameLevel(obj){
 				break;
 		}
 	}
+	addNode(50, 50, 3, getImage("img/power.png"), [[]]);
 }
 function gameUpdate(){
 	
@@ -58,6 +59,8 @@ function slowGameUpdate(){
 		}
 	}
 	ctx.translate(-(canvasW/2-3*selW-3),-(canvasH-selH-10));
+	
+	nodeCycle();
 	
 	ctx.translate(canvasW/2-6*selW-6,10);
 	for(var i = 0; i < level.level.length; i++){
