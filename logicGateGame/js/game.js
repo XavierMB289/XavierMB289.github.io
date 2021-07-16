@@ -15,6 +15,7 @@ function gameInit(){
 	selected.onload = function(){ //allows for download and play on desktop
 		selW = selected.width;
 		selH = selected.height;
+		//addNode(3.5, 2.5, selW, 3, getImage("img/power.png"), [[8.5, 2.5]]); //commented out until needed...
 	}
 	
 	getLevel("level/"+currentLevel+".json", loadGameLevel);
@@ -34,7 +35,6 @@ function loadGameLevel(obj){
 				break;
 		}
 	}
-	addNode(50, 50, 3, getImage("img/power.png"), [[100, 100]]);
 }
 function gameUpdate(){
 	
@@ -60,9 +60,8 @@ function slowGameUpdate(){
 	}
 	ctx.translate(-(canvasW/2-3*selW-3),-(canvasH-selH-10));
 	
-	nodeCycle();
-	
 	ctx.translate(canvasW/2-6*selW-6,10);
+	nodeCycle();
 	for(var i = 0; i < level.level.length; i++){
 		var x = level.level[i][2];
 		var y = level.level[i][3];

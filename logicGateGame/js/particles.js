@@ -1,7 +1,7 @@
 var nodes = [];
 
-function addNode(startX, startY, spd, img, path){ // [[x,y], [x,y], [x,y], ...]
-	nodes.push(new ParticleNode(startX, startY, spd, img, path));
+function addNode(startX, startY, selW, spd, img, path){ // [[x,y], [x,y], [x,y], ...]
+	nodes.push(new ParticleNode(startX, startY, selW, spd, img, path));
 }
 
 function nodeCycle(){
@@ -14,15 +14,17 @@ function nodeCycle(){
 class ParticleNode{
 	x = null;
 	y = null;
+	selW = null;
 	speed = null;
 	destination = 0;
 	path = [];
 	particles = [];
 	partImage = null;
 	
-	constructor(startX, startY, spd, img, path){ 
-		this.x = startX;
-		this.y = startY;
+	constructor(startX, startY, selW, spd, img, path){ //startX and startY are gridbased...
+		this.x = startX*selW;
+		this.y = startY*selW;
+		this.selW = selW;
 		this.speed = spd;
 		this.partImage = img;
 		this.path = path;
@@ -46,7 +48,7 @@ class ParticleNode{
 				this.particles.splice(this.particles.indexOf(part), 1);
 			}
 		}
-		var tempAngle = Math.atan2(this.path[this.destination][1] - this.y, this.path[this.destination][0] - this.x);
+		var tempAngle = Math.atan2(this.path[this.destination][1]*this.selW - this.y, this.path[this.destination][0]*this.selW - this.x);
 		this.x += Math.cos(tempAngle) * this.speed;
 		this.y += Math.sin(tempAngle) * this.speed;
 	}
@@ -63,6 +65,7 @@ class Particle{
 		this.y = startY;
 		this.speed = spd;
 		this.rotate = rot;
+		return this;
 	}
 	
 	paint(img, x, y){
