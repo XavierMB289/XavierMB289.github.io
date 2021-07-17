@@ -1,7 +1,11 @@
 var nodes = [];
 
-function addNode(startX, startY, selW, spd, img, path){ // [[x,y], [x,y], [x,y], ...]
-	nodes.push(new ParticleNode(startX, startY, selW, spd, img, path));
+function addNode(startX, startY, selW, spd, img, path, callback = null){ // [[x,y], [x,y], [x,y], ...]
+	var part = new ParticleNode(startX, startY, selW, spd, img, path);
+	if(callback != null){
+		part.addCallback(callback);
+	}
+	nodes.push(part);
 }
 
 function nodeCycle(){
@@ -21,6 +25,7 @@ class ParticleNode{
 	particles = [];
 	partImage = null;
 	spawnParticles = true;
+	callback = null;
 	
 	constructor(startX, startY, selW, spd, img, path){ //startX and startY are gridbased...
 		this.x = startX*selW;
@@ -30,6 +35,10 @@ class ParticleNode{
 		this.partImage = img;
 		this.path = path;
 		return this;
+	}
+	
+	addCallback(callback){
+		this.callback = callback;
 	}
 	
 	paint(){
@@ -58,6 +67,9 @@ class ParticleNode{
 		if(Math.cos(tempAngle) < 0.2 && Math.sin(tempAngle) < 0.2){
 			if(this.destination == this.path.length-1){
 				if(this.particles.length == 0){
+					if(this.callback != null){
+						this.callback();
+					}
 					nodes.splice(this, 1);
 				}
 				this.spawnParticles = false;

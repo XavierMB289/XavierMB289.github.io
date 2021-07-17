@@ -1,0 +1,20 @@
+{
+	"name": "Trade out",
+	"hints": ["One of them looks different...", "Look at the wires?", "[2,3]", "trade out [2,3] with the inventory.."],
+	"level": [
+		["button", "s", 1, 1, "img"],
+		["wire", "n,e", 1, 2, "img"],
+		["wire", "w,s", 2, 2, "img"],
+		["wire", "n,w", 2, 3, "img"],
+		["wire", "w,e", 3, 3, "img"],
+		["battery", "w", 4, 3, "img"]
+	],
+	"inv": [
+		null,
+		null,
+		null,
+		["wire", "n,e", "img"],
+		null,
+		null
+	]
+}

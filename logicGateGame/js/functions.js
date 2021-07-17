@@ -39,6 +39,20 @@ function getItem(level, userSelect, inventory=false){ //TODO: fix the pickup
 	}
 	return null;
 }
+function getItemByName(level, name){
+	for(var i = 0; i < level.level.length; i++){
+		var item = level.level[i];
+		if(item[0] == name){
+			return item;
+		}
+	}
+	for(var i = 0; i < level.inv.length; i++){
+		var item = level.inv[i];
+		if(item[0] == name){
+			return item;
+		}
+	}
+}
 function getItemImage(level, x, y){
 	var list = level.level;
 	for(var z = 0; z < list.length; z++){
@@ -97,8 +111,8 @@ function returnItem(level, userItem){
 function alterItem(level, userItem, newImages){
 	if(userItem[2]!="inv"){
 		for(var i = 0; i < level.level.length; i++){
-			var coords = userItem[2].split(",");
-			if(level.level[i][2] == parseInt(coords[0]) && level.level[i][3] == parseInt(coords[1])){
+			var coords = userItem[2].length > 1 ? userItem[2].split(",") : userItem[2];
+			if(level.level[i][2] == parseInt(coords[0]) && (userItem[2].length == 1 || level.level[i][3] == parseInt(coords[1]))){
 				var passed = false;
 				for(var j = 0; j < newImages.length; j++){
 					if(newImages[j] == level.level[i][4] && !passed && j != newImages.length-1){ //That way it can't "pass" the last image

@@ -1,4 +1,4 @@
 TODO:
 have certain items be able to add particles after certain conditions are met.
-setup batteryEnergy function so that it can be stopped when the input changes...
-change getNextItem to incorperate angles.
+change getNextItem to incorperate angles!!!
+Play test the 2nd level.

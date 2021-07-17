@@ -3,6 +3,7 @@ var unselected, selected, gatePipe, pipe, buttonSwitch, battery;
 var selW, selH;
 var userSelect = 0, oldUS, userItem = null; //The keypress is handled based on what this is... userItem = [name, direction, oldCoords]
 var level, currentLevel = 1;
+var startBattery = false, batteryTimer = 15;
 
 function gameInit(){
 	unselected = getImage("img/unselected_slot.png");
@@ -81,6 +82,19 @@ function slowGameUpdate(){
 	
 	ctx.translate(-(canvasW/2-6*selW-6),-10);
 	
+	if(startBattery != false){
+		batteryTimer--;
+		if(batteryTimer <= 0){
+			batteryTimer = 15;
+			var item = getItemByName(level, "battery");
+			level = alterItem(level, [item[0], item[1], item[2]+","+item[3]], battery);
+			if(item[4] == battery[3]){
+				startBattery = false;
+				currentLevel++;
+				getLevel("level/"+currentLevel+".json", loadGameLevel);
+			}
+		}
+	}
 }
 document.onkeyup = function(e){
 	var letter = e.key.toLowerCase();
@@ -135,8 +149,7 @@ document.onkeyup = function(e){
 						temp = userSelect - 6;
 						var x = temp % 12;
 						var y = Math.floor(temp/12);
-						addNode(x+.5, y+.5, selW, 5, getImage("img/power.png"), [[next[2]+.5, next[3]+.5]]);
-						
+						addNode(x+.5, y+.5, selW, 5, getImage("img/power.png"), [[next[2]+.5, next[3]+.5]], function(){ if(next[0]=="battery"){startBattery = true;} });
 					}
 				}else if(temp == null){
 					temp = userSelect - 6;
@@ -214,7 +227,4 @@ function drawPipes(x, y, dirs, gate = true){
 		}
 		ctx.restore();
 	}
-}
-function batteryEnergy(batteryIndex){
-	
 }
