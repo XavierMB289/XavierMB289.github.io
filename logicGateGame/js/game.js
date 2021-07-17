@@ -131,6 +131,12 @@ document.onkeyup = function(e){
 				}else if(temp != null){
 					if(temp[0] == "button"){
 						level = alterItem(level, temp, buttonSwitch);
+						var next = getNextItem(level, userSelect);
+						temp = userSelect - 6;
+						var x = temp % 12;
+						var y = Math.floor(temp/12);
+						addNode(x+.5, y+.5, selW, 5, getImage("img/power.png"), [[next[2]+.5, next[3]+.5]]);
+						
 					}
 				}else if(temp == null){
 					temp = userSelect - 6;
@@ -208,4 +214,7 @@ function drawPipes(x, y, dirs, gate = true){
 		}
 		ctx.restore();
 	}
+}
+function batteryEnergy(batteryIndex){
+	
 }

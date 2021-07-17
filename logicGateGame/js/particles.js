@@ -20,6 +20,7 @@ class ParticleNode{
 	path = [];
 	particles = [];
 	partImage = null;
+	spawnParticles = true;
 	
 	constructor(startX, startY, selW, spd, img, path){ //startX and startY are gridbased...
 		this.x = startX*selW;
@@ -39,7 +40,9 @@ class ParticleNode{
 	}
 	
 	update(){
-		this.particles.push(new Particle(this.x, this.y, this.speed));
+		if(this.spawnParticles){
+			this.particles.push(new Particle(this.x, this.y, this.speed));
+		}
 		
 		for(var i = 0; i < this.particles.length; i++){
 			var part = this.particles[i];
@@ -51,6 +54,17 @@ class ParticleNode{
 		var tempAngle = Math.atan2(this.path[this.destination][1]*this.selW - this.y, this.path[this.destination][0]*this.selW - this.x);
 		this.x += Math.cos(tempAngle) * this.speed;
 		this.y += Math.sin(tempAngle) * this.speed;
+		
+		if(Math.cos(tempAngle) < 0.2 && Math.sin(tempAngle) < 0.2){
+			if(this.destination == this.path.length-1){
+				if(this.particles.length == 0){
+					nodes.splice(this, 1);
+				}
+				this.spawnParticles = false;
+			}else{
+				this.destination++;
+			}
+		}
 	}
 }
 class Particle{

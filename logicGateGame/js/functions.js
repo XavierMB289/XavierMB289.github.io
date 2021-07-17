@@ -116,3 +116,31 @@ function alterItem(level, userItem, newImages){
 	}
 	return level;
 }
+function getNextItem(level, userSelect, direction){
+	var temp = userSelect - 6;
+	var levelX = temp % 12;
+	var levelY = Math.floor(temp/12);
+	var item = level.level.filter(x => { return x[2]==levelX&&x[3]==levelY })[0];
+	while(item[0]!="battery"&&item[0].toLowerCase().includes("gate")!=true){
+		var dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
+		switch(dir){
+			case "n":
+				levelY--;
+				break;
+			case "s":
+				levelY++;
+				break;
+			case "e":
+				levelX++;
+				break;
+			case "w":
+				levelX--;
+				break;
+		}
+		item = level.level.filter(x => { return x[2]==levelX&&x[3]==levelY })[0];
+		if(item==null){
+			return null;
+		}
+	}
+	return item;
+}
