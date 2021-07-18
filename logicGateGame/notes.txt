@@ -1,4 +1,5 @@
 TODO:
 have certain items be able to add particles after certain conditions are met.
 change getNextItem to incorperate angles!!!
-Play test the 2nd level.
+Fix the inventory so that you can get items from it.
+change the inventory so you can have amounts of items.

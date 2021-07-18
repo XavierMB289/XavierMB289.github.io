@@ -2,8 +2,12 @@
 var unselected, selected, gatePipe, pipe, buttonSwitch, battery;
 var selW, selH;
 var userSelect = 0, oldUS, userItem = null; //The keypress is handled based on what this is... userItem = [name, direction, oldCoords]
-var level, currentLevel = 1;
+var level, currentLevel;
 var startBattery = false, batteryTimer = 15;
+
+window.onbeforeunload = function(){
+	setCookie("currentLevel", currentLevel, 7);
+};
 
 function gameInit(){
 	unselected = getImage("img/unselected_slot.png");
@@ -17,6 +21,14 @@ function gameInit(){
 		selW = selected.width;
 		selH = selected.height;
 		//addNode(3.5, 2.5, selW, 3, getImage("img/power.png"), [[8.5, 2.5]]); //commented out until needed...
+	}
+	
+	currentLevel = getCookie("currentLevel");
+	console.log("gameInit.currentLevel: "+currentLevel);
+	if(currentLevel == ""){
+		currentLevel = 2;
+	}else{
+		currentLevel = parseInt(currentLevel);
 	}
 	
 	getLevel("level/"+currentLevel+".json", loadGameLevel);
@@ -51,7 +63,7 @@ function slowGameUpdate(){
 	for(let x = 0; x < 6; x++){
 		var item = level.inv[x];
 		if(item!=null){
-			drawItem(item[0], x*selW+x, item[3], item[1], true);
+			drawItem(item[0], x, 0, item[1], true);
 		}
 		if(x == userSelect){
 			ctx.drawImage(selected, x*selW+x, 0);
@@ -92,6 +104,7 @@ function slowGameUpdate(){
 				startBattery = false;
 				currentLevel++;
 				getLevel("level/"+currentLevel+".json", loadGameLevel);
+				setCookie("currentLevel", currentLevel, 7);
 			}
 		}
 	}
