@@ -36,7 +36,7 @@ function getCookie(cname) {
 	}
 	return "";
 }
-function getItem(level, userSelect, inventory=false){ //TODO: fix the pickup
+function getItem(level, userSelect, inventory=false){
 	var list = null;
 	if(inventory != true){
 		list = level.level;
@@ -45,7 +45,7 @@ function getItem(level, userSelect, inventory=false){ //TODO: fix the pickup
 		var y = Math.floor(temp/12);
 		for(var z = 0; z < list.length; z++){
 			var item = list[z];
-			if(item[2] == x && item[3] == y){
+			if(item != null && item[2] == x && item[3] == y){
 				return [item[0], item[1], x+","+y];
 			}
 		}
@@ -53,7 +53,7 @@ function getItem(level, userSelect, inventory=false){ //TODO: fix the pickup
 		list = level.inv;
 		for(var z = 0; z < list.length; z++){
 			var item = list[z];
-			if(item[2] == userInput){
+			if(item != null && z == userSelect){
 				return [item[0], item[1], "inv"];
 			}
 		}
@@ -151,7 +151,7 @@ function alterItem(level, userItem, newImages){
 	}
 	return level;
 }
-function getNextItem(level, userSelect, direction){
+function getNextItem(level, userSelect){
 	var temp = userSelect - 6;
 	var levelX = temp % 12;
 	var levelY = Math.floor(temp/12);
@@ -178,4 +178,41 @@ function getNextItem(level, userSelect, direction){
 		}
 	}
 	return item;
+}
+function getPathToNext(level, userSelect){ //Similar to getNextItem but outputs the 2d array for particles
+	var ret = [];
+	var temp = userSelect - 6;
+	var levelX = temp % 12;
+	var levelY = Math.floor(temp/12);
+	var item = level.level.filter(x => { return x[2]==levelX&&x[3]==levelY })[0];
+	var prevDir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
+	while(item[0]!="battery"&&item[0].toLowerCase().includes("gate")!=true){
+		var dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
+		switch(dir){
+			case "n":
+				levelY--;
+				break;
+			case "s":
+				levelY++;
+				break;
+			case "e":
+				levelX++;
+				break;
+			case "w":
+				levelX--;
+				break;
+		}
+		if(dir != prevDir){
+			prevDir = dir;
+			ret.push([levelX+0.5, levelY+0.5]);
+		}
+		item = level.level.filter(x => { return x[2]==levelX&&x[3]==levelY })[0];
+		if(item==null){
+			break;
+		}
+	}
+	if(ret.length == 0){
+		ret.push([levelX+0.5, levelY+0.5]);
+	}
+	return ret;
 }

@@ -2,4 +2,5 @@ TODO:
 have certain items be able to add particles after certain conditions are met.
 change getNextItem to incorperate angles!!!
 Fix the inventory so that you can get items from it.
-change the inventory so you can have amounts of items.
+show number of items in inventory based on given JSON value. (level.inv[3])
+fix replacing items (if item in userItem, and click on a new item...)

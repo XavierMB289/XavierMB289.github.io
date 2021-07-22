@@ -13,8 +13,10 @@
 		null,
 		null,
 		null,
-		["wire", "n,e", "img"],
+		["wire", "n,e", "img", 1],
 		null,
 		null
-	]
+	],
+	"startInGrid": [false, 0, 0],
+	"disabledKeys": []
 }

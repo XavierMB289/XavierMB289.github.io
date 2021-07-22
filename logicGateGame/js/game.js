@@ -1,9 +1,8 @@
 //Game Variables
-var unselected, selected, gatePipe, pipe, buttonSwitch, battery;
+var unselected, selected;
 var selW, selH;
 var userSelect = 0, oldUS, userItem = null; //The keypress is handled based on what this is... userItem = [name, direction, oldCoords]
 var level, currentLevel;
-var startBattery = false, batteryTimer = 15;
 
 window.onbeforeunload = function(){
 	setCookie("currentLevel", currentLevel, 7);
@@ -12,21 +11,15 @@ window.onbeforeunload = function(){
 function gameInit(){
 	unselected = getImage("img/unselected_slot.png");
 	selected = getImage("img/selected_slot.png");
-	gatePipe = getImage("img/gate_pipe.png");
-	pipe = getImage("img/pipe.png");
-	buttonSwitch = [getImage("img/button_off.png"), getImage("img/button_on.png")];
-	battery = [getImage("img/battery_empty.png"), getImage("img/battery_close.png"), getImage("img/battery_half.png"), getImage("img/battery_full.png")];
 	
 	selected.onload = function(){ //allows for download and play on desktop
 		selW = selected.width;
 		selH = selected.height;
-		//addNode(3.5, 2.5, selW, 3, getImage("img/power.png"), [[8.5, 2.5]]); //commented out until needed...
 	}
 	
 	currentLevel = getCookie("currentLevel");
-	console.log("gameInit.currentLevel: "+currentLevel);
 	if(currentLevel == ""){
-		currentLevel = 2;
+		currentLevel = 1;
 	}else{
 		currentLevel = parseInt(currentLevel);
 	}
@@ -47,6 +40,9 @@ function loadGameLevel(obj){
 				level.level[i][4] = battery[0];
 				break;
 		}
+	}
+	if(level.startInGrid[0]){
+		userSelect = level.startInGrid[3] * 12 + level.startInGrid[2] + 6;
 	}
 }
 function gameUpdate(){
@@ -94,23 +90,13 @@ function slowGameUpdate(){
 	
 	ctx.translate(-(canvasW/2-6*selW-6),-10);
 	
-	if(startBattery != false){
-		batteryTimer--;
-		if(batteryTimer <= 0){
-			batteryTimer = 15;
-			var item = getItemByName(level, "battery");
-			level = alterItem(level, [item[0], item[1], item[2]+","+item[3]], battery);
-			if(item[4] == battery[3]){
-				startBattery = false;
-				currentLevel++;
-				getLevel("level/"+currentLevel+".json", loadGameLevel);
-				setCookie("currentLevel", currentLevel, 7);
-			}
-		}
-	}
+	batteryUpdate(level, currentLevel);
 }
 document.onkeyup = function(e){
 	var letter = e.key.toLowerCase();
+	if(level.disabledKeys.includes(letter)){
+		return;
+	}
 	if(userSelect < 6){ //if in the inventory
 		switch(letter){
 			case "a": //left
@@ -119,6 +105,11 @@ document.onkeyup = function(e){
 			case "d": //right
 				userSelect += userSelect + 1 < 6 ? 1 : 0;
 				break;
+			case "enter":
+				var temp = getItem(level, userSelect, true);
+				if(temp != null){
+					userItem = temp;
+				}//NO BREAK! WE WANT THE BACKSPACE CODE TO RUN!
 			case "backspace": //change selection
 				var temp = userSelect;
 				userSelect = oldUS > 5 ? oldUS : 6;
@@ -162,14 +153,17 @@ document.onkeyup = function(e){
 						temp = userSelect - 6;
 						var x = temp % 12;
 						var y = Math.floor(temp/12);
-						addNode(x+.5, y+.5, selW, 5, getImage("img/power.png"), [[next[2]+.5, next[3]+.5]], function(){ if(next[0]=="battery"){startBattery = true;} });
+						console.log(getPathToNext(level, userSelect));
+						addNode(x+.5, y+.5, selW, 5, getImage("img/power.png"), getPathToNext(level, userSelect), function(){ if(next[0]=="battery"){startBattery = true;} });
 					}
 				}else if(temp == null){
-					temp = userSelect - 6;
-					var x = temp % 12;
-					var y = Math.floor(temp/12);
-					level = addItem(level, userItem, x, y);
-					userItem = null;
+					if(userItem != null){
+						temp = userSelect - 6;
+						var x = temp % 12;
+						var y = Math.floor(temp/12);
+						level = addItem(level, userItem, x, y);
+						userItem = null;
+					}
 				}
 				break;
 			case "backspace":
@@ -185,59 +179,5 @@ document.onkeyup = function(e){
 				console.log(letter);
 				break;
 		}
-	}
-}
-function drawItem(name, x, y, dirs, inventory = false){
-	if(inventory != true){ //if item is on field
-		switch(name){ //Item name
-			case "button":
-				ctx.drawImage(getItemImage(level, x, y), x*selW+x, y*selH+y);
-				drawPipes(x, y, dirs);
-				break;
-			case "battery":
-				ctx.drawImage(getItemImage(level, x, y), x*selW+x, y*selH+y);
-				drawPipes(x, y, dirs);
-				break;
-		}
-	}else{ //If the image is in inventory
-		switch(name){ //Item name
-			case "button":
-				ctx.drawImage(buttonSwitch[0], x*selW+x, y*selH+y);
-				drawPipes(x, y, dirs);
-				break;
-			case "battery":
-				ctx.drawImage(battery[0], x*selW+x, y*selH+y);
-				drawPipes(x, y, dirs);
-				break;
-		}
-	}//BOTH
-	switch(name){
-		case "wire":
-			drawPipes(x, y, dirs, false);
-			break;
-	}
-}
-function drawPipes(x, y, dirs, gate = true){
-	dirs = dirs.includes(",") ? dirs.split(",") : [dirs];
-	for(var j = 0; j < dirs.length; j++){
-		ctx.save();
-		ctx.translate(x*selW+x+(selW/2), y*selH+y+(selH/2));
-		switch(dirs[j]){
-			case "s":
-				ctx.rotate(Math.PI);
-				break;
-			case "e":
-				ctx.rotate(0.5*Math.PI);
-				break;
-			case "w":
-				ctx.rotate(1.5*Math.PI);
-				break;
-		}
-		if(gate != false){
-			ctx.drawImage(gatePipe, -selW/2, -selH/2);
-		}else{
-			ctx.drawImage(pipe, -selW/2, -selH/2);
-		}
-		ctx.restore();
 	}
 }

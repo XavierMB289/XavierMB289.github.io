@@ -12,6 +12,8 @@ window.onload = function(){
 	
 	tile = getImage("img/tiles.png");
 	
+	wireInit();
+	gateInit();
 	gameInit();
 	
 	update();

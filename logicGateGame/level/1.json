@@ -16,5 +16,7 @@
 		null,
 		null,
 		null
-	]
+	],
+	"startInGrid": [true, 5, 2],
+	"disabledKeys": ["backspace"]
 }
