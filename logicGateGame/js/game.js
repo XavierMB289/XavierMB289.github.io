@@ -1,8 +1,8 @@
 //Game Variables
-var unselected, selected;
+var unselected, selected, left, right;
 var selW, selH;
 var userSelect = 0, oldUS, userItem = null; //The keypress is handled based on what this is... userItem = [name, direction, oldCoords]
-var level, currentLevel;
+var level, currentLevel, currentHint;
 
 window.onbeforeunload = function(){
 	setCookie("currentLevel", currentLevel, 7);
@@ -11,6 +11,8 @@ window.onbeforeunload = function(){
 function gameInit(){
 	unselected = getImage("img/unselected_slot.png");
 	selected = getImage("img/selected_slot.png");
+	left = getImage("img/left_comma.png");
+	right = getImage("img/right_period.png");
 	
 	selected.onload = function(){ //allows for download and play on desktop
 		selW = selected.width;
@@ -44,22 +46,26 @@ function loadGameLevel(obj){
 	if(level.startInGrid[0]){
 		userSelect = level.startInGrid[2] * 12 + level.startInGrid[1] + 6;
 	}
+	currentHint = 0;
 }
 function gameUpdate(){
 	
 }
 function slowGameUpdate(){
 	
+	ctx.font = "20px Caveat";
+	ctx.fillStyle = "#FFFFFF";
+	
 	if(level == null){
 		return;
 	}
 	
-	ctx.fillText(level.name, 20, 10);
 	ctx.translate(canvasW/2-3*selW-3,canvasH-selH-10);
 	for(let x = 0; x < 6; x++){
 		var item = level.inv[x];
-		if(item!=null){
+		if(item!=null && item[3] > 0){
 			drawItem(item[0], x, 0, item[1], true);
+			ctx.fillText(""+item[3], x*selW+x+10, selW*0.8);
 		}
 		if(x == userSelect){
 			ctx.drawImage(selected, x*selW+x, 0);
@@ -70,7 +76,7 @@ function slowGameUpdate(){
 	ctx.translate(-(canvasW/2-3*selW-3),-(canvasH-selH-10));
 	
 	ctx.translate(canvasW/2-6*selW-6,10);
-	nodeCycle();
+	nodeCycle(); //for particles
 	for(var i = 0; i < level.level.length; i++){
 		var x = level.level[i][2];
 		var y = level.level[i][3];
@@ -87,6 +93,12 @@ function slowGameUpdate(){
 			drawItem(userItem[0], x, y, userItem[1]);
 		}
 	}
+	
+	ctx.drawImage(left, -selW*2, selW*3.5);
+	ctx.drawImage(right, selW*13, selW*3.5);
+	
+	ctx.fillText(level.name, 20, 10);
+	ctx.fillText(level.hints[currentHint], 10, selW*8);
 	
 	ctx.translate(-(canvasW/2-6*selW-6),-10);
 	
@@ -153,7 +165,6 @@ document.onkeyup = function(e){
 						temp = userSelect - 6;
 						var x = temp % 12;
 						var y = Math.floor(temp/12);
-						console.log(getPathToNext(level, userSelect));
 						addNode(x+.5, y+.5, selW, 5, getImage("img/power.png"), getPathToNext(level, userSelect), function(){ if(next[0]=="battery"){startBattery = true;} });
 					}
 				}else if(temp == null){
@@ -179,5 +190,25 @@ document.onkeyup = function(e){
 				console.log(letter);
 				break;
 		}
+	}
+	//No matter the "state" check for these to change level
+	switch(letter){
+		case "<":
+		case ",":
+			if(currentLevel - 1 > 0){
+				currentLevel--;
+				getLevel("level/"+currentLevel+".json", loadGameLevel);
+			}
+			break;
+		case ">":
+		case ".":
+			if(currentLevel + 1 <= parseInt(getCookie("currentLevel"))){
+				currentLevel++;
+				getLevel("level/"+currentLevel+".json", loadGameLevel);
+			}
+			break;
+		case "e":
+			currentHint += currentHint + 1 < level.hints.length ? 1 : 0;
+			break;
 	}
 }

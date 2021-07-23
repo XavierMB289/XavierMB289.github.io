@@ -1,4 +1,3 @@
 TODO:
-have certain items be able to add particles after certain conditions are met.
 show number of items in inventory based on given JSON value. (level.inv[3])
 fix replacing items (if item in userItem, and click on a new item...)
