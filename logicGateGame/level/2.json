@@ -1,22 +1,22 @@
 {
-	"name": "Trade out",
-	"hints": ["HINT", "Look at the wires?", "[2,3]", "trade out [2,3] with the inventory.."],
+	"name": "Baby Steps",
+	"hints": ["Use WASD to Move"],
 	"level": [
-		["button", "s", 1, 1, "img"],
-		["wire", "n,e", 1, 2, "img"],
-		["wire", "w,s", 2, 2, "img"],
-		["wire", "n,w", 2, 3, "img"],
-		["wire", "w,e", 3, 3, "img"],
-		["battery", "w", 4, 3, "img"]
+		["button", "e", 3, 2, "img"],
+		["wire", "w,e", 4, 2, "img"],
+		["wire", "w,e", 5, 5, "img"],
+		["wire", "w,e", 6, 2, "img"],
+		["wire", "w,e", 7, 2, "img"],
+		["battery", "w", 8, 2, "img"]
 	],
 	"inv": [
 		null,
 		null,
 		null,
-		["wire", "n,e", "img", 1],
+		null,
 		null,
 		null
 	],
-	"startInGrid": [false, 0, 0],
-	"disabledKeys": []
+	"startInGrid": [true, 3, 2],
+	"disabledKeys": ["backspace", "e"]
 }

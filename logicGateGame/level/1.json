@@ -1,10 +1,10 @@
 {
-	"name": "Moving on Up",
-	"hints": ["Use ENTER to Activate"],
+	"name": "Baby Steps",
+	"hints": ["Use ENTER to Activate/Pickup/Putdown"],
 	"level": [
 		["button", "e", 3, 2, "img"],
 		["wire", "w,e", 4, 2, "img"],
-		["wire", "w,e", 5, 6, "img"],
+		["wire", "w,e", 5, 2, "img"],
 		["wire", "w,e", 6, 2, "img"],
 		["wire", "w,e", 7, 2, "img"],
 		["battery", "w", 8, 2, "img"]
@@ -17,6 +17,6 @@
 		null,
 		null
 	],
-	"startInGrid": [true, 5, 2],
+	"startInGrid": [true, 3, 2],
 	"disabledKeys": ["backspace", "w", "a", "s", "d", "e"]
 }

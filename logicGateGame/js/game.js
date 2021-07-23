@@ -5,7 +5,9 @@ var userSelect = 0, oldUS, userItem = null; //The keypress is handled based on w
 var level, currentLevel, currentHint;
 
 window.onbeforeunload = function(){
-	setCookie("currentLevel", currentLevel, 7);
+	if(currentLevel > getCookie("currentLevel")){
+		setCookie("currentLevel", currentLevel, 7);
+	}
 };
 
 function gameInit(){
