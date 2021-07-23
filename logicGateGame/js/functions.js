@@ -1,6 +1,6 @@
 function getImage(path){ //outputs an image base on the filepath given
 	var img = new Image();
-	img.src = path;
+	img.src = "../logicGateGame/"+path;
 	return img;
 }
 function getLevel(path, callback){

@@ -11,11 +11,17 @@
 <head>
 <body>
 	<canvas id="main"></canvas>
-	<script src="js/functions.js"></script>
-	<script src="js/particles.js"></script>
-	<script src="js/wires.js"></script>
-	<script src="js/gates.js"></script>
-	<script src="js/game.js"></script>
+	<script>
+		//Global Variables (WILL RESET EVERY REFRESH)
+		var canvas = document.getElementById("main");
+		var ctx = canvas.getContext("2d");
+		var canvasW, canvasH;
+	</script>
+	<script src="../logicGateGame/js/functions.js"></script>
+	<script src="../logicGateGame/js/particles.js"></script>
+	<script src="../logicGateGame/js/wires.js"></script>
+	<script src="../logicGateGame/js/gates.js"></script>
+	<script src="js/editor.js"></script>
 	<script src="js/loop.js"></script>
 </body>
 </html>
