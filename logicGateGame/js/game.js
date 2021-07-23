@@ -42,7 +42,7 @@ function loadGameLevel(obj){
 		}
 	}
 	if(level.startInGrid[0]){
-		userSelect = level.startInGrid[3] * 12 + level.startInGrid[2] + 6;
+		userSelect = level.startInGrid[2] * 12 + level.startInGrid[1] + 6;
 	}
 }
 function gameUpdate(){
