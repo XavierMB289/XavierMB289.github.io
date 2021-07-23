@@ -1,3 +1,4 @@
 TODO:
-show number of items in inventory based on given JSON value. (level.inv[3])
 fix replacing items (if item in userItem, and click on a new item...)
+Add more levels...
+add gates
