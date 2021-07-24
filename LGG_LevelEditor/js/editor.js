@@ -1,16 +1,29 @@
 //Game Variables
-var selected;
+var selected, andGate, battery, buttonSwitch, pipe, gatePipe;
 var selW, selH;
 var userSelect = 0, oldUS, userItem = null; //The keypress is handled based on what this is... userItem = [name, direction, oldCoords]
 var level; //The new level...
 
 function gameInit(){
 	selected = getImage("img/selected_slot.png");
+	andGate = getImage("img/and_gate.png");
+	battery = getImage("img/battery_empty.png");
+	buttonSwitch = getImage("img/button_off.png");
+	pipe = getImage("img/pipe.png");
 	
 	selected.onload = function(){ //allows for download and play on desktop
 		selW = selected.width;
 		selH = selected.height;
 	}
+	
+	level = {
+		"name": "Unnamed Level",
+		"hints": [],
+		"level": [],
+		"inv": [],
+		"startInGrid": [],
+		"disabledKeys": []
+	};
 }
 function gameUpdate(){
 	
@@ -30,6 +43,9 @@ function slowGameUpdate(){
 		}
 	}
 	ctx.translate(-10, -(canvasH/2-4*selW-4));
+	
+	//Drawing All the different usable items in the inventory grid
+	
 }
 document.onkeyup = function(e){
 	var letter = e.key.toLowerCase();
