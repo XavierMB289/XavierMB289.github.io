@@ -1,7 +1,7 @@
 //Game Variables
 var unselected, selected, left, right;
 var selW, selH;
-var userSelect = 0, oldUS, userItem = null; //The keypress is handled based on what this is... userItem = [name, direction, oldCoords]
+var userSelect = 0, oldUS = 0, userItem = null; //The keypress is handled based on what this is... userItem = [name, direction, oldCoords]
 var level, currentLevel, currentHint;
 
 window.onbeforeunload = function(){
@@ -23,7 +23,7 @@ function gameInit(){
 	
 	currentLevel = getCookie("currentLevel");
 	if(currentLevel == ""){
-		currentLevel = 3;
+		currentLevel = 4;
 	}else{
 		currentLevel = parseInt(currentLevel);
 	}
@@ -121,7 +121,7 @@ document.onkeyup = function(e){
 				break;
 			case "enter":
 				var temp = getItem(level, userSelect, true);
-				if(temp != null && parseInt(level.inv[temp[3]]) > 0){
+				if(temp != null && parseInt(level.inv[temp[3]][3]) > 0){
 					userItem = temp;
 					level.inv[temp[3]] -= 1; //Just to make sure it runs right
 				}//NO BREAK! WE WANT THE BACKSPACE CODE TO RUN!

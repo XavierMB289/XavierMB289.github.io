@@ -1,9 +1,11 @@
 var pipe = null;
 var gatePipe = null;
+var outputPipe = null;
 
 function wireInit(){
 	gatePipe = getImage("img/gate_pipe.png");
 	pipe = getImage("img/pipe.png");
+	outputPipe = getImage("img/pipe_output.png");
 }
 
 function drawPipes(x, y, dirs, gate = true){
@@ -25,7 +27,11 @@ function drawPipes(x, y, dirs, gate = true){
 		if(gate != false){
 			ctx.drawImage(gatePipe, -selW/2, -selH/2);
 		}else{
-			ctx.drawImage(pipe, -selW/2, -selH/2);
+			if(j == dirs.length - 1){
+				ctx.drawImage(outputPipe, -selW/2, -selH/2);
+			}else{
+				ctx.drawImage(pipe, -selW/2, -selH/2);
+			}
 		}
 		ctx.restore();
 	}

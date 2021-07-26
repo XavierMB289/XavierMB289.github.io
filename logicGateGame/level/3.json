@@ -1,5 +1,5 @@
 {
-	"name": "Baby Steps",
+	"name": "Inventory Management",
 	"hints": ["BACKSPACE will change to the Inventory and back"],
 	"level": [
 		["button", "e", 3, 2, "img"],
