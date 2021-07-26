@@ -46,7 +46,7 @@ function getItem(level, userSelect, inventory=false){
 		for(var z = 0; z < list.length; z++){
 			var item = list[z];
 			if(item != null && item[2] == x && item[3] == y){
-				return [item[0], item[1], x+","+y];
+				return [item[0], item[1], x+","+y, z];
 			}
 		}
 	}else{
@@ -54,7 +54,7 @@ function getItem(level, userSelect, inventory=false){
 		for(var z = 0; z < list.length; z++){
 			var item = list[z];
 			if(item != null && z == userSelect){
-				return [item[0], item[1], "inv"];
+				return [item[0], item[1], "inv", z];
 			}
 		}
 	}
