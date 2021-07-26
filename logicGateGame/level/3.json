@@ -1,6 +1,6 @@
 {
 	"name": "Baby Steps",
-	"hints": ["Backspace will change to the Inventory and back"],
+	"hints": ["BACKSPACE will change to the Inventory and back"],
 	"level": [
 		["button", "e", 3, 2, "img"],
 		["wire", "w,e", 4, 2, "img"],
@@ -13,7 +13,7 @@
 		null,
 		null,
 		null,
-		["wire", "w,e", 1],
+		["wire", "w,e", "inv", 1],
 		null
 	],
 	"startInGrid": [true, 3, 2],
