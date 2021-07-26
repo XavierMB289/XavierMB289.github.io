@@ -2,3 +2,5 @@ TODO:
 fix replacing items (if item in userItem, and click on a new item...)
 Add more levels...
 add gates
+Fix the selection of inventory items
+Show the selector in inventory
