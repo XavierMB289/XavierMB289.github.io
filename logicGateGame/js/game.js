@@ -99,12 +99,12 @@ function slowGameUpdate(){
 	ctx.drawImage(left, -selW*2, selW*3.5);
 	ctx.drawImage(right, selW*13, selW*3.5);
 	
-	ctx.fillText(level.name, 20, 10);
+	ctx.fillText(currentLevel+": "+level.name, 20, 10);
 	ctx.fillText(level.hints[currentHint], 10, selW*8);
 	
 	ctx.translate(-(canvasW/2-6*selW-6),-10);
 	
-	batteryUpdate(level, currentLevel);
+	currentLevel = batteryUpdate(level, currentLevel);
 }
 document.onkeyup = function(e){
 	var letter = e.key.toLowerCase();

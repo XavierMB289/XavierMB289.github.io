@@ -17,10 +17,10 @@ function batteryUpdate(level, currentLevel){
 				startBattery = false;
 				currentLevel++;
 				getLevel("level/"+currentLevel+".json", loadGameLevel);
-				setCookie("currentLevel", currentLevel, 7);
 			}
 		}
 	}
+	return currentLevel;
 }
 function drawItem(name, x, y, dirs, inventory = false){
 	if(inventory != true){ //if item is on field

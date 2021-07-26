@@ -6,14 +6,15 @@
 		["wire", "n,s", 2, 3, "img"],
 		["wire", "n,e", 2, 6, "img"],
 		["wire", "w,e", 4, 7, "img"],
+		["wire", "w,e", 9, 3, "img"],
 		["wire", "w,n", 5, 6, "img"],
 		["wire", "s,n", 5, 4, "img"],
-		["battery", "w", 5, 2, "img"]
+		["battery", "s", 5, 2, "img"]
 	],
 	"inv": [
 		["wire", "e,s", "inv", 1],
 		["wire", "n,s", "inv", 2],
-		["wire", "w,e", "inv", 2],
+		["wire", "s,n", "inv", 2],
 		null,
 		null,
 		null
