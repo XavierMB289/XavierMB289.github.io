@@ -123,7 +123,7 @@ document.onkeyup = function(e){
 				var temp = getItem(level, userSelect, true);
 				if(temp != null && parseInt(level.inv[temp[3]][3]) > 0){
 					userItem = temp;
-					level.inv[temp[3]] -= 1; //Just to make sure it runs right
+					level.inv[temp[3]][3] -= 1; //Just to make sure it runs right
 				}//NO BREAK! WE WANT THE BACKSPACE CODE TO RUN!
 			case "backspace": //change selection
 				var temp = userSelect;
