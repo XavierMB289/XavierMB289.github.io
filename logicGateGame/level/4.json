@@ -2,7 +2,7 @@
 	"name": "Inventory Management Part II",
 	"hints": ["E will change the hints...", "R will restart the level"],
 	"level": [
-		["button", "e", 3, 2, "img"],
+		["button", "w", 3, 2, "img"],
 		["wire", "n,s", 2, 3, "img"],
 		["wire", "n,e", 2, 6, "img"],
 		["wire", "w,e", 4, 7, "img"],
