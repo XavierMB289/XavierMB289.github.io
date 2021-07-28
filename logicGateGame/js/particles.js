@@ -60,11 +60,12 @@ class ParticleNode{
 				this.particles.splice(this.particles.indexOf(part), 1);
 			}
 		}
-		var tempAngle = Math.atan2(this.path[this.destination][1]*this.selW - this.y, this.path[this.destination][0]*this.selW - this.x);
+		var oldX = this.path[this.destination][0]*this.selW, oldY = this.path[this.destination][1]*this.selW;
+		var tempAngle = Math.atan2(oldY - this.y, oldX - this.x);
 		this.x += Math.cos(tempAngle) * this.speed;
 		this.y += Math.sin(tempAngle) * this.speed;
 		
-		if(Math.cos(tempAngle) < 0.2 && Math.sin(tempAngle) < 0.2){
+		if(thresh(oldX, this.x, 3) && thresh(oldY, this.y, 3)){
 			if(this.destination == this.path.length-1){
 				if(this.particles.length == 0){
 					if(this.callback != null){

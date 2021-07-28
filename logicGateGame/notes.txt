@@ -3,3 +3,4 @@ fix replacing items (if item in userItem, and click on a new item...)
 Add more levels...
 add gates
 check for "if next item goes to previously checked item, fizzle out"
+Add in logic gates

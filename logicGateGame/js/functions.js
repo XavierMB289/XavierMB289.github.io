@@ -36,6 +36,9 @@ function getCookie(cname) {
 	}
 	return "";
 }
+function thresh(pointNum, checkNum, thresh){
+	return Math.abs(pointNum - checkNum) < thresh;
+}
 function getItem(level, userSelect, inventory=false){
 	var list = null;
 	if(inventory != true){
@@ -188,6 +191,10 @@ function getPathToNext(level, userSelect){ //Similar to getNextItem but outputs 
 	var prevDir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
 	while(item[0]!="battery"&&item[0].toLowerCase().includes("gate")!=true){
 		var dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
+		if(dir != prevDir){
+			prevDir = dir;
+			ret.push([levelX+0.5, levelY+0.5]);
+		}
 		switch(dir){
 			case "n":
 				levelY--;
@@ -202,17 +209,11 @@ function getPathToNext(level, userSelect){ //Similar to getNextItem but outputs 
 				levelX--;
 				break;
 		}
-		if(dir != prevDir){
-			prevDir = dir;
-			ret.push([levelX+0.5, levelY+0.5]);
-		}
 		item = level.level.filter(x => { return x[2]==levelX&&x[3]==levelY })[0];
 		if(item==null){
 			break;
 		}
 	}
-	if(ret.length == 0){
-		ret.push([levelX+0.5, levelY+0.5]);
-	}
+	ret.push([levelX+0.5, levelY+0.5]); //NO MATTER WHAT: adds last location
 	return ret;
 }

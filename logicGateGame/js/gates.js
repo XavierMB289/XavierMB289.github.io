@@ -1,5 +1,5 @@
 var buttonSwitch, battery;
-var startBattery = false, batteryTimer = 10;
+var startBattery = false, batteryTimer = 7;
 
 function gateInit(){
 	buttonSwitch = [getImage("img/button_off.png"), getImage("img/button_on.png")];
@@ -10,7 +10,7 @@ function batteryUpdate(level, currentLevel){
 	if(startBattery != false){
 		batteryTimer--;
 		if(batteryTimer <= 0){
-			batteryTimer = 10;
+			batteryTimer = 7;
 			var item = getItemByName(level, "battery");
 			level = alterItem(level, [item[0], item[1], item[2]+","+item[3]], battery);
 			if(item[4] == battery[3]){

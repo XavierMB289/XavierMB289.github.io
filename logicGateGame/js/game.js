@@ -23,7 +23,7 @@ function gameInit(){
 	
 	currentLevel = getCookie("currentLevel");
 	if(currentLevel == ""){
-		currentLevel = 4;
+		currentLevel = 2;
 	}else{
 		currentLevel = parseInt(currentLevel);
 	}
@@ -78,7 +78,6 @@ function slowGameUpdate(){
 	ctx.translate(-(canvasW/2-3*selW-3),-(canvasH-selH-10));
 	
 	ctx.translate(canvasW/2-6*selW-6,10);
-	nodeCycle(); //for particles
 	for(var i = 0; i < level.level.length; i++){
 		var x = level.level[i][2];
 		var y = level.level[i][3];
@@ -95,6 +94,8 @@ function slowGameUpdate(){
 			drawItem(userItem[0], x, y, userItem[1]);
 		}
 	}
+	
+	nodeCycle(); //for particles
 	
 	ctx.drawImage(left, -selW*2, selW*3.5);
 	ctx.drawImage(right, selW*13, selW*3.5);
@@ -168,7 +169,7 @@ document.onkeyup = function(e){
 						temp = userSelect - 6;
 						var x = temp % 12;
 						var y = Math.floor(temp/12);
-						addNode(x+.5, y+.5, selW, 5, getImage("img/power.png"), getPathToNext(level, userSelect), function(){ if(next[0]=="battery"){startBattery = true;} });
+						addNode(x+.5, y+.5, selW, 6, getImage("img/power.png"), getPathToNext(level, userSelect), function(){ if(next != null && next[0]=="battery"){startBattery = true;} });
 					}
 				}else if(temp == null){
 					if(userItem != null){
