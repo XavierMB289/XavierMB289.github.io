@@ -82,7 +82,7 @@ function getItemImage(level, x, y){
 	for(var z = 0; z < list.length; z++){
 		var item = list[z];
 		if(item[2] == x && item[3] == y){
-			return item[4];
+			return item[5];
 		}
 	}
 	return null;
@@ -142,12 +142,12 @@ function alterItem(level, userItem, newImages){
 					if(newImages[j] == level.level[i][4] && !passed && j != newImages.length-1){ //That way it can't "pass" the last image
 						passed = true;
 					}else if(passed != false){
-						level.level[i][4] = newImages[j];
+						level.level[i][5] = newImages[j];
 						return level;
 					}
 				}
 				if(passed != true){
-					level.level[i][4] = newImages[0];
+					level.level[i][5] = newImages[0];
 				}
 			}
 		}

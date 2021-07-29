@@ -38,10 +38,10 @@ function loadGameLevel(obj){
 		var name = level.level[i][0];
 		switch(name){ //Item name
 			case "button":
-				level.level[i][4] = buttonSwitch[0];
+				level.level[i][5] = buttonSwitch[0];
 				break;
 			case "battery":
-				level.level[i][4] = battery[0];
+				level.level[i][5] = battery[0];
 				break;
 		}
 	}

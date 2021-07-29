@@ -2,12 +2,12 @@
 	"name": "Baby Steps",
 	"hints": ["Use ENTER to Activate/Pickup/Putdown"],
 	"level": [
-		["button", "e", 3, 2, "img"],
-		["wire", "w,e", 4, 2],
-		["wire", "w,e", 5, 2],
-		["wire", "w,e", 6, 2],
-		["wire", "w,e", 7, 2],
-		["battery", "w", 8, 2, "img"]
+		["button", "e", 3, 2, false, "img"],
+		["wire", "w,e", 4, 2, false],
+		["wire", "w,e", 5, 2, false],
+		["wire", "w,e", 6, 2, false],
+		["wire", "w,e", 7, 2, false],
+		["battery", "w", 8, 2, false, "img"]
 	],
 	"inv": [
 		null,

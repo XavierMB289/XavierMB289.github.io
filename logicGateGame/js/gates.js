@@ -26,7 +26,7 @@ class Gate{
 	input1 = null;
 	input2 = null;
 	
-	function setInputOne(input){
+	setInputOne(input){
 		input1 = input;
 	}
 }

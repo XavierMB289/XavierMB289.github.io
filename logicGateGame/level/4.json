@@ -2,14 +2,14 @@
 	"name": "Inventory Management Part II",
 	"hints": ["E will change the hints...", "R will restart the level"],
 	"level": [
-		["button", "w", 3, 2, "img"],
-		["wire", "n,s", 2, 3],
-		["wire", "n,e", 2, 6],
-		["wire", "w,e", 4, 7],
-		["wire", "w,e", 9, 3],
-		["wire", "w,n", 5, 6],
-		["wire", "s,n", 5, 4],
-		["battery", "s", 5, 2, "img"]
+		["button", "w", 3, 2, false, "img"],
+		["wire", "n,s", 2, 3, false],
+		["wire", "n,e", 2, 6, false],
+		["wire", "w,e", 4, 7, false],
+		["wire", "w,e", 9, 3, false],
+		["wire", "w,n", 5, 6, false],
+		["wire", "s,n", 5, 4, false],
+		["battery", "s", 5, 2, false, "img"]
 	],
 	"inv": [
 		["wire", "e,s", "inv", 1],
