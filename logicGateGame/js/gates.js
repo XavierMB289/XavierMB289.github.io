@@ -22,6 +22,14 @@ function batteryUpdate(level, currentLevel){
 	}
 	return currentLevel;
 }
+class Gate{
+	input1 = null;
+	input2 = null;
+	
+	function setInputOne(input){
+		input1 = input;
+	}
+}
 function drawItem(name, x, y, dirs, inventory = false){
 	if(inventory != true){ //if item is on field
 		switch(name){ //Item name

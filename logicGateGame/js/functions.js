@@ -159,23 +159,37 @@ function getNextItem(level, userSelect){
 	var levelX = temp % 12;
 	var levelY = Math.floor(temp/12);
 	var item = level.level.filter(x => { return x[2]==levelX&&x[3]==levelY })[0];
+	var prevDir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
 	while(item[0]!="battery"&&item[0].toLowerCase().includes("gate")!=true){
 		var dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
 		switch(dir){
 			case "n":
+				if(prevDir=="s"){
+					return item;
+				}
 				levelY--;
 				break;
 			case "s":
+				if(prevDir=="n"){
+					return item;
+				}
 				levelY++;
 				break;
 			case "e":
+				if(prevDir=="w"){
+					return item;
+				}
 				levelX++;
 				break;
 			case "w":
+				if(prevDir=="e"){
+					return item;
+				}
 				levelX--;
 				break;
 		}
 		item = level.level.filter(x => { return x[2]==levelX&&x[3]==levelY })[0];
+		prevDir = dir;
 		if(item==null){
 			return null;
 		}
@@ -197,15 +211,27 @@ function getPathToNext(level, userSelect){ //Similar to getNextItem but outputs 
 		}
 		switch(dir){
 			case "n":
+				if(prevDir=="s"){
+					return item;
+				}
 				levelY--;
 				break;
 			case "s":
+				if(prevDir=="n"){
+					return item;
+				}
 				levelY++;
 				break;
 			case "e":
+				if(prevDir=="w"){
+					return item;
+				}
 				levelX++;
 				break;
 			case "w":
+				if(prevDir=="e"){
+					return item;
+				}
 				levelX--;
 				break;
 		}

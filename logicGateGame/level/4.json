@@ -3,12 +3,12 @@
 	"hints": ["E will change the hints...", "R will restart the level"],
 	"level": [
 		["button", "w", 3, 2, "img"],
-		["wire", "n,s", 2, 3, "img"],
-		["wire", "n,e", 2, 6, "img"],
-		["wire", "w,e", 4, 7, "img"],
-		["wire", "w,e", 9, 3, "img"],
-		["wire", "w,n", 5, 6, "img"],
-		["wire", "s,n", 5, 4, "img"],
+		["wire", "n,s", 2, 3],
+		["wire", "n,e", 2, 6],
+		["wire", "w,e", 4, 7],
+		["wire", "w,e", 9, 3],
+		["wire", "w,n", 5, 6],
+		["wire", "s,n", 5, 4],
 		["battery", "s", 5, 2, "img"]
 	],
 	"inv": [
