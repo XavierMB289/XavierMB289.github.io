@@ -23,11 +23,56 @@ function batteryUpdate(level, currentLevel){
 	return currentLevel;
 }
 class Gate{
-	input1 = null;
-	input2 = null;
+	selW = null;
+	dirs = null;
+	coords = null;
+	inputs = null; //Binary Algebra
+	inputCoords = null; //Where to look for the Energized tag
+	gateType = null;
 	
-	setInputOne(input){
-		input1 = input;
+	constructor(selW, dirs, coords, gateType){
+		this.selW = selW;
+		this.dirs = dirs.length > 1 ? dirs.split(",") : [dirs];
+		this.coords = coords;
+		this.inputs = [0, 0];
+		this.inputCoords = [[0,0], [0,0]];
+		this.gateType = gateType;
+		for(let i = 0; i < this.dirs.length; i++){
+			switch(this.dirs[i]){
+				case "n":
+					inputCoords[i] = [coords[0], coords[1]-1];
+					break;
+				case "s":
+					inputCoords[i] = [coords[0], coords[1]+1];
+					break;
+				case "e":
+					inputCoords[i] = [coords[0]+1, coords[1]];
+					break;
+				case "w":
+					inputCoords[i] = [coords[0]-1, coords[1]];
+					break;
+			}
+		}
+	}
+	#getInputs(level){
+		var list = level.level;
+		inputs[0] = (list.filter(x => { return x[2]==inputCoords[0][0]&&x[3]==inputCoords[0][1] })[0])[4];
+		inputs[1] = (list.filter(x => { return x[2]==inputCoords[1][0]&&x[3]==inputCoords[1][1] })[0])[4];
+	}
+	#genOutput(level){
+		var userSelect = coords[0]+(coords[1]*12)+6;
+		var next = getNextItem(level, userSelect);
+		addNode(coords[0]+.5, coords[1]+.5, this.selW, getImage("img/power.png"), getPathToNext(level, userSelect), function(){ if(next != null && next[0]=="battery"){startBattery = true;} });
+	}
+	solveGate(level){
+		this.#getInputs(level);
+		switch(gateType){
+			case "and":
+				if(inputs[0] * inputs[1] == 1){
+					this.#genOutput(level);
+				}
+				break;
+		}
 	}
 }
 function drawItem(name, x, y, dirs, inventory = false){

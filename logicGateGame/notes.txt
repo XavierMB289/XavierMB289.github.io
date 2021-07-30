@@ -1,3 +1,6 @@
 TODO:
 Add more levels...
 add gates
+finish level 5
+test the AND GATE!!!
+Add gate outputs... (similar to the wires)

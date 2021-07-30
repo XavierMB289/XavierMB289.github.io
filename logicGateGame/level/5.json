@@ -1,0 +1,22 @@
+{
+	"name": "A new Foe has appeared",
+	"hints": ["E will change the hints...", "R will restart the level"],
+	"level": [
+		["button", "e", 3, 2, false, "img"],
+		["wire", "w,e", 4, 2, false],
+		["button", "e", 3, 5, false, "img"],
+		["wire", "n,s", 2, 3, false],
+		["wire", "n,e", 2, 6, false],
+		["battery", "s", 5, 2, false, "img"]
+	],
+	"inv": [
+		["wire", "e,s", "inv", 1],
+		["wire", "n,s", "inv", 2],
+		["wire", "s,n", "inv", 2],
+		null,
+		null,
+		null
+	],
+	"startInGrid": [false, 0, 0],
+	"disabledKeys": ["backspace"]
+}

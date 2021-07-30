@@ -19,7 +19,7 @@ class ParticleNode{
 	x = null;
 	y = null;
 	selW = null;
-	speed = null;
+	speed = 6;
 	destination = 0;
 	path = [];
 	particles = [];
@@ -27,7 +27,7 @@ class ParticleNode{
 	spawnParticles = true;
 	callback = null;
 	
-	constructor(startX, startY, selW, spd, img, path){ //startX and startY are gridbased...
+	constructor(startX, startY, selW, img, path){ //startX and startY are gridbased...
 		this.x = startX*selW;
 		this.y = startY*selW;
 		this.selW = selW;
