@@ -82,9 +82,10 @@ function slowGameUpdate(){
 	
 	ctx.translate(canvasW/2-6*selW-6,10);
 	for(var i = 0; i < level.level.length; i++){
-		var x = level.level[i][2];
-		var y = level.level[i][3];
-		var dirs = level.level[i][1];
+		var item = level.level[i];
+		var dirs = item[1];
+		var x = item[2];
+		var y = item[3];
 		
 		drawItem(level.level[i][0], x, y, dirs);
 	}
@@ -110,6 +111,7 @@ function slowGameUpdate(){
 	
 	currentLevel = batteryUpdate(level, currentLevel);
 }
+
 document.onkeyup = function(e){
 	var letter = e.key.toLowerCase();
 	if(level.disabledKeys.includes(letter)){
@@ -167,12 +169,22 @@ document.onkeyup = function(e){
 					level = removeItem(level, x, y);
 				}else if(temp != null){
 					if(temp[0] == "button"){
+						level.level[temp[3]][4] = true;
 						level = alterItem(level, temp, buttonSwitch);
 						var next = getNextItem(level, userSelect);
 						temp = userSelect - 6;
 						var x = temp % 12;
 						var y = Math.floor(temp/12);
-						addNode(x+.5, y+.5, selW, getImage("img/power.png"), getPathToNext(level, userSelect), function(){ if(next != null && next[0]=="battery"){startBattery = true;} });
+						addNode(x+.5, y+.5, selW, getImage("img/power.png"), getPathToNext(level, userSelect), function(){
+							if(next != null){
+								if(next[0]=="battery"){
+									startBattery = true;
+								}
+								if(next[0].toLowerCase().contains("gate")){
+									next[5].solveGate(level);
+								}
+							} 
+						});
 					}
 				}else if(temp == null){
 					if(userItem != null){

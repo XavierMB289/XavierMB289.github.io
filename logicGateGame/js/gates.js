@@ -1,9 +1,10 @@
-var buttonSwitch, battery;
+var buttonSwitch, battery, andGate;
 var startBattery = false, batteryTimer = 7;
 
 function gateInit(){
 	buttonSwitch = [getImage("img/button_off.png"), getImage("img/button_on.png")];
 	battery = [getImage("img/battery_empty.png"), getImage("img/battery_close.png"), getImage("img/battery_half.png"), getImage("img/battery_full.png")];
+	andGate = getImage("img/and_gate.png");
 }
 
 function batteryUpdate(level, currentLevel){
@@ -40,16 +41,16 @@ class Gate{
 		for(let i = 0; i < this.dirs.length; i++){
 			switch(this.dirs[i]){
 				case "n":
-					inputCoords[i] = [coords[0], coords[1]-1];
+					this.inputCoords[i] = [coords[0], coords[1]-1];
 					break;
 				case "s":
-					inputCoords[i] = [coords[0], coords[1]+1];
+					this.inputCoords[i] = [coords[0], coords[1]+1];
 					break;
 				case "e":
-					inputCoords[i] = [coords[0]+1, coords[1]];
+					this.inputCoords[i] = [coords[0]+1, coords[1]];
 					break;
 				case "w":
-					inputCoords[i] = [coords[0]-1, coords[1]];
+					this.inputCoords[i] = [coords[0]-1, coords[1]];
 					break;
 			}
 		}
@@ -102,6 +103,10 @@ function drawItem(name, x, y, dirs, inventory = false){
 	switch(name){
 		case "wire":
 			drawPipes(x, y, dirs, false);
+			break;
+		case "andGate":
+			ctx.drawImage(andGate, x*selW+x, y*selH+y);
+			drawPipes(x, y, dirs);
 			break;
 	}
 }

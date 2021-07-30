@@ -243,3 +243,6 @@ function getPathToNext(level, userSelect){ //Similar to getNextItem but outputs 
 	ret.push([levelX+0.5, levelY+0.5]); //NO MATTER WHAT: adds last location
 	return ret;
 }
+function energize(level, startItem){
+	
+}

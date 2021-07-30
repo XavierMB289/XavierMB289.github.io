@@ -31,7 +31,6 @@ class ParticleNode{
 		this.x = startX*selW;
 		this.y = startY*selW;
 		this.selW = selW;
-		this.speed = spd;
 		this.partImage = img;
 		this.path = path;
 		return this;
