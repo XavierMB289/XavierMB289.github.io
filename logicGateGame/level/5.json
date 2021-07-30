@@ -21,6 +21,6 @@
 		null,
 		null
 	],
-	"startInGrid": [false, 0, 0],
+	"startInGrid": [true, 3, 2],
 	"disabledKeys": ["backspace"]
 }
