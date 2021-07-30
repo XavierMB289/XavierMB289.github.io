@@ -35,8 +35,8 @@ function loadGameLevel(obj){
 	level = obj;
 	//setting up the images for the level... ALSO SETTING UP THE GATES!!!
 	for(var i = 0; i < level.level.length; i++){
-		var name = level.level[i][0];
-		switch(name){ //Item name
+		var item = level.level[i];
+		switch(item[0]){ //Item name
 			case "button":
 				level.level[i][5] = buttonSwitch[0];
 				break;
@@ -44,7 +44,7 @@ function loadGameLevel(obj){
 				level.level[i][5] = battery[0];
 				break;
 			case "andGate":
-				level.level[i]
+				level.level[i][5] = new Gate(selW, item[1], [item[2], item[3]], "and");
 				break;
 		}
 	}
