@@ -86,8 +86,13 @@ function slowGameUpdate(){
 		var dirs = item[1];
 		var x = item[2];
 		var y = item[3];
-		
 		drawItem(level.level[i][0], x, y, dirs);
+		ctx.fillText(level.level[i][4], x*selW+x, y*selH+y);
+		if(level.level[i][0] == "battery" && level.level[i][4]){
+			var temp = batteryUpdate(level, currentLevel);
+			level = temp[0];
+			currentLevel = temp[1];
+		}
 	}
 	if(userSelect >= 6){
 		var temp = userSelect - 6;
@@ -108,8 +113,6 @@ function slowGameUpdate(){
 	ctx.fillText(level.hints[currentHint], 10, selW*8);
 	
 	ctx.translate(-(canvasW/2-6*selW-6),-10);
-	
-	currentLevel = batteryUpdate(level, currentLevel);
 }
 
 document.onkeyup = function(e){
@@ -156,7 +159,7 @@ document.onkeyup = function(e){
 				userSelect += (temp + 1) % 12 != 0 ? 1 : 0; 
 				break;
 			case "enter":
-				var temp = getItem(level, userSelect);
+				var temp = getItemByUserSelect(level, userSelect);
 				if(temp != null && (temp[2] == "inv" || temp[0] == "wire")){ //if you're on an item, go ahead and remove it
 					if(userItem != null){
 						level = returnItem(level, userItem);
@@ -169,7 +172,7 @@ document.onkeyup = function(e){
 					level = removeItem(level, x, y);
 				}else if(temp != null){
 					if(temp[0] == "button"){
-						level.level[temp[3]][4] = true;
+						level = energize(level, temp);
 						level = alterItem(level, temp, buttonSwitch);
 						var next = getNextItem(level, userSelect);
 						temp = userSelect - 6;
@@ -180,8 +183,8 @@ document.onkeyup = function(e){
 								if(next[0]=="battery"){
 									startBattery = true;
 								}
-								if(next[0].toLowerCase().contains("gate")){
-									next[5].solveGate(level);
+								if(next[0].toLowerCase().includes("gate")){
+									level = next[5].solveGate(level);
 								}
 							} 
 						});

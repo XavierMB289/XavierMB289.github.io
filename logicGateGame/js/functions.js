@@ -39,53 +39,32 @@ function getCookie(cname) {
 function thresh(pointNum, checkNum, thresh){
 	return Math.abs(pointNum - checkNum) < thresh;
 }
-function getItem(level, userSelect, inventory=false){
+function getItemByCoords(level, x, y, inventory=false){
 	var list = null;
 	if(inventory != true){
 		list = level.level;
-		var temp = userSelect - 6;
-		var x = (temp % 12);
-		var y = Math.floor(temp/12);
-		for(var z = 0; z < list.length; z++){
-			var item = list[z];
-			if(item != null && item[2] == x && item[3] == y){
-				return [item[0], item[1], x+","+y, z];
-			}
-		}
+		return list.filter(z => { return z[2]==x&&z[3]==y })[0];
 	}else{
 		list = level.inv;
-		for(var z = 0; z < list.length; z++){
-			var item = list[z];
-			if(item != null && z == userSelect){
-				return [item[0], item[1], "inv", z];
-			}
-		}
+		return list.filter(z => { return z!=null&&z==x })[0];
 	}
 	return null;
 }
-function getItemByName(level, name){
-	for(var i = 0; i < level.level.length; i++){
-		var item = level.level[i];
-		if(item[0] == name){
-			return item;
-		}
-	}
-	for(var i = 0; i < level.inv.length; i++){
-		var item = level.inv[i];
-		if(item[0] == name){
-			return item;
-		}
+function getItemByUserSelect(level, userSelect, inventory=false){
+	var temp = userSelect - 6;
+	var x = (temp % 12);
+	var y = Math.floor(temp/12);
+	return getItemByCoords(level, x, y, inventory);
+}
+function getItemByName(level, name, inventory=false){
+	if(inventory != true){
+		return level.level.filter(z => { return z[0]==name; })[0];
+	}else{
+		return level.inv.filter(z => { return z[0]==name; })[0];
 	}
 }
 function getItemImage(level, x, y){
-	var list = level.level;
-	for(var z = 0; z < list.length; z++){
-		var item = list[z];
-		if(item[2] == x && item[3] == y){
-			return item[5];
-		}
-	}
-	return null;
+	return (level.level.filter(z => { return z[2]==x&&z[3]==y; })[0])[5];
 }
 function removeItem(level, x, y, inventory=false){
 	var list = null;
@@ -110,7 +89,7 @@ function removeItem(level, x, y, inventory=false){
 	}
 }
 function addItem(level, userItem, x, y){
-	var temp = [userItem[0], userItem[1], x, y];
+	var temp = [userItem[0], userItem[1], x, y, false, "justInCase"];
 	level.level.push(temp);
 	return level;
 }
@@ -139,7 +118,7 @@ function alterItem(level, userItem, newImages){
 			if(level.level[i][2] == parseInt(coords[0]) && (userItem[2].length == 1 || level.level[i][3] == parseInt(coords[1]))){
 				var passed = false;
 				for(var j = 0; j < newImages.length; j++){
-					if(newImages[j] == level.level[i][4] && !passed && j != newImages.length-1){ //That way it can't "pass" the last image
+					if(newImages[j] == level.level[i][5] && !passed && j != newImages.length-1){ //That way it can't "pass" the last image
 						passed = true;
 					}else if(passed != false){
 						level.level[i][5] = newImages[j];
@@ -158,9 +137,9 @@ function getNextItem(level, userSelect){
 	var temp = userSelect - 6;
 	var levelX = temp % 12;
 	var levelY = Math.floor(temp/12);
-	var item = level.level.filter(x => { return x[2]==levelX&&x[3]==levelY })[0];
+	var item = getItem(level, userSelect);
 	var prevDir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
-	while(item[0]!="battery"&&item[0].toLowerCase().includes("gate")!=true){
+	do{
 		var dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
 		switch(dir){
 			case "n":
@@ -193,7 +172,7 @@ function getNextItem(level, userSelect){
 		if(item==null){
 			return null;
 		}
-	}
+	}while(item[0]!="battery"&&item[0].toLowerCase().includes("gate")!=true);
 	return item;
 }
 function getPathToNext(level, userSelect){ //Similar to getNextItem but outputs the 2d array for particles
@@ -203,7 +182,7 @@ function getPathToNext(level, userSelect){ //Similar to getNextItem but outputs 
 	var levelY = Math.floor(temp/12);
 	var item = level.level.filter(x => { return x[2]==levelX&&x[3]==levelY })[0];
 	var prevDir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
-	while(item[0]!="battery"&&item[0].toLowerCase().includes("gate")!=true){
+	do{
 		var dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
 		if(dir != prevDir){
 			prevDir = dir;
@@ -239,10 +218,49 @@ function getPathToNext(level, userSelect){ //Similar to getNextItem but outputs 
 		if(item==null){
 			break;
 		}
-	}
+	}while(item[0]!="battery"&&item[0].toLowerCase().includes("gate")!=true);
 	ret.push([levelX+0.5, levelY+0.5]); //NO MATTER WHAT: adds last location
 	return ret;
 }
 function energize(level, startItem){
-	
+	var levelX = startItem[2];
+	var levelY = startItem[3];
+	var item = startItem;
+	var prevDir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
+	do{
+		var dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
+		getItem(level, levelX, levelY)[3][4] = true;
+		switch(dir){
+			case "n":
+				if(prevDir=="s"){
+					return item;
+				}
+				levelY--;
+				break;
+			case "s":
+				if(prevDir=="n"){
+					return item;
+				}
+				levelY++;
+				break;
+			case "e":
+				if(prevDir=="w"){
+					return item;
+				}
+				levelX++;
+				break;
+			case "w":
+				if(prevDir=="e"){
+					return item;
+				}
+				levelX--;
+				break;
+		}
+		item = level.level.filter(x => { return x[2]==levelX&&x[3]==levelY })[0];
+		prevDir = dir;
+		if(item==null){
+			break;
+		}
+	}while(item[0] == "wire");
+	return level;
 }
