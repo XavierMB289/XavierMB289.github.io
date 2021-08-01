@@ -1,5 +1,6 @@
 var buttonSwitch, battery, andGate;
 var startBattery = false, batteryTimer = 7;
+var batteryItem = null, prevItemIndex = null;
 
 function gateInit(){
 	buttonSwitch = [getImage("img/button_off.png"), getImage("img/button_on.png")];
@@ -8,15 +9,21 @@ function gateInit(){
 }
 
 function batteryUpdate(level, currentLevel){
-	batteryTimer--;
-	if(batteryTimer <= 0){
-		batteryTimer = 7;
-		var item = getItemByName(level, "battery");
-		level = alterItem(level, [item[0], item[1], item[2]+","+item[3]], battery);
-		if(item[4] == battery[3]){
-			startBattery = false;
-			currentLevel++;
-			getLevel("level/"+currentLevel+".json", loadGameLevel);
+	if(prevItemIndex == null){
+		batteryItem = getItemByName(level, "battery");
+		prevItemIndex = getPrevItemIndex(level, batteryItem);
+	}
+	if(startBattery){
+		batteryTimer--;
+		if(batteryTimer <= 0){
+			batteryTimer = 7;
+			level = alterItem(level, [batteryItem[0], batteryItem[1], batteryItem[2]+","+batteryItem[3]], battery);
+			batteryItem = getItemByName(level, "battery");
+			if(batteryItem[4] == battery[3]){
+				startBattery = false;
+				currentLevel++;
+				getLevel("level/"+currentLevel+".json", loadGameLevel);
+			}
 		}
 	}
 	return [level, currentLevel];
@@ -72,7 +79,7 @@ class Gate{
 			} 
 		});
 		if(next[0].toLowerCase().includes("gate") != true){
-			return energize(level, getItem(level, userSelect));
+			return energize(level, getItem(level, this.coords[0], this.coords[1]));
 		}
 	}
 	solveGate(level){

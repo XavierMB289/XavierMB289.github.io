@@ -4,3 +4,4 @@ add gates
 Add gate outputs... (similar to the wires)
 Fix energize so it actually works with the update functions methods
 Change the game.js file to reflect the changes in the functions.js file
+Fix the problem with the gate not showing particles

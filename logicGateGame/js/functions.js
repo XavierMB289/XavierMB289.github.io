@@ -39,7 +39,7 @@ function getCookie(cname) {
 function thresh(pointNum, checkNum, thresh){
 	return Math.abs(pointNum - checkNum) < thresh;
 }
-function getItemByCoords(level, x, y, inventory=false){
+function getItem(level, x, y, inventory=false){
 	var list = null;
 	if(inventory != true){
 		list = level.level;
@@ -50,11 +50,26 @@ function getItemByCoords(level, x, y, inventory=false){
 	}
 	return null;
 }
-function getItemByUserSelect(level, userSelect, inventory=false){
-	var temp = userSelect - 6;
-	var x = (temp % 12);
-	var y = Math.floor(temp/12);
-	return getItemByCoords(level, x, y, inventory);
+function getItemIndex(level, x, y, inventory=false){
+	var list = null;
+	if(inventory != true){
+		list = level.level;
+		for(var i = 0; i < list.length; i++){
+			var z = list[i];
+			if(z[2]==x&&z[3]==y){
+				return i;
+			}
+		}
+	}else{
+		list = level.inv;
+		for(var i = 0; i < list.length; i++){
+			var z = list[i];
+			if(z!=null&&z==x){
+				return i;
+			}
+		}
+	}
+	return null;
 }
 function getItemByName(level, name, inventory=false){
 	if(inventory != true){
@@ -137,7 +152,7 @@ function getNextItem(level, userSelect){
 	var temp = userSelect - 6;
 	var levelX = temp % 12;
 	var levelY = Math.floor(temp/12);
-	var item = getItem(level, userSelect);
+	var item = getItem(level, levelX, levelY);
 	var prevDir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
 	do{
 		var dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
@@ -167,7 +182,7 @@ function getNextItem(level, userSelect){
 				levelX--;
 				break;
 		}
-		item = level.level.filter(x => { return x[2]==levelX&&x[3]==levelY })[0];
+		item = getItem(level, levelX, levelY);
 		prevDir = dir;
 		if(item==null){
 			return null;
@@ -180,7 +195,7 @@ function getPathToNext(level, userSelect){ //Similar to getNextItem but outputs 
 	var temp = userSelect - 6;
 	var levelX = temp % 12;
 	var levelY = Math.floor(temp/12);
-	var item = level.level.filter(x => { return x[2]==levelX&&x[3]==levelY })[0];
+	var item = getItem(level, levelX, levelY);
 	var prevDir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
 	do{
 		var dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
@@ -214,7 +229,7 @@ function getPathToNext(level, userSelect){ //Similar to getNextItem but outputs 
 				levelX--;
 				break;
 		}
-		item = level.level.filter(x => { return x[2]==levelX&&x[3]==levelY })[0];
+		item = getItem(level, levelX, levelY);
 		if(item==null){
 			break;
 		}
@@ -229,7 +244,7 @@ function energize(level, startItem){
 	var prevDir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
 	do{
 		var dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
-		getItem(level, levelX, levelY)[3][4] = true;
+		level.level[getItemIndex(level, levelX, levelY)][4] = true;
 		switch(dir){
 			case "n":
 				if(prevDir=="s"){
@@ -256,11 +271,51 @@ function energize(level, startItem){
 				levelX--;
 				break;
 		}
-		item = level.level.filter(x => { return x[2]==levelX&&x[3]==levelY })[0];
+		item = getItem(level, levelX, levelY);
 		prevDir = dir;
 		if(item==null){
 			break;
 		}
 	}while(item[0] == "wire");
 	return level;
+}
+function getPrevItem(level, item){ //WARNING! ONLY RETURNS ONE PREVIOUS ITEM!
+	var dir = item[1].length > 1 ? item[1][0] : item[1];
+	var x = item[2];
+	var y = item[3];
+	switch(dir){
+		case "n":
+			y--;
+			break;
+		case "s":
+			y++;
+			break;
+		case "e":
+			x++;
+			break;
+		case "w":
+			x--;
+			break;
+	}
+	return getItem(level, x, y);
+}
+function getPrevItemIndex(level, item){
+	var dir = item[1].length > 1 ? item[1][0] : item[1];
+	var x = item[2];
+	var y = item[3];
+	switch(dir){
+		case "n":
+			y--;
+			break;
+		case "s":
+			y++;
+			break;
+		case "e":
+			x++;
+			break;
+		case "w":
+			x--;
+			break;
+	}
+	return getItemIndex(level, x, y);
 }

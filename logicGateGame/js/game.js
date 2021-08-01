@@ -113,10 +113,16 @@ function slowGameUpdate(){
 	ctx.fillText(level.hints[currentHint], 10, selW*8);
 	
 	ctx.translate(-(canvasW/2-6*selW-6),-10);
+	
+	var temp = batteryUpdate(level, currentLevel);
+	level = temp[0];
+	currentLevel = temp[1];
 }
 
 document.onkeyup = function(e){
 	var letter = e.key.toLowerCase();
+	var x = (userSelect-6) % 12;
+	var y = Math.floor((userSelect-6)/12);
 	if(level.disabledKeys.includes(letter)){
 		return;
 	}
@@ -159,25 +165,19 @@ document.onkeyup = function(e){
 				userSelect += (temp + 1) % 12 != 0 ? 1 : 0; 
 				break;
 			case "enter":
-				var temp = getItemByUserSelect(level, userSelect);
+				var temp = getItem(level, x, y);
 				if(temp != null && (temp[2] == "inv" || temp[0] == "wire")){ //if you're on an item, go ahead and remove it
 					if(userItem != null){
 						level = returnItem(level, userItem);
 						userItem = null;
 					}
 					userItem = temp;
-					temp = userSelect - 6;
-					var x = temp % 12;
-					var y = Math.floor(temp/12);
 					level = removeItem(level, x, y);
 				}else if(temp != null){
 					if(temp[0] == "button"){
 						level = energize(level, temp);
 						level = alterItem(level, temp, buttonSwitch);
 						var next = getNextItem(level, userSelect);
-						temp = userSelect - 6;
-						var x = temp % 12;
-						var y = Math.floor(temp/12);
 						addNode(x+.5, y+.5, selW, getImage("img/power.png"), getPathToNext(level, userSelect), function(){
 							if(next != null){
 								if(next[0]=="battery"){
@@ -191,9 +191,6 @@ document.onkeyup = function(e){
 					}
 				}else if(temp == null){
 					if(userItem != null){
-						temp = userSelect - 6;
-						var x = temp % 12;
-						var y = Math.floor(temp/12);
 						level = addItem(level, userItem, x, y);
 						userItem = null;
 					}
