@@ -1,6 +1,6 @@
 var buttonSwitch, battery, andGate;
 var startBattery = false, batteryTimer = 7;
-var batteryItem = null, prevItemIndex = null;
+var batteryItem = null;
 
 function gateInit(){
 	buttonSwitch = [getImage("img/button_off.png"), getImage("img/button_on.png")];
@@ -9,9 +9,8 @@ function gateInit(){
 }
 
 function batteryUpdate(level, currentLevel){
-	if(prevItemIndex == null){
+	if(batteryItem == null){
 		batteryItem = getItemByName(level, "battery");
-		prevItemIndex = getPrevItemIndex(level, batteryItem);
 	}
 	if(startBattery){
 		batteryTimer--;
@@ -19,7 +18,7 @@ function batteryUpdate(level, currentLevel){
 			batteryTimer = 7;
 			level = alterItem(level, [batteryItem[0], batteryItem[1], batteryItem[2]+","+batteryItem[3]], battery);
 			batteryItem = getItemByName(level, "battery");
-			if(batteryItem[4] == battery[3]){
+			if(batteryItem[5] == battery[3]){
 				startBattery = false;
 				currentLevel++;
 				getLevel("level/"+currentLevel+".json", loadGameLevel);
@@ -36,8 +35,7 @@ class Gate{
 	inputCoords = null; //Where to look for the Energized tag
 	gateType = null;
 	
-	constructor(selW, dirs, coords, gateType){
-		this.selW = selW;
+	constructor(dirs, coords, gateType){
 		this.dirs = dirs.length > 1 ? dirs.split(",") : [dirs];
 		this.coords = coords;
 		this.inputs = [0, 0];
@@ -65,16 +63,16 @@ class Gate{
 		this.inputs[0] = (list.filter(x => { return x[2]==this.inputCoords[0][0]&&x[3]==this.inputCoords[0][1] })[0])[4];
 		this.inputs[1] = (list.filter(x => { return x[2]==this.inputCoords[1][0]&&x[3]==this.inputCoords[1][1] })[0])[4];
 	}
-	#genOutput(level){
+	#genOutput(level, selW){
 		var userSelect = this.coords[0]+(this.coords[1]*12)+6;
 		var next = getNextItem(level, userSelect);
-		addNode(this.coords[0]+.5, this.coords[1]+.5, this.selW, getImage("img/power.png"), getPathToNext(level, userSelect), function(){
+		addNode(this.coords[0]+.5, this.coords[1]+.5, selW, getImage("img/power.png"), getPathToNext(level, userSelect), function(){
 			if(next != null){
 				if(next[0]=="battery"){
 					startBattery = true;
 				}
 				if(next[0].toLowerCase().includes("gate")){
-					return next[5].solveGate(level);
+					return next[5].solveGate(level, selW);
 				}
 			} 
 		});
@@ -82,12 +80,15 @@ class Gate{
 			return energize(level, getItem(level, this.coords[0], this.coords[1]));
 		}
 	}
-	solveGate(level){
+	solveGate(level, selW){
 		this.#getInputs(level);
+		if(nodes.length > 1){ //Make sure there is only 1?
+			return level;
+		}
 		switch(this.gateType){
 			case "and":
 				if(this.inputs[0] * this.inputs[1] == 1){
-					return this.#genOutput(level);
+					return this.#genOutput(level, selW);
 				}
 				break;
 		}

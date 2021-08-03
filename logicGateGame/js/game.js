@@ -23,7 +23,7 @@ function gameInit(){
 	
 	currentLevel = getCookie("currentLevel");
 	if(currentLevel == ""){
-		currentLevel = 5;
+		currentLevel = 1;
 	}else{
 		currentLevel = parseInt(currentLevel);
 	}
@@ -44,7 +44,7 @@ function loadGameLevel(obj){
 				level.level[i][5] = battery[0];
 				break;
 			case "andGate":
-				level.level[i][5] = new Gate(selW, item[1], [item[2], item[3]], "and");
+				level.level[i][5] = new Gate(item[1], [item[2], item[3]], "and");
 				break;
 		}
 	}
@@ -87,7 +87,6 @@ function slowGameUpdate(){
 		var x = item[2];
 		var y = item[3];
 		drawItem(level.level[i][0], x, y, dirs);
-		ctx.fillText(level.level[i][4], x*selW+x, y*selH+y);
 		if(level.level[i][0] == "battery" && level.level[i][4]){
 			var temp = batteryUpdate(level, currentLevel);
 			level = temp[0];
@@ -184,7 +183,7 @@ document.onkeyup = function(e){
 									startBattery = true;
 								}
 								if(next[0].toLowerCase().includes("gate")){
-									level = next[5].solveGate(level);
+									level = next[5].solveGate(level, selW);
 								}
 							} 
 						});
