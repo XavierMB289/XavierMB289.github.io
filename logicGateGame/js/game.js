@@ -23,7 +23,7 @@ function gameInit(){
 	
 	currentLevel = getCookie("currentLevel");
 	if(currentLevel == ""){
-		currentLevel = 5;
+		currentLevel = 1;
 	}else{
 		currentLevel = parseInt(currentLevel);
 	}
@@ -44,7 +44,7 @@ function loadGameLevel(obj){
 				level.level[i][5] = battery[0];
 				break;
 			case "andGate":
-				level.level[i][5] = new Gate(selW, item[1], [item[2], item[3]], "and");
+				level.level[i][5] = new Gate(item[1], [item[2], item[3]], "and");
 				break;
 		}
 	}
@@ -86,8 +86,12 @@ function slowGameUpdate(){
 		var dirs = item[1];
 		var x = item[2];
 		var y = item[3];
-		
 		drawItem(level.level[i][0], x, y, dirs);
+		if(level.level[i][0] == "battery" && level.level[i][4]){
+			var temp = batteryUpdate(level, currentLevel);
+			level = temp[0];
+			currentLevel = temp[1];
+		}
 	}
 	if(userSelect >= 6){
 		var temp = userSelect - 6;
@@ -109,11 +113,15 @@ function slowGameUpdate(){
 	
 	ctx.translate(-(canvasW/2-6*selW-6),-10);
 	
-	currentLevel = batteryUpdate(level, currentLevel);
+	var temp = batteryUpdate(level, currentLevel);
+	level = temp[0];
+	currentLevel = temp[1];
 }
 
 document.onkeyup = function(e){
 	var letter = e.key.toLowerCase();
+	var x = (userSelect-6) % 12;
+	var y = Math.floor((userSelect-6)/12);
 	if(level.disabledKeys.includes(letter)){
 		return;
 	}
@@ -156,41 +164,32 @@ document.onkeyup = function(e){
 				userSelect += (temp + 1) % 12 != 0 ? 1 : 0; 
 				break;
 			case "enter":
-				var temp = getItem(level, userSelect);
+				var temp = getItem(level, x, y);
 				if(temp != null && (temp[2] == "inv" || temp[0] == "wire")){ //if you're on an item, go ahead and remove it
 					if(userItem != null){
 						level = returnItem(level, userItem);
 						userItem = null;
 					}
 					userItem = temp;
-					temp = userSelect - 6;
-					var x = temp % 12;
-					var y = Math.floor(temp/12);
 					level = removeItem(level, x, y);
 				}else if(temp != null){
 					if(temp[0] == "button"){
-						level.level[temp[3]][4] = true;
+						level = energize(level, temp);
 						level = alterItem(level, temp, buttonSwitch);
 						var next = getNextItem(level, userSelect);
-						temp = userSelect - 6;
-						var x = temp % 12;
-						var y = Math.floor(temp/12);
 						addNode(x+.5, y+.5, selW, getImage("img/power.png"), getPathToNext(level, userSelect), function(){
 							if(next != null){
 								if(next[0]=="battery"){
 									startBattery = true;
 								}
-								if(next[0].toLowerCase().contains("gate")){
-									next[5].solveGate(level);
+								if(next[0].toLowerCase().includes("gate")){
+									level = next[5].solveGate(level, selW);
 								}
 							} 
 						});
 					}
 				}else if(temp == null){
 					if(userItem != null){
-						temp = userSelect - 6;
-						var x = temp % 12;
-						var y = Math.floor(temp/12);
 						level = addItem(level, userItem, x, y);
 						userItem = null;
 					}

@@ -1,7 +1,7 @@
 var nodes = [];
 
-function addNode(startX, startY, selW, spd, img, path, callback = null){ // [[x,y], [x,y], [x,y], ...]
-	var part = new ParticleNode(startX, startY, selW, spd, img, path);
+function addNode(startX, startY, selW, img, path, callback = null){ // [[x,y], [x,y], [x,y], ...]
+	var part = new ParticleNode(startX, startY, selW, img, path);
 	if(callback != null){
 		part.addCallback(callback);
 	}
