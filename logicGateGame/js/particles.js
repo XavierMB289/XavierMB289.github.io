@@ -8,11 +8,13 @@ function addNode(startX, startY, selW, img, path, callback = null){ // [[x,y], [
 	nodes.push(part);
 }
 
-function nodeCycle(){
+function nodeCycle(level){
+	var tempLevel = level;
 	for(var i = 0; i < nodes.length; i++){
 		nodes[i].paint();
-		nodes[i].update();
+		tempLevel = nodes[i].update(tempLevel);
 	}
+	return tempLevel;
 }
 
 class ParticleNode{
@@ -22,17 +24,19 @@ class ParticleNode{
 	speed = 6;
 	destination = 0;
 	path = [];
+	allowEnergize = true;
 	particles = [];
 	partImage = null;
 	spawnParticles = true;
 	callback = null;
 	
-	constructor(startX, startY, selW, img, path){ //startX and startY are gridbased...
+	constructor(startX, startY, selW, img, path, allowEnergize=true){ //startX and startY are gridbased...
 		this.x = startX*selW;
 		this.y = startY*selW;
 		this.selW = selW;
 		this.partImage = img;
 		this.path = path;
+		this.allowEnergize = allowEnergize;
 		return this;
 	}
 	
@@ -47,7 +51,7 @@ class ParticleNode{
 		}
 	}
 	
-	update(){
+	update(level){
 		if(this.spawnParticles){
 			this.particles.push(new Particle(this.x, this.y, this.speed));
 		}
@@ -77,6 +81,13 @@ class ParticleNode{
 				this.destination++;
 			}
 		}
+		//finding the gridX and gridY
+		if(this.allowEnergize){
+			var gridX = Math.floor(this.x/this.selW);
+			var gridY = Math.floor(this.y/this.selW);
+			return energize(level, gridX, gridY);
+		}
+		return level;
 	}
 }
 class Particle{

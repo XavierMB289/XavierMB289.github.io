@@ -103,7 +103,7 @@ function slowGameUpdate(){
 		}
 	}
 	
-	nodeCycle(); //for particles
+	level = nodeCycle(level); //for particles
 	
 	ctx.drawImage(left, -selW*2, selW*3.5);
 	ctx.drawImage(right, selW*13, selW*3.5);
@@ -174,14 +174,10 @@ document.onkeyup = function(e){
 					level = removeItem(level, x, y);
 				}else if(temp != null){
 					if(temp[0] == "button"){
-						level = energize(level, temp);
 						level = alterItem(level, temp, buttonSwitch);
 						var next = getNextItem(level, userSelect);
 						addNode(x+.5, y+.5, selW, getImage("img/power.png"), getPathToNext(level, userSelect), function(){
 							if(next != null){
-								if(next[0]=="battery"){
-									startBattery = true;
-								}
 								if(next[0].toLowerCase().includes("gate")){
 									level = next[5].solveGate(level, selW);
 								}

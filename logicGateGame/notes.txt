@@ -2,6 +2,3 @@ TODO:
 Add more levels...
 add gates
 Add gate outputs... (similar to the wires)
-add energized versions of all things
-change the energized function so it works in conjunction with particles
-change the pathToNext method to get every block it needs to go to..

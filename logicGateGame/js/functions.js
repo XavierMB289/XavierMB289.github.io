@@ -129,7 +129,7 @@ function returnItem(level, userItem){
 function alterItem(level, userItem, newImages){
 	if(userItem[2]!="inv"){
 		for(var i = 0; i < level.level.length; i++){
-			var coords = userItem[2].length > 1 ? userItem[2].split(",") : userItem[2];
+			var coords = [userItem[2], userItem[3]];
 			if(level.level[i][2] == parseInt(coords[0]) && (userItem[2].length == 1 || level.level[i][3] == parseInt(coords[1]))){
 				var passed = false;
 				for(var j = 0; j < newImages.length; j++){
@@ -237,46 +237,9 @@ function getPathToNext(level, userSelect){ //Similar to getNextItem but outputs 
 	ret.push([levelX+0.5, levelY+0.5]); //NO MATTER WHAT: adds last location
 	return ret;
 }
-function energize(level, startItem){
-	var levelX = startItem[2];
-	var levelY = startItem[3];
-	var item = startItem;
-	var prevDir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
-	do{
-		var dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
-		level.level[getItemIndex(level, levelX, levelY)][4] = true;
-		switch(dir){
-			case "n":
-				if(prevDir=="s"){
-					return item;
-				}
-				levelY--;
-				break;
-			case "s":
-				if(prevDir=="n"){
-					return item;
-				}
-				levelY++;
-				break;
-			case "e":
-				if(prevDir=="w"){
-					return item;
-				}
-				levelX++;
-				break;
-			case "w":
-				if(prevDir=="e"){
-					return item;
-				}
-				levelX--;
-				break;
-		}
-		item = getItem(level, levelX, levelY);
-		prevDir = dir;
-		if(item==null){
-			break;
-		}
-	}while(item[0] == "wire");
+function energize(level, x, y){
+	var index = getItemIndex(level, x, y);
+	level.level[index][4] = true;
 	return level;
 }
 function getPrevItem(level, item){ //WARNING! ONLY RETURNS ONE PREVIOUS ITEM!
