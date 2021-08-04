@@ -23,7 +23,7 @@ function gameInit(){
 	
 	currentLevel = getCookie("currentLevel");
 	if(currentLevel == ""){
-		currentLevel = 1;
+		currentLevel = 3;
 	}else{
 		currentLevel = parseInt(currentLevel);
 	}
@@ -69,7 +69,7 @@ function slowGameUpdate(){
 	for(let x = 0; x < 6; x++){
 		var item = level.inv[x];
 		if(item!=null && item[3] > 0){
-			drawItem(item[0], x, 0, item[1], true);
+			drawItem(level, item[0], x, 0, item[1], true);
 			ctx.fillText(""+item[3], x*selW+x+10, selW*0.8);
 		}
 		if(x == userSelect){
@@ -86,7 +86,7 @@ function slowGameUpdate(){
 		var dirs = item[1];
 		var x = item[2];
 		var y = item[3];
-		drawItem(level.level[i][0], x, y, dirs);
+		drawItem(level, level.level[i][0], x, y, dirs);
 		if(level.level[i][0] == "battery" && level.level[i][4]){
 			var temp = batteryUpdate(level, currentLevel);
 			level = temp[0];
@@ -99,7 +99,7 @@ function slowGameUpdate(){
 		var y = Math.floor(temp/12);
 		ctx.drawImage(selected, x*selW+x, y*selH+y);
 		if(userItem != null){
-			drawItem(userItem[0], x, y, userItem[1]);
+			drawItem(level, userItem[0], x, y, userItem[1]);
 		}
 	}
 	

@@ -20,7 +20,7 @@ function batteryUpdate(level, currentLevel){
 				level = alterItem(level, batteryItem, battery);
 				batteryItem = getItemByName(level, "battery");
 				batteryTimer = 7;
-			}else if(batteryTimer <= -7){
+			}else if(batteryTimer <= -7 && nodes.length == 0){
 				batteryTimer = 7;
 				currentLevel++;
 				getLevel("level/"+currentLevel+".json", loadGameLevel);
@@ -92,34 +92,34 @@ class Gate{
 		return level;
 	}
 }
-function drawItem(name, x, y, dirs, inventory = false){
+function drawItem(level, name, x, y, dirs, inventory = false){
 	if(inventory != true){ //if item is on field
 		switch(name){ //Item name
 			case "button":
 			case "battery":
 				ctx.drawImage(getItemImage(level, x, y), x*selW+x, y*selH+y);
-				drawPipes(x, y, dirs);
+				drawPipes(level, x, y, dirs);
 				break;
 		}
 	}else{ //If the image is in inventory
 		switch(name){ //Item name
 			case "button":
 				ctx.drawImage(buttonSwitch[0], x*selW+x, y*selH+y);
-				drawPipes(x, y, dirs);
+				drawPipes(level, x, y, dirs);
 				break;
 			case "battery":
 				ctx.drawImage(battery[0], x*selW+x, y*selH+y);
-				drawPipes(x, y, dirs);
+				drawPipes(level, x, y, dirs);
 				break;
 		}
 	}//BOTH
 	switch(name){
 		case "wire":
-			drawPipes(x, y, dirs, false);
+			drawPipes(level, x, y, dirs, false);
 			break;
 		case "andGate":
 			ctx.drawImage(andGate, x*selW+x, y*selH+y);
-			drawPipes(x, y, dirs);
+			drawPipes(level, x, y, dirs);
 			break;
 	}
 }

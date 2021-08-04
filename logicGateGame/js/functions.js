@@ -64,7 +64,7 @@ function getItemIndex(level, x, y, inventory=false){
 		list = level.inv;
 		for(var i = 0; i < list.length; i++){
 			var z = list[i];
-			if(z!=null&&z==x){
+			if(z!=null&&i==x){
 				return i;
 			}
 		}
