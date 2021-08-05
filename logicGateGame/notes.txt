@@ -1,5 +1,4 @@
 TODO:
 Add more levels...
 add gates
-Add gate outputs... (similar to the wires)
-why is level 3 like this?! (something wrong with wires.drawPipes)
+fix level 6
