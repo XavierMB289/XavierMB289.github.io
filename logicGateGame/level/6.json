@@ -1,0 +1,26 @@
+{
+	"name": "Advanced AND Better",
+	"hints": ["THIS LEVEL IS NOT FINISHED! THIS IS THE END!"],
+	"level": [
+		["button", "e", 3, 2, false, "img"],
+		["wire", "w,e", 4, 2, false],
+		["wire", "w,s", 5, 2, false],
+		["wire", "n,s", 5, 3, false],
+		["button", "e", 3, 5, false, "img"],
+		["wire", "w,e", 4, 5, false],
+		["wire", "w,n", 5, 5, false],
+		["andGate", "n,s,e", 5, 4, false, "gate"],
+		["wire", "w,e", 6, 4, false],
+		["battery", "w", 7, 4, false, "img"]
+	],
+	"inv": [
+		null,
+		null,
+		null,
+		null,
+		null,
+		null
+	],
+	"startInGrid": [true, 3, 2],
+	"disabledKeys": ["backspace"]
+}
