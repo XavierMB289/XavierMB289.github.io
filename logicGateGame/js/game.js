@@ -86,7 +86,6 @@ function slowGameUpdate(){
 		var dirs = item[1];
 		var x = item[2];
 		var y = item[3];
-		ctx.fillText(level.level[i][4], x*selW+x, y*selW+y);
 		drawItem(level, level.level[i][0], x, y, dirs);
 	}
 	if(userSelect >= 6){
