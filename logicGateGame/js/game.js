@@ -86,12 +86,8 @@ function slowGameUpdate(){
 		var dirs = item[1];
 		var x = item[2];
 		var y = item[3];
+		ctx.fillText(level.level[i][4], x*selW+x, y*selW+y);
 		drawItem(level, level.level[i][0], x, y, dirs);
-		if(level.level[i][0] == "battery" && level.level[i][4]){
-			var temp = batteryUpdate(level, currentLevel);
-			level = temp[0];
-			currentLevel = temp[1];
-		}
 	}
 	if(userSelect >= 6){
 		var temp = userSelect - 6;
@@ -134,10 +130,10 @@ document.onkeyup = function(e){
 				userSelect += userSelect + 1 < 6 ? 1 : 0;
 				break;
 			case "enter":
-				var temp = getItem(level, userSelect, true);
-				if(temp != null && parseInt(level.inv[temp[3]][3]) > 0){
-					userItem = temp;
-					level.inv[temp[3]][3] -= 1; //Just to make sure it runs right
+				var temp = getItemIndex(level, userSelect, 0, true);
+				if(temp != null && parseInt(level.inv[temp][3]) > 0){
+					userItem = level.inv[temp];
+					level.inv[temp][3] -= 1; //Just to make sure it runs right
 				}//NO BREAK! WE WANT THE BACKSPACE CODE TO RUN!
 			case "backspace": //change selection
 				var temp = userSelect;

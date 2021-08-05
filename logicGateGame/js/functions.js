@@ -46,7 +46,12 @@ function getItem(level, x, y, inventory=false){
 		return list.filter(z => { return z[2]==x&&z[3]==y })[0];
 	}else{
 		list = level.inv;
-		return list.filter(z => { return z!=null&&z==x })[0];
+		for(var i = 0; i < list.length; i++){
+			var z = list[i];
+			if(z!=null&&i==x+y){
+				return z;
+			}
+		}
 	}
 	return null;
 }
@@ -64,7 +69,7 @@ function getItemIndex(level, x, y, inventory=false){
 		list = level.inv;
 		for(var i = 0; i < list.length; i++){
 			var z = list[i];
-			if(z!=null&&i==x){
+			if(z!=null&&i==x+y){
 				return i;
 			}
 		}

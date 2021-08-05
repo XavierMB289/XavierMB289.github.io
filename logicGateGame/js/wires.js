@@ -15,13 +15,9 @@ function wireInit(){
 }
 function drawPipes(level, x, y, dirs, gate = true){
 	dirs = dirs.includes(",") ? dirs.split(",") : [dirs];
-	var energy = null;
-	if(getItemIndex(level, x, y, true) != null){
-		energy = level.inv[getItemIndex(level, x, y, true)][4];
-	}else if(getItemIndex(level, x, y) != null){
+	var energy = false;
+	if(getItemIndex(level, x, y) != null){
 		energy = level.level[getItemIndex(level, x, y)][4];
-	}else{
-		energy = userItem[4];
 	}
 	for(var j = 0; j < dirs.length; j++){
 		ctx.save();
