@@ -2,3 +2,5 @@ TODO:
 Add more levels...
 add gates
 fix level 6
+fix "if button no longer pressed, deenergize..."
+battery not showing charge after "new Level"

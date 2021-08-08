@@ -86,7 +86,14 @@ function slowGameUpdate(){
 		var dirs = item[1];
 		var x = item[2];
 		var y = item[3];
+		/* var prevItemIndex = getPrevItemIndex(level, item);
+		if(prevItemIndex != null){
+			if(level.level[prevItemIndex][4] != true){
+				level.level[i][4] = false;
+			}
+		} */
 		drawItem(level, level.level[i][0], x, y, dirs);
+		ctx.fillText(level.level[i][4], x*selW+x, y*selW+y);
 	}
 	if(userSelect >= 6){
 		var temp = userSelect - 6;
@@ -169,15 +176,20 @@ document.onkeyup = function(e){
 					level = removeItem(level, x, y);
 				}else if(temp != null){
 					if(temp[0] == "button"){
+						if(temp[5] == buttonSwitch[0]){
+							level.level[getItemIndex(level, temp[2], temp[3])][4] = true;
+							var next = getNextItem(level, userSelect);
+							addNode(x+.5, y+.5, selW, getImage("img/power.png"), getPathToNext(level, userSelect), function(){
+								if(next != null){
+									if(next[0].toLowerCase().includes("gate")){
+										level = next[5].solveGate(level, selW);
+									}
+								} 
+							});
+						}else{
+							level.level[getItemIndex(level, temp[2], temp[3])][4] = false;
+						}
 						level = alterItem(level, temp, buttonSwitch);
-						var next = getNextItem(level, userSelect);
-						addNode(x+.5, y+.5, selW, getImage("img/power.png"), getPathToNext(level, userSelect), function(){
-							if(next != null){
-								if(next[0].toLowerCase().includes("gate")){
-									level = next[5].solveGate(level, selW);
-								}
-							} 
-						});
 					}
 				}else if(temp == null){
 					if(userItem != null){
