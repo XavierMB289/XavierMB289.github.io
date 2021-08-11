@@ -247,6 +247,11 @@ function energize(level, x, y){
 	level.level[index][4] = true;
 	return level;
 }
+function deenergize(level, x, y){
+	var index = getItemIndex(level, x, y);
+	level.level[index][4] = false;
+	return level;
+}
 function getPrevItem(level, item){ //WARNING! ONLY RETURNS ONE PREVIOUS ITEM!
 	var dir = item[1].length > 1 ? item[1][0] : item[1];
 	var x = item[2];

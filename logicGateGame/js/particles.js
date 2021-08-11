@@ -1,11 +1,14 @@
 var nodes = [];
 
-function addNode(startX, startY, selW, img, path, callback = null){ // [[x,y], [x,y], [x,y], ...]
-	var part = new ParticleNode(startX, startY, selW, img, path);
+function addNode(startX, startY, selW, img, path, energizeStatus, callback = null){ // [[x,y], [x,y], [x,y], ...]
+	var part = new ParticleNode(startX, startY, selW, img, path, energizeStatus);
 	if(callback != null){
 		part.addCallback(callback);
 	}
 	nodes.push(part);
+}
+function changeLastSpeed(spd){
+	nodes[nodes.length-1].setSpeed(spd);
 }
 
 function nodeCycle(level){
@@ -24,24 +27,28 @@ class ParticleNode{
 	speed = 6;
 	destination = 0;
 	path = [];
-	allowEnergize = true;
+	energize = 0;
 	particles = [];
 	partImage = null;
 	spawnParticles = true;
 	callback = null;
 	
-	constructor(startX, startY, selW, img, path, allowEnergize=true){ //startX and startY are gridbased...
+	constructor(startX, startY, selW, img, path, energize = 0){ //startX and startY are gridbased...
 		this.x = startX*selW;
 		this.y = startY*selW;
 		this.selW = selW;
 		this.partImage = img;
 		this.path = path;
-		this.allowEnergize = allowEnergize;
+		this.energize = energize;
 		return this;
 	}
 	
 	addCallback(callback){
 		this.callback = callback;
+	}
+	
+	setSpeed(spd){
+		this.speed = spd;
 	}
 	
 	paint(){
@@ -82,10 +89,14 @@ class ParticleNode{
 			}
 		}
 		//finding the gridX and gridY
-		if(this.allowEnergize){
+		if(this.energize == 1){
 			var gridX = Math.floor(this.x/this.selW);
 			var gridY = Math.floor(this.y/this.selW);
 			return energize(level, gridX, gridY);
+		}else if(this.energize == -1){
+			var gridX = Math.floor(this.x/this.selW);
+			var gridY = Math.floor(this.y/this.selW);
+			return deenergize(level, gridX, gridY);
 		}
 		return level;
 	}

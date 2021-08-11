@@ -1,11 +1,12 @@
-var buttonSwitch, battery, andGate;
+var buttonSwitch, battery, andGate, notGate;
 var batteryTimer = 7;
 var batteryItem = null, prevItemIndex = null;
 
 function gateInit(){
 	buttonSwitch = [getImage("img/button_off.png"), getImage("img/button_on.png")];
-	battery = [getImage("img/battery_empty.png"), getImage("img/battery_close.png"), getImage("img/battery_half.png"), getImage("img/battery_full.png")];
+	battery = [getImage("img/battery_empty.png"), getImage("img/battery_half.png"), getImage("img/battery_full.png")];
 	andGate = getImage("img/and_gate.png");
+	notGate = getImage("img/not_gate.png");
 }
 
 function batteryUpdate(level, currentLevel){
@@ -16,17 +17,21 @@ function batteryUpdate(level, currentLevel){
 	if(level.level[prevItemIndex][4]){
 		batteryTimer--;
 		if(batteryTimer <= 0){
-			if(batteryItem[5] != battery[3]){
+			if(batteryItem[5] != battery[battery.length-1]){
 				level = alterItem(level, batteryItem, battery);
 				batteryItem = getItemByName(level, "battery");
 				batteryTimer = 7;
 			}else if(batteryTimer <= -7 && nodes.length == 0){
 				batteryTimer = 7;
+				batteryItem = null;
 				currentLevel++;
 				getLevel("level/"+currentLevel+".json", loadGameLevel);
 			}
 		}
 		
+	}else{
+		batteryTimer = 7;
+		level = alterItem(level, batteryItem, [battery[0]]);
 	}
 	return [level, currentLevel];
 }
@@ -66,10 +71,10 @@ class Gate{
 		this.inputs[0] = (list.filter(x => { return x[2]==this.inputCoords[0][0]&&x[3]==this.inputCoords[0][1] })[0])[4];
 		this.inputs[1] = (list.filter(x => { return x[2]==this.inputCoords[1][0]&&x[3]==this.inputCoords[1][1] })[0])[4];
 	}
-	#genOutput(level, selW){
+	#genOutput(level, selW, energize){
 		var userSelect = this.coords[0]+(this.coords[1]*12)+6;
 		var next = getNextItem(level, userSelect);
-		addNode(this.coords[0]+.5, this.coords[1]+.5, selW, getImage("img/power.png"), getPathToNext(level, userSelect), function(){
+		addNode(this.coords[0]+.5, this.coords[1]+.5, selW, getImage(energize == 1 ? "img/power.png": "img/powerless.png"), getPathToNext(level, userSelect), energize, function(){
 			if(next != null){
 				if(next[0].toLowerCase().includes("gate")){
 					return next[5].solveGate(level, selW);
@@ -85,7 +90,15 @@ class Gate{
 		switch(this.gateType){
 			case "and":
 				if(this.inputs[0] * this.inputs[1] == 1){
-					return this.#genOutput(level, selW);
+					return this.#genOutput(level, selW, 1);
+				}
+				break;
+			case "not":
+				var item = getItem(level, coords[0], coords[1]);
+				if(this.inputs[0] != 1 && item[4] != true){
+					return this.#genOutput(level, selW, 1);
+				}else if(this.inputs[0] != 0 && item[4] != false){
+					return this.#genOutput(level, selW, -1);
 				}
 				break;
 		}
@@ -119,6 +132,10 @@ function drawItem(level, name, x, y, dirs, inventory = false){
 			break;
 		case "andGate":
 			ctx.drawImage(andGate, x*selW+x, y*selH+y);
+			drawPipes(level, x, y, dirs);
+			break;
+		case "notGate":
+			ctx.drawImage(notGate, x*selW+x, y*selH+y);
 			drawPipes(level, x, y, dirs);
 			break;
 	}

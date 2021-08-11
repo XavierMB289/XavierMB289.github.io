@@ -23,7 +23,7 @@ function gameInit(){
 	
 	currentLevel = getCookie("currentLevel");
 	if(currentLevel == ""){
-		currentLevel = 1;
+		currentLevel = 5;
 	}else{
 		currentLevel = parseInt(currentLevel);
 	}
@@ -36,6 +36,11 @@ function loadGameLevel(obj){
 	//setting up the images for the level... ALSO SETTING UP THE GATES!!!
 	for(var i = 0; i < level.level.length; i++){
 		var item = level.level[i];
+		if(item[0].includes("Gate")){
+			var gate = item[0].split("Gate")[0];
+			level.level[i][5] = new Gate(item[1], [item[2], item[3]], gate);
+			continue;
+		}
 		switch(item[0]){ //Item name
 			case "button":
 				level.level[i][5] = buttonSwitch[0];
@@ -43,11 +48,12 @@ function loadGameLevel(obj){
 			case "battery":
 				level.level[i][5] = battery[0];
 				break;
-			case "andGate":
-				level.level[i][5] = new Gate(item[1], [item[2], item[3]], "and");
-				break;
 		}
 	}
+	//Trying to fix this problem with battery
+	var temp = batteryUpdate(level, currentLevel);
+	level = temp[0];
+	currentLevel = temp[1];
 	if(level.startInGrid[0]){
 		userSelect = level.startInGrid[2] * 12 + level.startInGrid[1] + 6;
 	}
@@ -86,12 +92,6 @@ function slowGameUpdate(){
 		var dirs = item[1];
 		var x = item[2];
 		var y = item[3];
-		/* var prevItemIndex = getPrevItemIndex(level, item);
-		if(prevItemIndex != null){
-			if(level.level[prevItemIndex][4] != true){
-				level.level[i][4] = false;
-			}
-		} */
 		drawItem(level, level.level[i][0], x, y, dirs);
 		ctx.fillText(level.level[i][4], x*selW+x, y*selW+y);
 	}
@@ -179,7 +179,7 @@ document.onkeyup = function(e){
 						if(temp[5] == buttonSwitch[0]){
 							level.level[getItemIndex(level, temp[2], temp[3])][4] = true;
 							var next = getNextItem(level, userSelect);
-							addNode(x+.5, y+.5, selW, getImage("img/power.png"), getPathToNext(level, userSelect), function(){
+							addNode(x+.5, y+.5, selW, getImage("img/power.png"), getPathToNext(level, userSelect), 1, function(){
 								if(next != null){
 									if(next[0].toLowerCase().includes("gate")){
 										level = next[5].solveGate(level, selW);
@@ -188,6 +188,14 @@ document.onkeyup = function(e){
 							});
 						}else{
 							level.level[getItemIndex(level, temp[2], temp[3])][4] = false;
+							addNode(x+.5, y+.5, selW, getImage("img/powerless.png"), getPathToNext(level, userSelect), -1, function(){
+								if(next != null){
+									if(next[0].toLowerCase().includes("gate")){
+										level = next[5].solveGate(level, selW);
+									}
+								} 
+							});
+							changeLastSpeed(10);
 						}
 						level = alterItem(level, temp, buttonSwitch);
 					}
