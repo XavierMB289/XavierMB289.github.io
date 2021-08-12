@@ -1,6 +1,7 @@
 var pipe = null;
 var pipeOutput = null;
 var energizedPipe = null;
+var pipePip = null;
 var gatePipe = null;
 var gatePipeOutput = null;
 var energizedGatePipe = null
@@ -9,6 +10,7 @@ function wireInit(){
 	pipe = getImage("img/pipe.png");
 	pipeOutput = getImage("img/pipe_output.png");
 	energizedPipe = getImage("img/pipe_energized.png");
+	pipePip = getImage("img/pipe_pip.png");
 	gatePipe = getImage("img/gate_pipe.png");
 	gatePipeOutput = getImage("img/gate_pipe_output.png");
 	energizedGatePipe = getImage("img/gate_pipe_energized.png");
@@ -51,6 +53,7 @@ function drawPipes(level, x, y, dirs, gate = true){
 			if(energy != false){
 				ctx.drawImage(energizedPipe, -selW/2, -selH/2);
 			}
+			ctx.drawImage(pipePip, -selW/2, -selH/2);
 		}
 		ctx.restore();
 	}
