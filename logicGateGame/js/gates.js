@@ -10,25 +10,22 @@ function gateInit(){
 }
 
 function batteryUpdate(level, currentLevel){
-	if(batteryItem == null){
-		batteryItem = getItemByName(level, "battery");
+	batteryItem = getItemByName(level, "battery");
+	if(prevItemIndex == null){
 		prevItemIndex = getPrevItemIndex(level, batteryItem);
 	}
-	if(level.level[prevItemIndex][4]){
-		batteryTimer--;
-		if(batteryTimer <= 0){
-			if(batteryItem[5] != battery[battery.length-1]){
-				level = alterItem(level, batteryItem, battery);
-				batteryItem = getItemByName(level, "battery");
-				batteryTimer = 7;
-			}else if(batteryTimer <= -7 && nodes.length == 0){
-				batteryTimer = 7;
-				batteryItem = null;
-				currentLevel++;
-				getLevel("level/"+currentLevel+".json", loadGameLevel);
-			}
+	if(batteryItem[4]){
+		if(--batteryTimer <= 0 && nodes.length < 1){
+			batteryTimer = 7;
+			prevItemIndex = null;
+			currentLevel++;
+			getLevel("level/"+currentLevel+".json", loadGameLevel);
+			batteryItem = getItemByName(level, "battery");
+		}else{
+			level = alterItem(level, batteryItem, [battery[2]]);
 		}
-		
+	}else if(prevItemIndex != null && level.level[prevItemIndex][4]){
+		level = alterItem(level, batteryItem, [battery[1]]);	
 	}else{
 		batteryTimer = 7;
 		level = alterItem(level, batteryItem, [battery[0]]);
