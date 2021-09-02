@@ -4,9 +4,6 @@ function getImage(path){ //outputs an image base on the filepath given
 	return img;
 }
 function getLevel(path, callback){
-	if(currentLevel >= 6){
-		window.location.href = "what.html";
-	}
 	path = "https://xaviermb289.github.io/logicGateGame/" + path;
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
