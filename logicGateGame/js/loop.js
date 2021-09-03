@@ -4,6 +4,11 @@ var tile; //images
 var loopDelaySet = 6;
 var loopDelay = loopDelaySet;
 
+var state = null;
+
+var menuLevel = {"level": []};
+var menuTimer = 30;
+
 window.onload = function(){
 	var win = window,
 		doc = document,
@@ -20,6 +25,26 @@ window.onload = function(){
 	gateInit();
 	gameInit();
 	
+	state = loopMenu;
+	
+	menuLevel.level = [
+		["wire", "s,e", 0, 0, false],
+		["wire", "w,s", 1, 0, false],
+		["wire", "n,s", 2, 0, false],
+		["wire", "s,e", 4, 0, false],
+		["wire", "w,s", 5, 0, false],
+		["wire", "n,e", 6, 0, false],
+		["wire", "n,w,s", 7, 0, false],
+		["wire", "s,e,n", 0, 1, false],
+		["wire", "n,w", 1, 1, false],
+		["wire", "n,e", 2, 1, false],
+		["wire", "w,e", 3, 1, false],
+		["wire", "s,e,n", 4, 1, false],
+		["wire", "s,w,n", 5, 1, false],
+		["wire", "n,e", 6, 1, false],
+		["wire", "w,n", 7, 1, false]
+	];
+	
 	update();
 };
 function update() {
@@ -27,22 +52,56 @@ function update() {
 	var tileW = tile.width;
 	var tileH = tile.height;
 	
+	ctx.font = "20px Caveat";
+	ctx.fillStyle = "#FFFFFF";
+	
 	if(loopDelay-- <= 0){
 		ctx.fillStyle = "#1a1a1a";
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
-		ctx.translate(canvasW/2-6*tileW-6,20);
-		for(let x = 0; x < 12; x+=1){
-			for(let y = 0; y < 8; y+=1){
-				ctx.drawImage(tile, x*tileW+x, y*tileH+y);
-			}
-		}
-		ctx.translate(-(canvasW/2-6*tileW-6),-20);
-		slowGameUpdate();
+		
+		state(tileW, tileH);
+		
 		loopDelay = loopDelaySet;
 	}
-	
-	gameUpdate();
 	
 	var myMainLoop = window.requestAnimationFrame( update );
 	
 };
+
+function loopMenu(tileW, tileH){
+	ctx.translate(canvasW/2, canvasH/4);
+	ctx.font = "128px Caveat";
+	ctx.fillStyle = "#FFFF00";
+	var metric = ctx.measureText("Logistics");
+	ctx.fillText("Logistics", -(metric.width/2), 0);
+	ctx.translate(-(canvasW/2), -(canvasH/4));
+	
+	ctx.translate(canvasW/2-4*tileW+4, canvasH/2);
+	for(var x = 0; x < 8; x++){
+		for(var y = 0; y < 2; y++){
+			ctx.drawImage(tile, x*tileW+x, y*tileH+y);
+		}
+	}
+	for(var i = 0; i < menuLevel.level.length; i++){
+		var x = menuLevel.level[i][2];
+		var y = menuLevel.level[i][3];
+		var dirs = menuLevel.level[i][1];
+		drawPipes(menuLevel, x, y, dirs, false);
+	}
+	ctx.translate(-(canvasW/2-4*tileW+4), -(canvasH/2));
+	
+	if(menuTimer-- <= 0){
+		state = loopGame;
+	}
+}
+
+function loopGame(tileW, tileH){
+	ctx.translate(canvasW/2-6*tileW-6,20);
+	for(let x = 0; x < 12; x+=1){
+		for(let y = 0; y < 8; y+=1){
+			ctx.drawImage(tile, x*tileW+x, y*tileH+y);
+		}
+	}
+	ctx.translate(-(canvasW/2-6*tileW-6),-20);
+	slowGameUpdate();
+}
