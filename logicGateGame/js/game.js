@@ -86,7 +86,7 @@ function slowGameUpdate(){
 	}
 	ctx.translate(-(canvasW/2-3*selW-3),-(canvasH-selH-10));
 	
-	ctx.translate(canvasW/2-6*selW-6,10);
+	ctx.translate(canvasW/2-6*selW-6,20);
 	for(var i = 0; i < level.level.length; i++){
 		var item = level.level[i];
 		var dirs = item[1];
@@ -110,10 +110,10 @@ function slowGameUpdate(){
 	ctx.drawImage(left, -selW*2, selW*3.5);
 	ctx.drawImage(right, selW*13, selW*3.5);
 	
-	ctx.fillText(currentLevel+": "+level.name, 20, 10);
-	ctx.fillText(level.hints[currentHint], 10, selW*8);
+	ctx.fillText(currentLevel+": "+level.name, 10, 0);
+	ctx.fillText(level.hints[currentHint], 10, selW*8.4);
 	
-	ctx.translate(-(canvasW/2-6*selW-6),-10);
+	ctx.translate(-(canvasW/2-6*selW-6),-20);
 	
 	var temp = batteryUpdate(level, currentLevel);
 	level = temp[0];

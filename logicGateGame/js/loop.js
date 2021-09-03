@@ -30,13 +30,13 @@ function update() {
 	if(loopDelay-- <= 0){
 		ctx.fillStyle = "#1a1a1a";
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
-		ctx.translate(canvasW/2-6*tileW-6,10);
+		ctx.translate(canvasW/2-6*tileW-6,20);
 		for(let x = 0; x < 12; x+=1){
 			for(let y = 0; y < 8; y+=1){
 				ctx.drawImage(tile, x*tileW+x, y*tileH+y);
 			}
 		}
-		ctx.translate(-(canvasW/2-6*tileW-6),-10);
+		ctx.translate(-(canvasW/2-6*tileW-6),-20);
 		slowGameUpdate();
 		loopDelay = loopDelaySet;
 	}
