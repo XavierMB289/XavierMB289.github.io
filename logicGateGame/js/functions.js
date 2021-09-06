@@ -10,6 +10,8 @@ function getLevel(path, callback){
 		if (this.readyState == 4 && this.status == 200) {
 			var result = this.responseText.trim();
 			callback(JSON.parse(result));
+		}else if(this.status == 404){
+			window.location = "finish.html";
 		}
 	};
 	xhttp.open("GET", path, true);

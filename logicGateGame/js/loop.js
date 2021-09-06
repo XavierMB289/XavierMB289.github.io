@@ -7,7 +7,6 @@ var loopDelay = loopDelaySet;
 var state = null;
 
 var menuLevel = {"level": []};
-var menuTimer = 30;
 
 window.onload = function(){
 	var win = window,
@@ -26,6 +25,7 @@ window.onload = function(){
 	gameInit();
 	
 	state = loopMenu;
+	document.onkeyup = menuKeyUp;
 	
 	menuLevel.level = [
 		["wire", "s,e", 0, 0, false],
@@ -89,9 +89,12 @@ function loopMenu(tileW, tileH){
 		drawPipes(menuLevel, x, y, dirs, false);
 	}
 	ctx.translate(-(canvasW/2-4*tileW+4), -(canvasH/2));
-	
-	if(menuTimer-- <= 0){
+}
+
+function menuKeyUp(e){
+	if(e.key.toLowerCase() == "enter"){
 		state = loopGame;
+		document.onkeyup = gameKeyUp;
 	}
 }
 

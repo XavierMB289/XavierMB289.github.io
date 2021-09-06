@@ -1,6 +1,6 @@
 {
 	"name": "Inventory Management Part II",
-	"hints": ["E will change the hints...", "R will restart the level"],
+	"hints": ["E will change the hints...", "R will restart the level", "Green to Red, Green to Red..."],
 	"level": [
 		["button", "w", 3, 2, false, "img"],
 		["wire", "n,s", 2, 3, false],

@@ -23,7 +23,7 @@ function gameInit(){
 	
 	currentLevel = getCookie("currentLevel");
 	if(currentLevel == ""){
-		currentLevel = 1;
+		currentLevel = 6;
 	}else{
 		currentLevel = parseInt(currentLevel);
 	}
@@ -120,7 +120,7 @@ function slowGameUpdate(){
 	currentLevel = temp[1];
 }
 
-document.onkeyup = function(e){
+function gameKeyUp(e){
 	var letter = e.key.toLowerCase();
 	var x = (userSelect-6) % 12;
 	var y = Math.floor((userSelect-6)/12);

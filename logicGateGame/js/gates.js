@@ -91,7 +91,7 @@ class Gate{
 				}
 				break;
 			case "not":
-				var item = getItem(level, coords[0], coords[1]);
+				var item = getItem(level, this.coords[0], this.coords[1]);
 				if(this.inputs[0] != 1 && item[4] != true){
 					return this.#genOutput(level, selW, 1);
 				}else if(this.inputs[0] != 0 && item[4] != false){

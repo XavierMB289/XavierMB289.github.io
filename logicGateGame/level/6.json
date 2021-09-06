@@ -1,6 +1,6 @@
 {
 	"name": "NOT.. KNOT... SNOT?",
-	"hints": ["THIS LEVEL IS NOT FINISHED! THIS IS THE END!"],
+	"hints": ["NOT gates invert the input signal"],
 	"level": [
 		["button", "e", 3, 2, false, "img"],
 		["wire", "w,e", 4, 2, false],

@@ -1,6 +1,6 @@
 {
 	"name": "A new Foe has appeared",
-	"hints": ["E will change the hints...", "R will restart the level"],
+	"hints": ["E will change the hints...", "R will restart the level", "AND gates only output if both inputs are enabled"],
 	"level": [
 		["button", "e", 3, 2, false, "img"],
 		["wire", "w,e", 4, 2, false],
