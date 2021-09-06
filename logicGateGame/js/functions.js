@@ -197,15 +197,18 @@ function getNextItem(level, userSelect){
 	}while(item[0]!="battery"&&item[0].toLowerCase().includes("gate")!=true);
 	return item;
 }
-function getPathToNext(level, userSelect){ //Similar to getNextItem but outputs the 2d array for particles
+function getPathToNext(level, userSelect, getPath=""){ //Similar to getNextItem but outputs the 2d array for particles
 	var ret = [];
 	var temp = userSelect - 6;
 	var levelX = temp % 12;
 	var levelY = Math.floor(temp/12);
 	var item = getItem(level, levelX, levelY);
 	var prevDir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
+	if(getPath != ""){
+		prevDir = getPath;
+	}
+	var dir = prevDir;
 	do{
-		var dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
 		if(dir != prevDir){
 			prevDir = dir;
 			ret.push([levelX+0.5, levelY+0.5]);
@@ -240,6 +243,7 @@ function getPathToNext(level, userSelect){ //Similar to getNextItem but outputs 
 		if(item==null){
 			break;
 		}
+		var dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
 	}while(item[0]!="battery"&&item[0].toLowerCase().includes("gate")!=true);
 	ret.push([levelX+0.5, levelY+0.5]); //NO MATTER WHAT: adds last location
 	return ret;

@@ -1,4 +1,4 @@
-var buttonSwitch, battery, andGate, notGate;
+var buttonSwitch, battery, andGate, notGate, bufferGate;
 var batteryTimer = 7;
 var batteryItem = null, prevItemIndex = null;
 
@@ -7,6 +7,7 @@ function gateInit(){
 	battery = [getImage("img/battery_empty.png"), getImage("img/battery_half.png"), getImage("img/battery_full.png")];
 	andGate = getImage("img/and_gate.png");
 	notGate = getImage("img/not_gate.png");
+	bufferGate = getImage("img/buffer_gate.png");
 }
 
 function batteryUpdate(level, currentLevel){
@@ -46,7 +47,7 @@ class Gate{
 		this.inputs = [0, 0];
 		this.inputCoords = [[0,0], [0,0]];
 		this.gateType = gateType;
-		for(let i = 0; i < this.dirs.length; i++){
+		for(let i = 0; i < Math.min(this.dirs.length, 2); i++){
 			switch(this.dirs[i]){
 				case "n":
 					this.inputCoords[i] = [coords[0], coords[1]-1];
@@ -68,10 +69,10 @@ class Gate{
 		this.inputs[0] = (list.filter(x => { return x[2]==this.inputCoords[0][0]&&x[3]==this.inputCoords[0][1] })[0])[4];
 		this.inputs[1] = (list.filter(x => { return x[2]==this.inputCoords[1][0]&&x[3]==this.inputCoords[1][1] })[0])[4];
 	}
-	#genOutput(level, selW, energize){
+	#genOutput(level, selW, energize, getPath=""){
 		var userSelect = this.coords[0]+(this.coords[1]*12)+6;
 		var next = getNextItem(level, userSelect);
-		addNode(this.coords[0]+.5, this.coords[1]+.5, selW, getImage(energize == 1 ? "img/power.png": "img/powerless.png"), getPathToNext(level, userSelect), energize, function(){
+		addNode(this.coords[0]+.5, this.coords[1]+.5, selW, getImage(energize == 1 ? "img/power.png": "img/powerless.png"), getPathToNext(level, userSelect, getPath), energize, function(){
 			if(next != null){
 				if(next[0].toLowerCase().includes("gate")){
 					return next[5].solveGate(level, selW);
@@ -96,6 +97,13 @@ class Gate{
 					return this.#genOutput(level, selW, 1);
 				}else if(this.inputs[0] != 0 && item[4] != false){
 					return this.#genOutput(level, selW, -1);
+				}
+				break;
+			case "buffer":
+				if(this.inputs[0] == 1){
+					for(var i = 1; i < this.dirs.length(); i++){
+						level = this.#genOutput(level, selW, 1, dirs[i]);
+					}
 				}
 				break;
 		}
@@ -133,6 +141,10 @@ function drawItem(level, name, x, y, dirs, inventory = false){
 			break;
 		case "notGate":
 			ctx.drawImage(notGate, x*selW+x, y*selH+y);
+			drawPipes(level, x, y, dirs);
+			break;
+		case "bufferGate":
+			ctx.drawImage(bufferGate, x*selW+x, y*selH+y);
 			drawPipes(level, x, y, dirs);
 			break;
 	}

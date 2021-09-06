@@ -1,6 +1,6 @@
 {
-	"name": "I'm NOT AND! You're AND!",
-	"hints": ["Wow, really need a hint?", "We havent even gotten passed level 10...", "Bruh... Green to Red..."],
+	"name": "And now I'm BUFF",
+	"hints": ["BUFFER's are supposed to output the input...", "...but here, they split it."],
 	"level": [
 		["button", "e", 3, 2, false, "img"],
 		["wire", "w,s", 5, 2, false],
@@ -12,8 +12,8 @@
 	],
 	"inv": [
 		null,
-		["wire", "w,e", "inv", 1],
-		["wire", "e,w", "inv", 1],
+		null,
+		null,
 		null,
 		null,
 		null
