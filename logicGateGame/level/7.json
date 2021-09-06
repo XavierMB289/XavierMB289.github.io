@@ -1,0 +1,23 @@
+{
+	"name": "I'm NOT AND! You're AND!",
+	"hints": ["Wow, really need a hint?", "We havent even gotten passed level 10...", "Bruh..."],
+	"level": [
+		["button", "e", 3, 2, false, "img"],
+		["wire", "w,s", 5, 2, false],
+		["notGate", "n,s", 5, 3, false, "gate"],
+		["wire", "n,e", 5, 4, true],
+		["andGate", "w,s,e", 6, 4, true, "gate"],
+		["button", "n", 6, 5, false, "img"],
+		["battery", "w", 7, 4, false, "img"]
+	],
+	"inv": [
+		null,
+		["wire", "w,e", "inv", 1],
+		["wire", "e,w", "inv", 1],
+		null,
+		null,
+		null
+	],
+	"startInGrid": [false, 0, 0],
+	"disabledKeys": []
+}
