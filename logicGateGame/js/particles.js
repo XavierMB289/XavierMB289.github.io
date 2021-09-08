@@ -1,4 +1,5 @@
 var nodes = [];
+var deleteNodes = [];
 
 function addNode(startX, startY, selW, img, path, energizeStatus, callback = null){ // [[x,y], [x,y], [x,y], ...]
 	var part = new ParticleNode(startX, startY, selW, img, path, energizeStatus);
@@ -13,6 +14,10 @@ function changeLastSpeed(spd){
 
 function nodeCycle(level){
 	var tempLevel = level;
+	if(deleteNodes.length > 0){
+		deleteNodeByID(deleteNodes[0]);
+		deleteNodes.splice(0, 1);
+	}
 	for(var i = 0; i < nodes.length; i++){
 		nodes[i].paint();
 		tempLevel = nodes[i].update(tempLevel);
@@ -20,7 +25,22 @@ function nodeCycle(level){
 	return tempLevel;
 }
 
+function deleteNodeByID(ID){
+	var node = null;
+	for(var i = 0; i < nodes.length; i++){
+		if(nodes[i].getID() == ID){
+			node = i;
+		}
+	}
+	if(node != null){
+		nodes.splice(node, 1);
+	}
+}
+
 class ParticleNode{
+	ID = null;
+	startX = null;
+	startY = null;
 	x = null;
 	y = null;
 	selW = null;
@@ -34,8 +54,11 @@ class ParticleNode{
 	callback = null;
 	
 	constructor(startX, startY, selW, img, path, energize = 0){ //startX and startY are gridbased...
+		this.ID = Math.floor(Math.random() * 1000000000);
 		this.x = startX*selW;
 		this.y = startY*selW;
+		this.startX = startX;
+		this.startY = startY;
 		this.selW = selW;
 		this.partImage = img;
 		this.path = path;
@@ -49,6 +72,10 @@ class ParticleNode{
 	
 	setSpeed(spd){
 		this.speed = spd;
+	}
+	
+	getID(){
+		return this.ID;
 	}
 	
 	paint(){
@@ -78,10 +105,26 @@ class ParticleNode{
 		if(thresh(oldX, this.x, 3) && thresh(oldY, this.y, 3)){
 			if(this.destination == this.path.length-1){
 				if(this.particles.length == 0){
-					if(this.callback != null){
-						this.callback();
+					var gridX = Math.floor(this.x/this.selW);
+					var gridY = Math.floor(this.y/this.selW);
+					if(getItem(level, gridX, gridY) != null){
+						if(this.callback != null){
+							this.callback();
+						}
+					}else{
+						var inverseEnergy = this.energize*-1;
+						var newImage = inverseEnergy==1?getImage("img/power.png"):getImage("img/powerless.png");
+						var newPath = reverseArray(this.path);
+						addNode(newPath[0][0], newPath[0][1], this.selW, newImage, newPath, inverseEnergy, function(){
+							var temp = getItem(level, newPath[newPath.length-1][0]-0.5, newPath[newPath.length-1][1]-0.5);
+							console.log(temp);
+							if(temp[0] == "button"){
+								level = alterItem(level, temp, buttonSwitch);
+							}
+						});
+						changeLastSpeed(10);
 					}
-					nodes.splice(this, 1);
+					deleteNodes.push(this.ID);
 				}
 				this.spawnParticles = false;
 			}else{

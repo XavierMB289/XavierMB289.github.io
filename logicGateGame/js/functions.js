@@ -202,6 +202,7 @@ function getPathToNext(level, userSelect, getPath=""){ //Similar to getNextItem 
 	var temp = userSelect - 6;
 	var levelX = temp % 12;
 	var levelY = Math.floor(temp/12);
+	ret.push([levelX+0.5, levelY+0.5]); //ADDING The start so reverse array will work
 	var item = getItem(level, levelX, levelY);
 	var prevDir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
 	if(getPath != ""){
@@ -216,25 +217,25 @@ function getPathToNext(level, userSelect, getPath=""){ //Similar to getNextItem 
 		switch(dir){
 			case "n":
 				if(prevDir=="s"){
-					return item;
+					return ret;
 				}
 				levelY--;
 				break;
 			case "s":
 				if(prevDir=="n"){
-					return item;
+					return ret;
 				}
 				levelY++;
 				break;
 			case "e":
 				if(prevDir=="w"){
-					return item;
+					return ret;
 				}
 				levelX++;
 				break;
 			case "w":
 				if(prevDir=="e"){
-					return item;
+					return ret;
 				}
 				levelX--;
 				break;
@@ -243,19 +244,23 @@ function getPathToNext(level, userSelect, getPath=""){ //Similar to getNextItem 
 		if(item==null){
 			break;
 		}
-		var dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
+		dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
 	}while(item[0]!="battery"&&item[0].toLowerCase().includes("gate")!=true);
 	ret.push([levelX+0.5, levelY+0.5]); //NO MATTER WHAT: adds last location
 	return ret;
 }
 function energize(level, x, y){
 	var index = getItemIndex(level, x, y);
-	level.level[index][4] = true;
+	if(index != null){
+		level.level[index][4] = true;
+	}
 	return level;
 }
 function deenergize(level, x, y){
 	var index = getItemIndex(level, x, y);
-	level.level[index][4] = false;
+	if(index != null){
+		level.level[index][4] = false;
+	}
 	return level;
 }
 function getPrevItem(level, item){ //WARNING! ONLY RETURNS ONE PREVIOUS ITEM!
@@ -297,4 +302,11 @@ function getPrevItemIndex(level, item){
 			break;
 	}
 	return getItemIndex(level, x, y);
+}
+function reverseArray(array){
+	var ret = [];
+	for(var i = array.length-1; i > -1; i--){
+		ret.push(array[i]);
+	}
+	return ret;
 }

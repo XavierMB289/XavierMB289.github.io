@@ -77,7 +77,7 @@ class Gate{
 				if(next[0].toLowerCase().includes("gate")){
 					return next[5].solveGate(level, selW);
 				}
-			} 
+			}
 		});
 	}
 	solveGate(level, selW){

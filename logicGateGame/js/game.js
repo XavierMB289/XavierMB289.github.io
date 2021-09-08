@@ -23,7 +23,7 @@ function gameInit(){
 	
 	currentLevel = getCookie("currentLevel");
 	if(currentLevel == ""){
-		currentLevel = 1;
+		currentLevel = 2;
 	}else{
 		currentLevel = parseInt(currentLevel);
 	}
@@ -184,20 +184,10 @@ function gameKeyUp(e){
 									if(next[0].toLowerCase().includes("gate")){
 										level = next[5].solveGate(level, selW);
 									}
-								} 
+								}
 							});
-						}else{
-							level.level[getItemIndex(level, temp[2], temp[3])][4] = false;
-							addNode(x+.5, y+.5, selW, getImage("img/powerless.png"), getPathToNext(level, userSelect), -1, function(){
-								if(next != null){
-									if(next[0].toLowerCase().includes("gate")){
-										level = next[5].solveGate(level, selW);
-									}
-								} 
-							});
-							changeLastSpeed(10);
+							level = alterItem(level, temp, buttonSwitch);
 						}
-						level = alterItem(level, temp, buttonSwitch);
 					}
 				}else if(temp == null){
 					if(userItem != null){
