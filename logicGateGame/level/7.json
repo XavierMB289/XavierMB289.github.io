@@ -8,7 +8,8 @@
 		["wire", "n,e", 5, 4, true],
 		["andGate", "w,s,e", 6, 4, true, "gate"],
 		["button", "n", 6, 5, false, "img"],
-		["battery", "w", 7, 4, false, "img"]
+		["wire", "w,e", 7, 4, false],
+		["battery", "w", 8, 4, false, "img"]
 	],
 	"inv": [
 		null,
