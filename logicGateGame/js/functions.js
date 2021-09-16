@@ -118,7 +118,7 @@ function addItem(level, userItem, x, y){
 function addToInv(level, userItem){
 	for(var index = 0; index < level.inv.length; index++){ //Checking if there is already one...
 		var item = level.inv[index];
-		if(item[0] == userItem[0] && item[1] == userItem[1]){
+		if(item != null && item[0] == userItem[0] && item[1] == userItem[1]){
 			level.inv[index][3] += 1;
 			return level;
 		}

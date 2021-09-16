@@ -150,7 +150,7 @@ function gameKeyUp(e){
 				console.log(letter);
 				break;
 		}
-	}else{ //if on the board...
+	}else if(nodes.length <= 0){ //if on the board...
 		var temp = userSelect - 6;
 		switch(letter){
 			case "w": //up
@@ -186,8 +186,18 @@ function gameKeyUp(e){
 									}
 								}
 							});
-							level = alterItem(level, temp, buttonSwitch);
+						}else{
+							level.level[getItemIndex(level, temp[2], temp[3])][4] = false;
+							var next = getNextItem(level, userSelect);
+							addNode(x+.5, y+.5, selW, getImage("img/powerless.png"), getPathToNext(level, userSelect), -1, function(){
+								if(next != null){
+									if(next[0].toLowerCase().includes("gate")){
+										level = next[5].solveGate(level, selW);
+									}
+								}
+							});
 						}
+						level = alterItem(level, temp, buttonSwitch);
 					}
 				}else if(temp == null){
 					if(userItem != null){
@@ -228,6 +238,9 @@ function gameKeyUp(e){
 			break;
 		case "e":
 			currentHint += currentHint + 1 < level.hints.length ? 1 : 0;
+			break;
+		case "r":
+			getLevel("level/"+currentLevel+".json", loadGameLevel);
 			break;
 	}
 }

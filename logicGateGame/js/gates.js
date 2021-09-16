@@ -101,7 +101,7 @@ class Gate{
 				break;
 			case "buffer":
 				if(this.inputs[0] == 1){
-					for(var i = 1; i < this.dirs.length(); i++){
+					for(var i = 1; i < this.dirs.length; i++){
 						level = this.#genOutput(level, selW, 1, dirs[i]);
 					}
 				}
