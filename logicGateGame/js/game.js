@@ -23,7 +23,7 @@ function gameInit(){
 	
 	currentLevel = getCookie("currentLevel");
 	if(currentLevel == ""){
-		currentLevel = 7;
+		currentLevel = 8;
 	}else{
 		currentLevel = parseInt(currentLevel);
 	}
