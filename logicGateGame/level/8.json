@@ -23,6 +23,6 @@
 		null,
 		null
 	],
-	"startInGrid": [false, 0, 0],
+	"startInGrid": [true, 2, 5],
 	"disabledKeys": []
 }

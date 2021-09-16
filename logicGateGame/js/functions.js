@@ -155,14 +155,17 @@ function alterItem(level, userItem, newImages){
 	}
 	return level;
 }
-function getNextItem(level, userSelect){
+function getNextItem(level, userSelect, getPath=""){
 	var temp = userSelect - 6;
 	var levelX = temp % 12;
 	var levelY = Math.floor(temp/12);
 	var item = getItem(level, levelX, levelY);
 	var prevDir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
+	if(getPath != ""){
+		prevDir = getPath;
+	}
+	var dir = prevDir;
 	do{
-		var dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
 		switch(dir){
 			case "n":
 				if(prevDir=="s"){
@@ -194,6 +197,7 @@ function getNextItem(level, userSelect){
 		if(item==null){
 			return null;
 		}
+		dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
 	}while(item[0]!="battery"&&item[0].toLowerCase().includes("gate")!=true);
 	return item;
 }
