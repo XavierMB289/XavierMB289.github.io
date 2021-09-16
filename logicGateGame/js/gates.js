@@ -71,7 +71,6 @@ class Gate{
 	}
 	#genOutput(level, selW, energize, getPath=""){
 		var userSelect = this.coords[0]+(this.coords[1]*12)+6;
-		console.log(level);
 		var next = getNextItem(level, userSelect, getPath);
 		addNode(this.coords[0]+.5, this.coords[1]+.5, selW, getImage(energize == 1 ? "img/power.png": "img/powerless.png"), getPathToNext(level, userSelect, getPath), energize, function(){
 			if(next != null){
@@ -102,8 +101,9 @@ class Gate{
 				break;
 			case "buffer":
 				if(this.inputs[0] == 1){
+					var tempLevel = level;
 					for(var i = 1; i < this.dirs.length; i++){
-						level = this.#genOutput(level, selW, 1, this.dirs[i]);
+						level = this.#genOutput(tempLevel, selW, 1, this.dirs[i]);
 					}
 				}
 				break;
