@@ -6,7 +6,7 @@
 		["wire", "w,s", 5, 2, false],
 		["notGate", "n,s", 5, 3, false, "gate"],
 		["wire", "n,e", 5, 4, true],
-		["andGate", "w,s,e", 6, 4, true, "gate"],
+		["andGate", "w,s,e", 6, 4, false, "gate"],
 		["button", "n", 6, 5, false, "img"],
 		["wire", "w,e", 7, 4, false],
 		["battery", "w", 8, 4, false, "img"]

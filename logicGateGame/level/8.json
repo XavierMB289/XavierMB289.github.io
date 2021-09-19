@@ -12,7 +12,7 @@
 		["wire", "n,e", 3, 5, false],
 		["wire", "w,e", 4, 5, false],
 		["wire", "w,n", 5, 5, false],
-		["andGate", "n,s,e", 5, 4, true, "gate"],
+		["andGate", "n,s,e", 5, 4, false, "gate"],
 		["battery", "w", 6, 4, false, "img"]
 	],
 	"inv": [

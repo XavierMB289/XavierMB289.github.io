@@ -1,4 +1,4 @@
-var buttonSwitch, battery, andGate, notGate, bufferGate;
+var buttonSwitch, battery, andGate, notGate, bufferGate, orGate;
 var batteryTimer = 7;
 var batteryItem = null, prevItemIndex = null;
 
@@ -8,6 +8,7 @@ function gateInit(){
 	andGate = getImage("img/and_gate.png");
 	notGate = getImage("img/not_gate.png");
 	bufferGate = getImage("img/buffer_gate.png");
+	orGate = getImage("img/or_gate.png");
 }
 
 function batteryUpdate(level, currentLevel){
@@ -107,6 +108,11 @@ class Gate{
 					}
 				}
 				break;
+			case "or":
+				if(this.input[0] == 1 || this.input[1] == 1){
+					return this.#genOutput(level, selW, 1);
+				}
+				break;
 		}
 		return level;
 	}
@@ -146,6 +152,10 @@ function drawItem(level, name, x, y, dirs, inventory = false){
 			break;
 		case "bufferGate":
 			ctx.drawImage(bufferGate, x*selW+x, y*selH+y);
+			drawPipes(level, x, y, dirs);
+			break;
+		case "orGate":
+			ctx.drawImage(orGate, x*selW+x, y*selH+y);
 			drawPipes(level, x, y, dirs);
 			break;
 	}

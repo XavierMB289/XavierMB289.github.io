@@ -1,0 +1,25 @@
+{
+	"name": "OR, we could not?",
+	"hints": ["OR gates output if any of the inputs are powered"],
+	"level": [
+		["button", "e", 5, 3, false, "img"],
+		["wire", "w,e", 6, 3, false],
+		["wire", "w,s", 7, 3, false],
+		["button", "e", 5, 5, false, "img"],
+		["wire", "w,e", 6, 5, false],
+		["wire", "w,n", 7, 5, false],
+		
+		["orGate", "n,s,e", 7, 4, false, "gate"],
+		["battery", "w", 8, 4, false, "img"]
+	],
+	"inv": [
+		null,
+		null,
+		null,
+		null,
+		null,
+		null
+	],
+	"startInGrid": [true, 5, 4],
+	"disabledKeys": []
+}
