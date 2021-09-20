@@ -76,7 +76,7 @@ class Gate{
 	}
 	#genOutput(level, selW, energize, getPath=""){
 		var userSelect = this.coords[0]+(this.coords[1]*12)+6;
-		var next = getNextItem(level, userSelect, getPath);
+		var next = getNextGate(level, userSelect, getPath);
 		addNode(this.coords[0]+.5, this.coords[1]+.5, selW, getImage(energize == 1 ? "img/power.png": "img/powerless.png"), getPathToNext(level, userSelect, getPath), energize, function(){
 			if(next != null){
 				if(next[0].toLowerCase().includes("gate")){

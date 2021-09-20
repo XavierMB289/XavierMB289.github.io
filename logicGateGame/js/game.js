@@ -178,7 +178,7 @@ function gameKeyUp(e){
 					if(temp[0] == "button"){
 						if(temp[5] == buttonSwitch[0]){
 							level.level[getItemIndex(level, temp[2], temp[3])][4] = true;
-							var next = getNextItem(level, userSelect);
+							var next = getNextGate(level, userSelect);
 							addNode(x+.5, y+.5, selW, getImage("img/power.png"), getPathToNext(level, userSelect), 1, function(){
 								if(next != null){
 									if(next[0].toLowerCase().includes("gate")){
@@ -188,7 +188,7 @@ function gameKeyUp(e){
 							});
 						}else{
 							level.level[getItemIndex(level, temp[2], temp[3])][4] = false;
-							var next = getNextItem(level, userSelect);
+							var next = getNextGate(level, userSelect);
 							addNode(x+.5, y+.5, selW, getImage("img/powerless.png"), getPathToNext(level, userSelect), -1, function(){
 								if(next != null){
 									if(next[0].toLowerCase().includes("gate")){
