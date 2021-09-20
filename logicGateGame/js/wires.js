@@ -32,8 +32,8 @@ function drawPipes(level, x, y, dirs, gate = true){
 		energy = energyItem[4];
 	}
 	var nextEnergy = false;
-	if(getPrevItemIndex(level, energyItem) != null){
-		prevEnergy = getPrevItem(level, energyItem)[4];
+	if(getNextItemIndex(level, energyItem) != null){
+		nextEnergy = getNextItem(level, energyItem)[4];
 	}
 	
 	if(inputDir != null){
@@ -53,12 +53,12 @@ function drawPipes(level, x, y, dirs, gate = true){
 			}
 			if(gate != false){
 				ctx.drawImage(gatePipe, -selW/2, -selH/2);
-				if(prevEnergy != false){
+				if(energy != false){
 					ctx.drawImage(energizedGatePipe, -selW/2, -selH/2);
 				}
 			}else{
 				ctx.drawImage(pipe, -selW/2, -selH/2);
-				if(prevEnergy != false){
+				if(energy != false){
 					ctx.drawImage(energizedPipe, -selW/2, -selH/2);
 				}
 				ctx.drawImage(pipePip, -selW/2, -selH/2);
@@ -84,12 +84,12 @@ function drawPipes(level, x, y, dirs, gate = true){
 			}
 			if(gate != false){
 				ctx.drawImage(gatePipeOutput, -selW/2, -selH/2);
-				if(energy != false){
+				if(nextEnergy != false){
 					ctx.drawImage(energizedGatePipe, -selW/2, -selH/2);
 				}
 			}else{
 				ctx.drawImage(pipeOutput, -selW/2, -selH/2);
-				if(energy != false){
+				if(nextEnergy != false){
 					ctx.drawImage(energizedPipe, -selW/2, -selH/2);
 				}
 				ctx.drawImage(pipePip, -selW/2, -selH/2);

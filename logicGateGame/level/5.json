@@ -2,16 +2,16 @@
 	"name": "A new Foe has appeared",
 	"hints": ["E will change the hints...", "R will restart the level", "AND gates only output if both inputs are enabled"],
 	"level": [
-		["button", "e", 3, 2, false, "img"],
-		["wire", "w,e", 4, 2, false],
-		["wire", "w,s", 5, 2, false],
-		["wire", "n,s", 5, 3, false],
-		["button", "e", 3, 5, false, "img"],
-		["wire", "w,e", 4, 5, false],
-		["wire", "w,n", 5, 5, false],
-		["andGate", "n,s,e", 5, 4, false, "gate"],
-		["wire", "w,e", 6, 4, false],
-		["battery", "w", 7, 4, false, "img"]
+		["button", [null,"e"], 3, 2, false, "img"],
+		["wire", ["w","e"], 4, 2, false],
+		["wire", ["w","s"], 5, 2, false],
+		["wire", ["n","s"], 5, 3, false],
+		["button", [null,"e"], 3, 5, false, "img"],
+		["wire", ["w","e"], 4, 5, false],
+		["wire", ["w","n"], 5, 5, false],
+		["andGate", ["n,s","e"], 5, 4, false, "gate"],
+		["wire", ["w","e"], 6, 4, false],
+		["battery", ["w",null], 7, 4, false, "img"]
 	],
 	"inv": [
 		null,

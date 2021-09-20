@@ -2,18 +2,18 @@
 	"name": "And now I'm BUFF",
 	"hints": ["BUFFER's are supposed to output the input...", "...but here, they split it."],
 	"level": [
-		["button", "n", 2, 5, false, "img"],
-		["wire", "s,e", 2, 4, false],
-		["bufferGate", "w,s,n", 3, 4, false, "gate"],
-		["wire", "s,e", 3, 3, false],
-		["wire", "w,e", 4, 3, false],
-		["wire", "w,s", 5, 3, false],
+		["button", [null,"n"], 2, 5, false, "img"],
+		["wire", ["s","e"], 2, 4, false],
+		["bufferGate", ["w","s,n"], 3, 4, false, "gate"],
+		["wire", ["s","e"], 3, 3, false],
+		["wire", ["w","e"], 4, 3, false],
+		["wire", ["w","s"], 5, 3, false],
 		
-		["wire", "n,e", 3, 5, false],
-		["wire", "w,e", 4, 5, false],
-		["wire", "w,n", 5, 5, false],
-		["andGate", "n,s,e", 5, 4, false, "gate"],
-		["battery", "w", 6, 4, false, "img"]
+		["wire", ["n","e"], 3, 5, false],
+		["wire", ["w","e"], 4, 5, false],
+		["wire", ["w","n"], 5, 5, false],
+		["andGate", ["n,s","e"], 5, 4, false, "gate"],
+		["battery", ["w",null], 6, 4, false, "img"]
 	],
 	"inv": [
 		null,

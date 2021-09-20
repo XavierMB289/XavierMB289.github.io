@@ -2,11 +2,11 @@
 	"name": "Inventory Management",
 	"hints": ["BACKSPACE will change to the Inventory and back"],
 	"level": [
-		["button", "e", 3, 2, false, "img"],
-		["wire", "w,e", 4, 2, false],
-		["wire", "w,e", 6, 2, false],
-		["wire", "w,e", 7, 2, false],
-		["battery", "w", 8, 2, false, "img"]
+		["button", [null,"e"], 3, 2, false, "img"],
+		["wire", ["w","e"], 4, 2, false],
+		["wire", ["w","e"], 6, 2, false],
+		["wire", ["w","e"], 7, 2, false],
+		["battery", ["w",null], 8, 2, false, "img"]
 	],
 	"inv": [
 		null,

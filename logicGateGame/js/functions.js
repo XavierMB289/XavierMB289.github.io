@@ -231,6 +231,31 @@ function getNextItem(level, item, inDir=""){
 	}
 	return getItem(level, x, y);
 }
+function getNextItemIndex(level, item, inDir=""){
+	var dir = null;
+	if(inDir != ""){
+		dir = inDir;
+	}else if(item[1][1] != null){
+		dir = item[1][1].length > 1 ? item[1][1].split(",")[0] : item[1][1];
+	}
+	var x = item[2];
+	var y = item[3];
+	switch(dir){
+		case "n":
+			y--;
+			break;
+		case "s":
+			y++;
+			break;
+		case "e":
+			x++;
+			break;
+		case "w":
+			x--;
+			break;
+	}
+	return getItemIndex(level, x, y);
+}
 function getPathToNext(level, userSelect, getPath=""){ //Similar to getNextGate but outputs the 2d array for particles
 	var ret = [];
 	var temp = userSelect - 6;
