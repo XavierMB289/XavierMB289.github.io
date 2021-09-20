@@ -12,9 +12,9 @@
 		["battery", ["s",null], 5, 2, false, "img"]
 	],
 	"inv": [
-		["wire", "e,s", "inv", 1],
-		["wire", "n,s", "inv", 2],
-		["wire", "s,n", "inv", 2],
+		["wire", ["e","s"], "inv", 1],
+		["wire", ["n","s"], "inv", 2],
+		["wire", ["s","n"], "inv", 2],
 		null,
 		null,
 		null

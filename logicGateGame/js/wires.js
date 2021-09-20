@@ -32,7 +32,7 @@ function drawPipes(level, x, y, dirs, gate = true){
 		energy = energyItem[4];
 	}
 	var nextEnergy = false;
-	if(getNextItemIndex(level, energyItem) != null){
+	if(energyItem != null && getNextItemIndex(level, energyItem) != null){
 		nextEnergy = getNextItem(level, energyItem)[4];
 	}
 	

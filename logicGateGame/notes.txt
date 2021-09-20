@@ -2,4 +2,4 @@ TODO:
 Add more levels...
 start making omnigate
 start on the gate movement
-fix wires so (1/2 energizes when it's energized, and 2/2 does it when the next one is...)
+fix picking up items (level 2)

@@ -13,7 +13,7 @@
 		null,
 		null,
 		null,
-		["wire", "w,e", "inv", 1],
+		["wire", ["w","e"], "inv", 1],
 		null
 	],
 	"startInGrid": [true, 5, 2],
