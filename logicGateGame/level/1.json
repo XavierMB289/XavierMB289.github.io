@@ -2,7 +2,7 @@
 	"name": "Baby Steps",
 	"hints": ["Use ENTER to Activate/Pickup/Putdown"],
 	"level": [
-		["button", ["e",null], 3, 2, false, "img"],
+		["button", [null,"e"], 3, 2, false, "img"],
 		["wire", ["w", "e"], 4, 2, false],
 		["wire", ["w", "e"], 5, 2, false],
 		["wire", ["w", "e"], 6, 2, false],

@@ -37,19 +37,23 @@ function batteryUpdate(level, currentLevel){
 class Gate{
 	selW = null;
 	dirs = null;
+	inputDir = null;
+	outputDir = null;
 	coords = null;
 	inputs = null; //Binary Algebra
 	inputCoords = null; //Where to look for the Energized tag
 	gateType = null;
 	
 	constructor(dirs, coords, gateType){
-		this.dirs = dirs.length > 1 ? dirs.split(",") : [dirs];
+		this.dirs = dirs;
+		this.inputDir = dirs[0].length > 1 ? dirs[0].split(",") : [dirs[0]];
+		this.outputDir = dirs[1].length > 1 ? dirs[1].split(",") : [dirs[1]];
 		this.coords = coords;
 		this.inputs = [0, 0];
-		this.inputCoords = [[0,0], [0,0]];
+		this.inputCoords = new Array(outputDir.length);
 		this.gateType = gateType;
-		for(let i = 0; i < Math.min(this.dirs.length, 2); i++){
-			switch(this.dirs[i]){
+		for(let i = 0; i < inputDir.length; i++){
+			switch(this.outputDir[i]){
 				case "n":
 					this.inputCoords[i] = [coords[0], coords[1]-1];
 					break;
@@ -103,8 +107,8 @@ class Gate{
 			case "buffer":
 				if(this.inputs[0] == 1){
 					var tempLevel = level;
-					for(var i = 1; i < this.dirs.length; i++){
-						level = this.#genOutput(tempLevel, selW, 1, this.dirs[i]);
+					for(var i = 0; i < this.outputDir.length; i++){
+						level = this.#genOutput(tempLevel, selW, 1, this.outputDir[i]);
 					}
 				}
 				break;

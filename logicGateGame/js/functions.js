@@ -160,12 +160,15 @@ function getNextItem(level, userSelect, getPath=""){
 	var levelX = temp % 12;
 	var levelY = Math.floor(temp/12);
 	var item = getItem(level, levelX, levelY);
-	var prevDir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
+	var prevDir = null;
 	if(getPath != ""){
 		prevDir = getPath;
+	}else if(item[1][1] != null){
+		prevDir = item[1][1].length > 1 ? item[1][1][item[1][1].length-1] : item[1][1];
 	}
 	var dir = prevDir;
 	do{
+		console.log(item);
 		switch(dir){
 			case "n":
 				if(prevDir=="s"){
@@ -197,7 +200,7 @@ function getNextItem(level, userSelect, getPath=""){
 		if(item==null){
 			return null;
 		}
-		dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
+		dir = item[1][1].length > 1 ? item[1][1][item[1][1].length-1] : item[1][1];
 	}while(item[0]!="battery"&&item[0].toLowerCase().includes("gate")!=true);
 	return item;
 }
@@ -208,7 +211,7 @@ function getPathToNext(level, userSelect, getPath=""){ //Similar to getNextItem 
 	var levelY = Math.floor(temp/12);
 	ret.push([levelX+0.5, levelY+0.5]); //ADDING The start so reverse array will work
 	var item = getItem(level, levelX, levelY);
-	var prevDir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
+	var prevDir = item[1][1].length > 1 ? item[1][1][item[1][1].length-1] : item[1][1];
 	if(getPath != ""){
 		prevDir = getPath;
 	}
@@ -248,7 +251,7 @@ function getPathToNext(level, userSelect, getPath=""){ //Similar to getNextItem 
 		if(item==null){
 			break;
 		}
-		dir = item[1].length > 1 ? item[1][item[1].length-1] : item[1];
+		dir = item[1][1].length > 1 ? item[1][1][item[1][1].length-1] : item[1][1];
 	}while(item[0]!="battery"&&item[0].toLowerCase().includes("gate")!=true);
 	ret.push([levelX+0.5, levelY+0.5]); //NO MATTER WHAT: adds last location
 	return ret;
@@ -267,8 +270,11 @@ function deenergize(level, x, y){
 	}
 	return level;
 }
-function getPrevItem(level, item){ //WARNING! ONLY RETURNS ONE PREVIOUS ITEM!
-	var dir = item[1].length > 1 ? item[1][0] : item[1];
+function getPrevItem(level, item, inDir=""){ //WARNING! ONLY RETURNS ONE PREVIOUS ITEM!
+	var dir = item[1][0].length > 1 ? item[1][0].split(",")[0] : item[1][0];
+	if(inDir != ""){
+		dir = inDir;
+	}
 	var x = item[2];
 	var y = item[3];
 	switch(dir){
@@ -287,8 +293,11 @@ function getPrevItem(level, item){ //WARNING! ONLY RETURNS ONE PREVIOUS ITEM!
 	}
 	return getItem(level, x, y);
 }
-function getPrevItemIndex(level, item){
-	var dir = item[1].length > 1 ? item[1][0] : item[1];
+function getPrevItemIndex(level, item, inDir=""){
+	var dir = item[1][0].length > 1 ? item[1][0].split(",")[0] : item[1][0];
+	if(inDir != ""){
+		dir = inDir;
+	}
 	var x = item[2];
 	var y = item[3];
 	switch(dir){

@@ -28,21 +28,21 @@ window.onload = function(){
 	document.onkeyup = menuKeyUp;
 	
 	menuLevel.level = [
-		["wire", "s,e", 0, 0, false],
-		["wire", "w,s", 1, 0, false],
-		["wire", "n,s", 2, 0, false],
-		["wire", "s,e", 4, 0, false],
-		["wire", "w,s", 5, 0, false],
-		["wire", "n,e", 6, 0, false],
-		["wire", "n,w,s", 7, 0, false],
-		["wire", "s,e,n", 0, 1, false],
-		["wire", "n,w", 1, 1, false],
-		["wire", "n,e", 2, 1, false],
-		["wire", "w,e", 3, 1, false],
-		["wire", "s,e,n", 4, 1, false],
-		["wire", "s,w,n", 5, 1, false],
-		["wire", "n,e", 6, 1, false],
-		["wire", "w,n", 7, 1, false]
+		["wire", ["s","e"], 0, 0, false],
+		["wire", ["w","s"], 1, 0, false],
+		["wire", ["n","s"], 2, 0, false],
+		["wire", ["s","e"], 4, 0, false],
+		["wire", ["w","s"], 5, 0, false],
+		["wire", ["n","e"], 6, 0, false],
+		["wire", ["n,w,s",null], 7, 0, false],
+		["wire", ["s,e,n",null], 0, 1, false],
+		["wire", ["n","w"], 1, 1, false],
+		["wire", ["n","e"], 2, 1, false],
+		["wire", ["w","e"], 3, 1, false],
+		["wire", ["s,e,n",null], 4, 1, false],
+		["wire", ["s,w,n",null], 5, 1, false],
+		["wire", ["n","e"], 6, 1, false],
+		["wire", ["w","n"], 7, 1, false]
 	];
 	
 	update();
