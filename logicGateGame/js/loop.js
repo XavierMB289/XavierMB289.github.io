@@ -22,6 +22,7 @@ window.onload = function(){
 	
 	wireInit();
 	gateInit();
+	initAudio();
 	gameInit();
 	
 	state = loopMenu;
@@ -60,6 +61,7 @@ function update() {
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
 		
 		state(tileW, tileH);
+		updateAudio();
 		
 		loopDelay = loopDelaySet;
 	}

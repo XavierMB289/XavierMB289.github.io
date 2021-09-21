@@ -1,5 +1,4 @@
 TODO:
 Add more levels...
 start making omnigate
-start on the gate movement
-fix picking up items (level 2)
+fix audio update (on has ended, delete)...
