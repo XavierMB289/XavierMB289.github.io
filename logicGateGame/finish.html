@@ -28,6 +28,14 @@
 			<p>
 				I wanted to create an experience that was both puzzling yet educational. I hope that experience has been shown to you.
 			</p>
+			<button onclick="deleteSave();">RESTART</button>
 		</div>
+		<script src="js/functions.js"></script>
+		<script>
+			function deleteSave(){
+				setCookie("currentLevel", 1, -1);
+				window.location = "index.html";
+			}
+		</script>
 	</body>
 </html>
