@@ -113,7 +113,7 @@ function slowGameUpdate(){
 	
 	ctx.translate(-(canvasW/2-6*selW-6),-20);
 	
-	ctx.drawImage(audioImg[muted?1:0], 10, 10);
+	ctx.drawImage(audioImg[muted?1:0], canvasW-audioImg[0].width-10, canvasH-audioImg[0].height-10);
 	
 	var temp = batteryUpdate(level, currentLevel);
 	level = temp[0];

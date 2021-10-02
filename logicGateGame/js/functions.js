@@ -199,7 +199,7 @@ function getNextGate(level, userSelect, getPath=""){
 		if(item==null){
 			return null;
 		}
-		if(item[1][1] != null){ //FOR THE LOOP STOP...
+		if(item[1][1] == null){ //FOR THE LOOP STOP...
 			break;
 		}
 		dir = item[1][1].length > 1 ? item[1][1][item[1][1].length-1] : item[1][1];

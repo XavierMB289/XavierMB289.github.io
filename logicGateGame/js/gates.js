@@ -50,10 +50,10 @@ class Gate{
 		this.outputDir = dirs[1].length > 1 ? dirs[1].split(",") : [dirs[1]];
 		this.coords = coords;
 		this.inputs = [0, 0];
-		this.inputCoords = new Array(outputDir.length);
+		this.inputCoords = new Array(this.inputDir.length);
 		this.gateType = gateType;
-		for(let i = 0; i < inputDir.length; i++){
-			switch(this.outputDir[i]){
+		for(let i = 0; i < this.inputDir.length; i++){
+			switch(this.inputDir[i]){
 				case "n":
 					this.inputCoords[i] = [coords[0], coords[1]-1];
 					break;
@@ -71,8 +71,8 @@ class Gate{
 	}
 	#getInputs(level){
 		var list = level.level;
-		this.inputs[0] = (list.filter(x => { return x[2]==this.inputCoords[0][0]&&x[3]==this.inputCoords[0][1] })[0])[4];
-		this.inputs[1] = (list.filter(x => { return x[2]==this.inputCoords[1][0]&&x[3]==this.inputCoords[1][1] })[0])[4];
+		if(this.inputCoords.length > 0){ this.inputs[0] = (list.filter(x => { return x[2]==this.inputCoords[0][0]&&x[3]==this.inputCoords[0][1] })[0])[4];}
+		if(this.inputCoords.length > 1){ this.inputs[1] = (list.filter(x => { return x[2]==this.inputCoords[1][0]&&x[3]==this.inputCoords[1][1] })[0])[4];}
 	}
 	#genOutput(level, selW, energize, getPath=""){
 		var userSelect = this.coords[0]+(this.coords[1]*12)+6;
@@ -113,7 +113,7 @@ class Gate{
 				}
 				break;
 			case "or":
-				if(this.input[0] == 1 || this.input[1] == 1){
+				if(this.inputs[0] == 1 || this.input[1] == 1){
 					return this.#genOutput(level, selW, 1);
 				}
 				break;
