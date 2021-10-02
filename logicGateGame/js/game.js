@@ -1,5 +1,5 @@
 //Game Variables
-var unselected, selected, left, right;
+var unselected, selected, left, right, audioImg;
 var selW, selH;
 var userSelect = 0, oldUS = 0, userItem = null; //The keypress is handled based on what this is... userItem = [name, direction, oldCoords]
 var level, currentLevel, currentHint;
@@ -15,6 +15,7 @@ function gameInit(){
 	selected = getImage("img/selected_slot.png");
 	left = getImage("img/left_comma.png");
 	right = getImage("img/right_period.png");
+	audioImg = [getImage("img/audio_on.png"), getImage("img/audio_off.png")];
 	
 	selected.onload = function(){ //allows for download and play on desktop
 		selW = selected.width;
@@ -58,9 +59,6 @@ function loadGameLevel(obj){
 		userSelect = level.startInGrid[2] * 12 + level.startInGrid[1] + 6;
 	}
 	currentHint = 0;
-}
-function gameUpdate(){
-	
 }
 function slowGameUpdate(){
 	
@@ -115,6 +113,8 @@ function slowGameUpdate(){
 	
 	ctx.translate(-(canvasW/2-6*selW-6),-20);
 	
+	ctx.drawImage(audioImg[muted?1:0], 10, 10);
+	
 	var temp = batteryUpdate(level, currentLevel);
 	level = temp[0];
 	currentLevel = temp[1];
@@ -127,6 +127,11 @@ function gameKeyUp(e){
 	if(level.disabledKeys.includes(letter)){
 		return;
 	}
+	
+	if("wasd".split("").includes(letter)){
+		createPlayer("effects/move.wav", 0.5);
+	}
+	
 	if(userSelect < 6){ //if in the inventory
 		switch(letter){
 			case "a": //left
@@ -241,6 +246,9 @@ function gameKeyUp(e){
 			break;
 		case "r":
 			getLevel("level/"+currentLevel+".json", loadGameLevel);
+			break;
+		case "m":
+			muted = !muted;
 			break;
 	}
 }

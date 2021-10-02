@@ -109,4 +109,5 @@ function loopGame(tileW, tileH){
 	}
 	ctx.translate(-(canvasW/2-6*tileW-6),-20);
 	slowGameUpdate();
+	updateAudio();
 }
