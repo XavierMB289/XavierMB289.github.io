@@ -1,4 +1,4 @@
-var buttonSwitch, battery, andGate, notGate, bufferGate, orGate;
+var buttonSwitch, battery, andGate, notGate, bufferGate, orGate, omniImg;
 var batteryTimer = 7;
 var batteryItem = null, prevItemIndex = null;
 
@@ -9,6 +9,7 @@ function gateInit(){
 	notGate = getImage("img/not_gate.png");
 	bufferGate = getImage("img/buffer_gate.png");
 	orGate = getImage("img/or_gate.png");
+	omniImg = getImage("img/omni_gate.png");
 }
 
 function batteryUpdate(level, currentLevel){
@@ -69,12 +70,12 @@ class Gate{
 			}
 		}
 	}
-	#getInputs(level){
+	getInputs(level){
 		var list = level.level;
 		if(this.inputCoords.length > 0){ this.inputs[0] = (list.filter(x => { return x[2]==this.inputCoords[0][0]&&x[3]==this.inputCoords[0][1] })[0])[4];}
 		if(this.inputCoords.length > 1){ this.inputs[1] = (list.filter(x => { return x[2]==this.inputCoords[1][0]&&x[3]==this.inputCoords[1][1] })[0])[4];}
 	}
-	#genOutput(level, selW, energize, getPath=""){
+	genOutput(level, selW, energize, getPath=""){
 		var userSelect = this.coords[0]+(this.coords[1]*12)+6;
 		var next = getNextGate(level, userSelect, getPath);
 		addNode(this.coords[0]+.5, this.coords[1]+.5, selW, getImage(energize == 1 ? "img/power.png": "img/powerless.png"), getPathToNext(level, userSelect, getPath), energize, function(){
@@ -160,6 +161,10 @@ function drawItem(level, name, x, y, dirs, inventory = false){
 			break;
 		case "orGate":
 			ctx.drawImage(orGate, x*selW+x, y*selH+y);
+			drawPipes(level, x, y, dirs);
+			break;
+		case "omniGate":
+			ctx.drawImage(omniImg, x*selW+x, y*selH+y);
 			drawPipes(level, x, y, dirs);
 			break;
 	}

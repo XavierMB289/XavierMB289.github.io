@@ -39,7 +39,11 @@ function loadGameLevel(obj){
 		var item = level.level[i];
 		if(item[0].includes("Gate")){
 			var gate = item[0].split("Gate")[0];
-			level.level[i][5] = new Gate(item[1], [item[2], item[3]], gate);
+			if(gate != "omni"){
+				level.level[i][5] = new Gate(item[1], [item[2], item[3]], gate);
+			}else{
+				level.level[i][5] = new Omnigate(item[1], [item[2], item[3]], gate, item[6]);
+			}
 			continue;
 		}
 		switch(item[0]){ //Item name

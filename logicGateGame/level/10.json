@@ -4,7 +4,7 @@
 	"level": [
 		["button", [null,"e"], 5, 3, false, "img"],
 		["wire", ["w","s"], 6, 3, false],
-		["omniGate", ["n","w"], 6, 4, false, "gate"],
+		["omniGate", ["n","w"], 6, 4, false, "gate", "omni0"],
 		["wire", ["e","s"], 5, 4, false],
 		["battery", ["n",null], 5, 5, false, "img"]
 	],
