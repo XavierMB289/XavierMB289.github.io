@@ -87,35 +87,35 @@ class Gate{
 		});
 	}
 	solveGate(level, selW){
-		this.#getInputs(level);
+		this.getInputs(level);
 		if(nodes.length > 1){ //Make sure there is only 1?
 			return level;
 		}
 		switch(this.gateType){
 			case "and":
 				if(this.inputs[0] * this.inputs[1] == 1){
-					return this.#genOutput(level, selW, 1);
+					return this.genOutput(level, selW, 1);
 				}
 				break;
 			case "not":
 				var item = getItem(level, this.coords[0], this.coords[1]);
 				if(this.inputs[0] != 1 && item[4] != true){
-					return this.#genOutput(level, selW, 1);
+					return this.genOutput(level, selW, 1);
 				}else if(this.inputs[0] != 0 && item[4] != false){
-					return this.#genOutput(level, selW, -1);
+					return this.genOutput(level, selW, -1);
 				}
 				break;
 			case "buffer":
 				if(this.inputs[0] == 1){
 					var tempLevel = level;
 					for(var i = 0; i < this.outputDir.length; i++){
-						level = this.#genOutput(tempLevel, selW, 1, this.outputDir[i]);
+						level = this.genOutput(tempLevel, selW, 1, this.outputDir[i]);
 					}
 				}
 				break;
 			case "or":
 				if(this.inputs[0] == 1 || this.input[1] == 1){
-					return this.#genOutput(level, selW, 1);
+					return this.genOutput(level, selW, 1);
 				}
 				break;
 		}
