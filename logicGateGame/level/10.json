@@ -23,6 +23,6 @@
 		["wire", ["w","e"], 5, 3, false],
 		["wire", ["w","e"], 6, 3, false],
 		["wire", ["w","e"], 7, 3, false],
-		["output", ["w",null], 8, 3, false],
+		["output", ["w",null], 8, 3, false]
 	]
 }
