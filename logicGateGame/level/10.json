@@ -18,7 +18,7 @@
 	],
 	"startInGrid": [true, 5, 4],
 	"disabledKeys": [],
-	"omni0":[
+	"omni0": [
 		["input", [null,"e"], 4, 3, false],
 		["wire", ["w","e"], 5, 3, false],
 		["wire", ["w","e"], 6, 3, false],

@@ -1,5 +1,5 @@
 //Game Variables
-var unselected, selected, left, right, audioImg;
+var unselected, selected, left, right, audioImg, inputImg, outputImg;
 var selW, selH;
 var userSelect = 0, oldUS = 0, userItem = null; //The keypress is handled based on what this is... userItem = [name, direction, oldCoords]
 var level, currentLevel, currentHint;
@@ -16,6 +16,9 @@ function gameInit(){
 	left = getImage("img/left_comma.png");
 	right = getImage("img/right_period.png");
 	audioImg = [getImage("img/audio_on.png"), getImage("img/audio_off.png")];
+	inputImg = getImage("img/input.png");
+	outputImg = getImage("img/output.png");
+	
 	
 	selected.onload = function(){ //allows for download and play on desktop
 		selW = selected.width;
@@ -24,14 +27,14 @@ function gameInit(){
 	
 	currentLevel = getCookie("currentLevel");
 	if(currentLevel == ""){
-		currentLevel = 1;
+		currentLevel = 10;
 	}else{
 		currentLevel = parseInt(currentLevel);
 	}
 	
 	getLevel("level/"+currentLevel+".json", loadGameLevel);
 }
-function loadGameLevel(obj){
+function loadGameLevel(obj, firstTime=true){
 	//getting the level obj from ajax workaround
 	level = obj;
 	//setting up the images for the level... ALSO SETTING UP THE GATES!!!
@@ -53,16 +56,24 @@ function loadGameLevel(obj){
 			case "battery":
 				level.level[i][5] = battery[0];
 				break;
+			case "input":
+				level.level[i][5] = inputImg;
+				break;
+			case "output":
+				level.level[i][5] = outputImg;
+				break;
 		}
 	}
-	//Trying to fix this problem with battery
-	var temp = batteryUpdate(level, currentLevel);
-	level = temp[0];
-	currentLevel = temp[1];
-	if(level.startInGrid[0]){
-		userSelect = level.startInGrid[2] * 12 + level.startInGrid[1] + 6;
+	if(firstTime != false){
+		//Trying to fix this problem with battery
+		var temp = batteryUpdate(level, currentLevel);
+		level = temp[0];
+		currentLevel = temp[1];
+		if(level.startInGrid[0]){
+			userSelect = level.startInGrid[2] * 12 + level.startInGrid[1] + 6;
+		}
+		currentHint = 0;
 	}
-	currentHint = 0;
 }
 function slowGameUpdate(){
 	
@@ -207,6 +218,8 @@ function gameKeyUp(e){
 							});
 						}
 						level = alterItem(level, temp, buttonSwitch);
+					}else if(temp[0] == "omniGate"){ //Here is the code that checks for omnigates
+						temp[5].onUserSelect(level);
 					}
 				}else if(temp == null){
 					if(userItem != null){
@@ -220,9 +233,13 @@ function gameKeyUp(e){
 					level = returnItem(level, userItem);
 					userItem = null;
 				}
-				temp = userSelect;
-				userSelect = oldUS;
-				oldUS = temp;
+				if(inOmnigate != true){
+					temp = userSelect;
+					userSelect = oldUS;
+					oldUS = temp;
+				}else{
+					level.level = omnigates[omnigates.length-1].onReturn(level);
+				}
 				break;
 			default:
 				console.log(letter);

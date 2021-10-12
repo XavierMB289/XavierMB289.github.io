@@ -17,21 +17,23 @@ function batteryUpdate(level, currentLevel){
 	if(prevItemIndex == null){
 		prevItemIndex = getPrevItemIndex(level, batteryItem);
 	}
-	if(batteryItem[4]){
-		if(--batteryTimer <= 0 && nodes.length < 1){
-			batteryTimer = 7;
-			prevItemIndex = null;
-			currentLevel++;
-			getLevel("level/"+currentLevel+".json", loadGameLevel);
-			batteryItem = getItemByName(level, "battery");
+	if(batteryItem != null){
+		if(batteryItem[4] != false){
+			if(--batteryTimer <= 0 && nodes.length < 1){
+				batteryTimer = 7;
+				prevItemIndex = null;
+				currentLevel++;
+				getLevel("level/"+currentLevel+".json", loadGameLevel);
+				batteryItem = getItemByName(level, "battery");
+			}else{
+				level = alterItem(level, batteryItem, [battery[2]]);
+			}
+		}else if(prevItemIndex != null && level.level[prevItemIndex][4]){
+			level = alterItem(level, batteryItem, [battery[1]]);	
 		}else{
-			level = alterItem(level, batteryItem, [battery[2]]);
+			batteryTimer = 7;
+			level = alterItem(level, batteryItem, [battery[0]]);
 		}
-	}else if(prevItemIndex != null && level.level[prevItemIndex][4]){
-		level = alterItem(level, batteryItem, [battery[1]]);	
-	}else{
-		batteryTimer = 7;
-		level = alterItem(level, batteryItem, [battery[0]]);
 	}
 	return [level, currentLevel];
 }
@@ -127,6 +129,8 @@ function drawItem(level, name, x, y, dirs, inventory = false){
 		switch(name){ //Item name
 			case "button":
 			case "battery":
+			case "input":
+			case "output":
 				ctx.drawImage(getItemImage(level, x, y), x*selW+x, y*selH+y);
 				drawPipes(level, x, y, dirs);
 				break;
