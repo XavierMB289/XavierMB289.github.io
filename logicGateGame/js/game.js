@@ -27,7 +27,7 @@ function gameInit(){
 	
 	currentLevel = getCookie("currentLevel");
 	if(currentLevel == ""){
-		currentLevel = 10;
+		currentLevel = 1;
 	}else{
 		currentLevel = parseInt(currentLevel);
 	}
@@ -240,11 +240,12 @@ function gameKeyUp(e){
 					level = returnItem(level, userItem);
 					userItem = null;
 				}
-				if(inOmnigate != true){
-					temp = userSelect;
-					userSelect = oldUS;
-					oldUS = temp;
-				}else{
+				temp = userSelect;
+				userSelect = oldUS;
+				oldUS = temp;
+				break;
+			case "6":
+				if(inOmnigate != false){
 					level = omnigates[omnigates.length-1].onReturn(level);
 				}
 				break;

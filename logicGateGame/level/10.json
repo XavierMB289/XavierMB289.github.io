@@ -1,6 +1,6 @@
 {
 	"name": "OMNI gate!",
-	"hints": ["OMNI gates allow for layering..."],
+	"hints": ["OMNI gates allow for layering...", "Use 6 (^) to go back...", "I'm sorry, I couldn't find a workaround..."],
 	"level": [
 		["button", [null,"e"], 5, 3, false, "img"],
 		["wire", ["w","s"], 6, 3, false],
