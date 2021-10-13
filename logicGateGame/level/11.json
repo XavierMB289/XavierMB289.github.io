@@ -1,0 +1,34 @@
+{
+	"name": "OMNI-ception",
+	"hints": ["But... it's the same..."],
+	"level": [
+		["button", [null,"e"], 5, 3, false, "img"],
+		["wire", ["w","s"], 6, 3, false],
+		["omniGate", ["n","w"], 6, 4, false, "gate", "omni0"],
+		["wire", ["e","s"], 5, 4, false],
+		["battery", ["n",null], 5, 5, false, "img"]
+	],
+	"inv": [
+		null,
+		null,
+		["wire", ["w","e"], "inv", 1],
+		null,
+		null,
+		null
+	],
+	"startInGrid": [true, 6, 4],
+	"disabledKeys": [],
+	"omni0": [
+		["input", [null,"e"], 4, 3, false],
+		["wire", ["w","e"], 5, 3, false],
+		["omniGate", ["w","e"], 6, 3, false, "gate", "omni1"],
+		["wire", ["w","e"], 7, 3, false],
+		["output", ["w",null], 8, 3, false]
+	],
+	"omni1": [
+		["input", [null,"e"], 4, 3, false],
+		["wire", ["w","e"], 5, 3, false],
+		["wire", ["w","e"], 7, 3, false],
+		["output", ["w",null], 8, 3, false]
+	]
+}

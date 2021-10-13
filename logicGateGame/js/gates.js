@@ -84,6 +84,8 @@ class Gate{
 			if(next != null){
 				if(next[0].toLowerCase().includes("gate")){
 					return next[5].solveGate(level, selW);
+				}else if(next[0].toLowerCase().includes("output")){
+					return omnigates[omnigates.length-1].onReturn(level, true);
 				}
 			}
 		});

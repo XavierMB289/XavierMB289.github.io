@@ -36,43 +36,46 @@ function gameInit(){
 }
 function loadGameLevel(obj, firstTime=true){
 	//getting the level obj from ajax workaround
-	level = obj;
+	var tempLevel = obj;
 	//setting up the images for the level... ALSO SETTING UP THE GATES!!!
-	for(var i = 0; i < level.level.length; i++){
-		var item = level.level[i];
+	for(var i = 0; i < tempLevel.level.length; i++){
+		var item = tempLevel.level[i];
 		if(item[0].includes("Gate")){
 			var gate = item[0].split("Gate")[0];
 			if(gate != "omni"){
-				level.level[i][5] = new Gate(item[1], [item[2], item[3]], gate);
+				tempLevel.level[i][5] = new Gate(item[1], [item[2], item[3]], gate);
 			}else{
-				level.level[i][5] = new Omnigate(item[1], [item[2], item[3]], gate, item[6]);
+				tempLevel.level[i][5] = new Omnigate(item[1], [item[2], item[3]], gate, item[6]);
 			}
 			continue;
 		}
 		switch(item[0]){ //Item name
 			case "button":
-				level.level[i][5] = buttonSwitch[0];
+				tempLevel.level[i][5] = buttonSwitch[0];
 				break;
 			case "battery":
-				level.level[i][5] = battery[0];
+				tempLevel.level[i][5] = battery[0];
 				break;
 			case "input":
-				level.level[i][5] = inputImg;
+				tempLevel.level[i][5] = inputImg;
 				break;
 			case "output":
-				level.level[i][5] = outputImg;
+				tempLevel.level[i][5] = outputImg;
 				break;
 		}
 	}
 	if(firstTime != false){
 		//Trying to fix this problem with battery
-		var temp = batteryUpdate(level, currentLevel);
-		level = temp[0];
+		var temp = batteryUpdate(tempLevel, currentLevel);
+		tempLevel = temp[0];
 		currentLevel = temp[1];
-		if(level.startInGrid[0]){
-			userSelect = level.startInGrid[2] * 12 + level.startInGrid[1] + 6;
+		if(tempLevel.startInGrid[0]){
+			userSelect = tempLevel.startInGrid[2] * 12 + tempLevel.startInGrid[1] + 6;
 		}
 		currentHint = 0;
+		level = tempLevel;
+	}else{
+		return tempLevel;
 	}
 }
 function slowGameUpdate(){
@@ -202,7 +205,9 @@ function gameKeyUp(e){
 							addNode(x+.5, y+.5, selW, getImage("img/power.png"), getPathToNext(level, userSelect), 1, function(){
 								if(next != null){
 									if(next[0].toLowerCase().includes("gate")){
-										level = next[5].solveGate(level, selW);
+										return next[5].solveGate(level, selW);
+									}else if(next[0].toLowerCase().includes("output")){
+										return omnigates[omnigates.length-1].onReturn(level, true);
 									}
 								}
 							});
@@ -212,14 +217,16 @@ function gameKeyUp(e){
 							addNode(x+.5, y+.5, selW, getImage("img/powerless.png"), getPathToNext(level, userSelect), -1, function(){
 								if(next != null){
 									if(next[0].toLowerCase().includes("gate")){
-										level = next[5].solveGate(level, selW);
+										return next[5].solveGate(level, selW);
+									}else if(next[0].toLowerCase().includes("output")){
+										return omnigates[omnigates.length-1].onReturn(level, true);
 									}
 								}
 							});
 						}
 						level = alterItem(level, temp, buttonSwitch);
 					}else if(temp[0] == "omniGate"){ //Here is the code that checks for omnigates
-						temp[5].onUserSelect(level);
+						level = temp[5].onUserSelect(level);
 					}
 				}else if(temp == null){
 					if(userItem != null){
@@ -238,7 +245,7 @@ function gameKeyUp(e){
 					userSelect = oldUS;
 					oldUS = temp;
 				}else{
-					level.level = omnigates[omnigates.length-1].onReturn(level);
+					level = omnigates[omnigates.length-1].onReturn(level);
 				}
 				break;
 			default:
