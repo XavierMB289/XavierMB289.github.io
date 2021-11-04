@@ -1,5 +1,5 @@
 //Game Variables
-var unselected, selected, left, right, audioImg, inputImg, outputImg;
+var unselected, selected, audioImg, inputImg, outputImg;
 var selW, selH;
 var userSelect = 0, oldUS = 0, userItem = null; //The keypress is handled based on what this is... userItem = [name, direction, oldCoords]
 var level, currentLevel, currentHint;
@@ -13,12 +13,9 @@ window.onbeforeunload = function(){
 function gameInit(){
 	unselected = getImage("img/unselected_slot.png");
 	selected = getImage("img/selected_slot.png");
-	left = getImage("img/left_comma.png");
-	right = getImage("img/right_period.png");
 	audioImg = [getImage("img/audio_on.png"), getImage("img/audio_off.png")];
 	inputImg = getImage("img/input.png");
 	outputImg = getImage("img/output.png");
-	
 	
 	selected.onload = function(){ //allows for download and play on desktop
 		selW = selected.width;

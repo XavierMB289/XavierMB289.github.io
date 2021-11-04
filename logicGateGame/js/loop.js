@@ -1,5 +1,5 @@
 //LOOP VARIABLES
-var tile; //images
+var tile, left, right; //images
 
 var loopDelaySet = 6;
 var loopDelay = loopDelaySet;
@@ -19,6 +19,8 @@ window.onload = function(){
 	canvasH = canvas.height;
 	
 	tile = getImage("img/tiles.png");
+	left = getImage("img/left_comma.png");
+	right = getImage("img/right_period.png");
 	
 	wireInit();
 	gateInit();
@@ -90,13 +92,58 @@ function loopMenu(tileW, tileH){
 		var dirs = menuLevel.level[i][1];
 		drawPipes(menuLevel, x, y, dirs, false);
 	}
+	ctx.drawImage(right, selW*9, selW*3.5);
+	ctx.translate(-(canvasW/2-4*tileW+4), -(canvasH/2));
+}
+function loopEditor(tileW, tileH){
+	ctx.translate(canvasW/2, canvasH/4);
+	ctx.font = "128px Caveat";
+	ctx.fillStyle = "#FFFF00";
+	var metric = ctx.measureText("Level Editor");
+	ctx.fillText("Level Editor", -(metric.width/2), 0);
+	ctx.translate(-(canvasW/2), -(canvasH/4));
+	
+	ctx.translate(canvasW/2-4*tileW+4, canvasH/2);
+	for(var x = 0; x < 8; x++){
+		for(var y = 0; y < 2; y++){
+			ctx.drawImage(tile, x*tileW+x, y*tileH+y);
+		}
+	}
+	for(var i = 0; i < menuLevel.level.length; i++){
+		var x = menuLevel.level[i][2];
+		var y = menuLevel.level[i][3];
+		var dirs = menuLevel.level[i][1];
+		drawPipes(menuLevel, x, y, dirs, false);
+	}
+	ctx.drawImage(left, -selW*2, selW*3.5);
 	ctx.translate(-(canvasW/2-4*tileW+4), -(canvasH/2));
 }
 
 function menuKeyUp(e){
-	if(e.key.toLowerCase() == "enter"){
-		state = loopGame;
-		document.onkeyup = gameKeyUp;
+	var keyName = e.key.toLowerCase();
+	switch(keyName){
+		case "enter":
+			state = loopGame;
+			document.onkeyup = gameKeyUp;
+			break;
+		case ">":
+		case ".":
+			state = loopEditor;
+			document.onkeyup = editorKeyUp;
+			break;
+	}
+}
+function editorKeyUp(e){
+	var keyName = e.key.toLowerCase();
+	switch(keyName){
+		case "enter":
+			window.location = "../LGG_LevelEditor/index.html";
+			break;
+		case "<":
+		case ",":
+			state = loopMenu;
+			document.onkeyup = menuKeyUp;
+			break;
 	}
 }
 
