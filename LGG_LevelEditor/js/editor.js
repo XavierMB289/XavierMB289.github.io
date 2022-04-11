@@ -89,10 +89,11 @@ document.onkeyup = function(e){
 					if(getItem(level, x, y) != null){
 						removeItem(level, x, y);
 					}
-					var dirs = prompt("DIRS: (n,s,e,w)\nTHE LAST LETTER IS THE OUTPUT\nExample:w,e");
+					var inputs = prompt("Input DIRS: (n,s,e,w)\nTHE LAST LETTER IS THE OUTPUT\nExample:w,e");
+					var outputs = prompt("Output DIRS: (n,s,e,w)\nTHE LAST LETTER IS THE OUTPUT\nExample:w,e");
 					var x = userSelect % 12;
 					var y = Math.floor(userSelect/12);
-					var tempArray = [userItem[0], dirs, x, y, false];
+					var tempArray = [userItem[0], [inputs,outputs], x, y, false];
 					if(userItem[0]!="wire"){
 						tempArray.push(userItem[1]);
 					}
