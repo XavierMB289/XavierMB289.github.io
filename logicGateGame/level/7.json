@@ -13,7 +13,7 @@
 	],
 	"inv": [
 		null,
-		["wire", ["w","e"], "inv", 1],
+		null,
 		["wire", ["e","w"], "inv", 1],
 		null,
 		null,
