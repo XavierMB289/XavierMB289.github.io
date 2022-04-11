@@ -1,7 +1,7 @@
 //Game Variables
 var selected, items;
 var selW, selH;
-var userSelect = 0, oldUS = null, userItem = null;
+var userSelect = 0, oldUS = null, userItem = null, hoveredItem = null;
 var level; //The new level...
 
 function gameInit(){
@@ -110,6 +110,16 @@ document.onkeyup = function(e){
 					userSelect = 96;
 				}
 				break;
+		}
+		if(letter == "w" || letter == "a" || letter == "s" || letter == "d"){
+			if(userSelect > 95){
+				var x = (userSelect-96) % 6;
+				var y = Math.floor((userSelect-96)/6);
+				var tempItem = getItem(level, x, y);
+				if(tempItem != null){
+					hoveredItem = tempItem;
+				}
+			}
 		}
 	}else{ //In "inventory"
 		var tempPos = userSelect - 96;
