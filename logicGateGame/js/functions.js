@@ -295,6 +295,7 @@ function getPathToNext(level, userSelect, getPath=""){ //Similar to getNextGate 
 			case "w":
 				if(prevDir=="e"){
 					return ret;
+					console.log("TESTING");
 				}
 				levelX--;
 				break;
