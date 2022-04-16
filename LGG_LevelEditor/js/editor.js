@@ -90,7 +90,9 @@ document.onkeyup = function(e){
 						removeItem(level, x, y);
 					}
 					var inputs = prompt("Input DIRS: (n,s,e,w)\nTHE LAST LETTER IS THE OUTPUT\nExample:w,e");
+					inputs = inputs == "" ? null : inputs;
 					var outputs = prompt("Output DIRS: (n,s,e,w)\nTHE LAST LETTER IS THE OUTPUT\nExample:w,e");
+					outputs = outputs == "" ? null : outputs;
 					var x = userSelect % 12;
 					var y = Math.floor(userSelect/12);
 					var tempArray = [userItem[0], [inputs,outputs], x, y, false];
