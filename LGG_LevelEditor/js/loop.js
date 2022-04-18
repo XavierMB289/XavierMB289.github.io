@@ -28,20 +28,24 @@ function update() {
 	var tileW = tile.width;
 	var tileH = tile.height;
 	
+	var f = document.getElementsByTagName("form")[0];
+	f.style.top = tileH*6+"px";
+	f.style.left = tileW*16+"px";
+	
 	if(loopDelay-- <= 0){
 		ctx.fillStyle = "#1a1a1a";
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
-		ctx.translate(10, canvasH/2-4*tileW-4);
+		ctx.translate(50, canvasH/2-4*tileW-4);
 		for(let x = 0; x < 12; x+=1){
 			for(let y = 0; y < 8; y+=1){
 				ctx.drawImage(tile, x*tileW+x, y*tileH+y);
 			}
 		}
-		ctx.translate(-10, -(canvasH/2-4*tileW-4));
+		ctx.translate(-50, -(canvasH/2-4*tileW-4));
 		
 		ctx.translate(canvasW-7*tileW-7, canvasH/2-4*tileW-4);
 		for(let x = 0; x < 6; x+=1){
-			for(let y = 0; y < 8; y+=1){
+			for(let y = 0; y < 3; y+=1){
 				ctx.drawImage(tile, x*tileW+x, y*tileH+y);
 				ctx.drawImage(unselected, x*tileW+x, y*tileH+y);
 			}

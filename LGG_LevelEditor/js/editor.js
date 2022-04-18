@@ -1,7 +1,7 @@
 //Game Variables
 var selected, items;
 var selW, selH;
-var userSelect = 0, oldUS = null, userItem = null, hoveredItem = null;
+var userSelect = 0, oldUS = null, userItem = null;
 var level; //The new level...
 
 function gameInit(){
@@ -42,7 +42,7 @@ function slowGameUpdate(){
 	ctx.font = "20px Caveat";
 	ctx.fillStyle = "#FFFFFF";
 	
-	ctx.translate(10, canvasH/2-4*selW-4);
+	ctx.translate(50, canvasH/2-4*selW-4);
 	for(var i = 0; i < level.level.length; i++){
 		var item = level.level[i];
 		var dirs = item[1];
@@ -58,7 +58,7 @@ function slowGameUpdate(){
 		}
 		ctx.drawImage(selected, x*selW+x, y*selH+y);
 	}
-	ctx.translate(-10, -(canvasH/2-4*selW-4));
+	ctx.translate(-50, -(canvasH/2-4*selW-4));
 	
 	//Drawing All the different usable items in the inventory grid
 	ctx.translate(canvasW-7*selW-7, canvasH/2-4*selW-4);
@@ -76,6 +76,9 @@ function slowGameUpdate(){
 }
 document.onkeyup = function(e){
 	var letter = e.key.toLowerCase();
+	if(canvas != document.activeElement){
+		return;
+	}
 	if(userSelect < 96){ //On game board...
 		switch(letter){ //No matter what...
 			case "w": //up
@@ -131,16 +134,6 @@ document.onkeyup = function(e){
 					userSelect = 96;
 				}
 				break;
-		}
-		if(letter == "w" || letter == "a" || letter == "s" || letter == "d"){
-			if(userSelect > 95){
-				var x = (userSelect-96) % 6;
-				var y = Math.floor((userSelect-96)/6);
-				var tempItem = getItem(level, x, y);
-				if(tempItem != null){
-					hoveredItem = tempItem;
-				}
-			}
 		}
 	}else{ //In "inventory"
 		var tempPos = userSelect - 96;

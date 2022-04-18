@@ -11,10 +11,31 @@
 				height: 100%;
 				overflow:hidden;
 			}
+			form{
+				position:fixed;
+				transform:translate(-50%, -50%);
+			}
+			form ul{
+				list-style:none;
+			}
+			form ul li{
+				padding-top:10px;
+				padding-bottom:10px;
+			}
 		</style>
 	<head>
 	<body>
 		<canvas id="main"></canvas>
+		<form>
+			<ul>
+				<li><input type="text" name="title" placeholder="Title..."/></li>
+				<li><input type="text" name="hints" placeholder="Hints..."/></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</form>
 		<script>
 			//Global Variables (WILL RESET EVERY REFRESH)
 			var canvas = document.getElementById("main");
