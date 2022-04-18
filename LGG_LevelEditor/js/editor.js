@@ -6,12 +6,18 @@ var level; //The new level...
 
 function gameInit(){
 	selected = getImage("img/selected_slot.png");
-	items = {
-		"names": ["andGate", "battery", "button", "wire"],
-		"andGate": getImage("img/and_gate.png"),
-		"battery": getImage("img/battery_empty.png"),
-		"button": getImage("img/button_off.png"),
-		"wire": getImage("img/pipe.png")
+	items = { //dictionary containing gate data
+		"names": ["andGate", "notGate", "bufferGate", "orGate", "omniGate", "battery", "button", "wire", "input", "output"],
+		"andGate": [getImage("img/and_gate.png"), 2, 1], //each gate [img, # of inputs, # of outputs]
+		"notGate": [getImage("img/not_gate.png"), 2, 1],
+		"bufferGate": [getImage("img/buffer_gate.png"), 1, 3],
+		"orGate": [getImage("img/or_gate.png"), 2, 1],
+		"omniGate": [getImage("img/omni_gate.png"), 1, 1], //TODO: Fix this line after changing omnigate
+		"battery": [getImage("img/battery_empty.png"), 1, 0],
+		"button": [getImage("img/button_off.png"), 0, 1],
+		"wire": [getImage("img/pipe.png"), 1, 1],
+		"input": [getImage("img/input.png"), 0, 1],
+		"output": [getImage("img/output.png"), 1, 0]
 	};
 	
 	selected.onload = function(){ //allows for download and play on desktop
@@ -48,7 +54,7 @@ function slowGameUpdate(){
 		var x = userSelect % 12;
 		var y = Math.floor(userSelect/12);
 		if(userItem != null){
-			ctx.drawImage(userItem[1], x*selW+x, y*selH+y);
+			ctx.drawImage(userItem[1][0], x*selW+x, y*selH+y);
 		}
 		ctx.drawImage(selected, x*selW+x, y*selH+y);
 	}
@@ -59,7 +65,7 @@ function slowGameUpdate(){
 	for(var i = 0; i < items.names.length; i++){
 		var x = i % 6;
 		var y = Math.floor(i / 6);
-		ctx.drawImage(items[items["names"][i]], x*selW+x, y*selW+y);
+		ctx.drawImage(items[items["names"][i]][0], x*selW+x, y*selW+y);
 	}
 	if(userSelect > 95){
 		var x = (userSelect-96) % 6;
@@ -89,15 +95,28 @@ document.onkeyup = function(e){
 					if(getItem(level, x, y) != null){
 						removeItem(level, x, y);
 					}
-					var inputs = prompt("Input DIRS: (n,s,e,w)\nTHE LAST LETTER IS THE OUTPUT\nExample:w,e");
+					var inputs = "", outputs = "";
+					if(userItem[1][1] > 0){
+						inputs = prompt("Input DIRS: (n,s,e,w)\nTHE LAST LETTER IS THE OUTPUT\nExample:w,e");
+					}
 					inputs = inputs == "" ? null : inputs;
-					var outputs = prompt("Output DIRS: (n,s,e,w)\nTHE LAST LETTER IS THE OUTPUT\nExample:w,e");
+					if(userItem[1][2] > 0){
+						outputs = prompt("Output DIRS: (n,s,e,w)\nTHE LAST LETTER IS THE OUTPUT\nExample:w,e");
+					}
 					outputs = outputs == "" ? null : outputs;
 					var x = userSelect % 12;
 					var y = Math.floor(userSelect/12);
+					if(getItem(level, x, y) != null){
+						var affirm = prompt("Are you sure? (type: \"yes\" for YES)");
+						if(affirm.toLowerCase() != "yes"){
+							return;
+						}else{
+							removeItem(level, x, y);
+						}
+					}
 					var tempArray = [userItem[0], [inputs,outputs], x, y, false];
-					if(userItem[0]!="wire"){
-						tempArray.push(userItem[1]);
+					if(userItem[0]!="wire"){ //If not wire, add image
+						tempArray.push(userItem[1][0]);
 					}
 					level.level.push(tempArray);
 				}
