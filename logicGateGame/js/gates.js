@@ -2,6 +2,14 @@ var buttonSwitch, battery, andGate, notGate, bufferGate, orGate, omniImg;
 var batteryTimer = 7;
 var batteryItem = null, prevItemIndex = null;
 
+winFunction = function(level, currentLevel){
+	batteryTimer = 7;
+	prevItemIndex = null;
+	currentLevel++;
+	getLevel("level/"+currentLevel+".json", loadGameLevel);
+	batteryItem = getItemByName(level, "battery");
+};
+
 function gateInit(){
 	buttonSwitch = [getImage("img/button_off.png"), getImage("img/button_on.png")];
 	battery = [getImage("img/battery_empty.png"), getImage("img/battery_half.png"), getImage("img/battery_full.png")];
@@ -10,13 +18,6 @@ function gateInit(){
 	bufferGate = getImage("img/buffer_gate.png");
 	orGate = getImage("img/or_gate.png");
 	omniImg = getImage("img/omni_gate.png");
-	winFunction = function(level, currentLevel){
-		batteryTimer = 7;
-		prevItemIndex = null;
-		currentLevel++;
-		getLevel("level/"+currentLevel+".json", loadGameLevel);
-		batteryItem = getItemByName(level, "battery");
-	};
 }
 
 function batteryUpdate(level, currentLevel){
