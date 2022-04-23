@@ -28,9 +28,9 @@ function update() {
 	var tileW = tile.width;
 	var tileH = tile.height;
 	
-	var f = document.getElementsByTagName("form")[0];
-	f.style.top = tileH*6+"px";
-	f.style.left = tileW*16+"px";
+	var f = document.getElementsByTagName("ul")[0];
+	f.style.top = tileH*6.5+"px";
+	f.style.left = tileW*17+"px";
 	
 	if(loopDelay-- <= 0){
 		ctx.fillStyle = "#1a1a1a";

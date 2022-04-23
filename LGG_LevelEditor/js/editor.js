@@ -48,7 +48,7 @@ function slowGameUpdate(){
 		var dirs = item[1];
 		var x = item[2];
 		var y = item[3];
-		drawItem(level, level.level[i][0], x, y, dirs);
+		drawItem(level, item[0], x, y, dirs);
 	}
 	if(userSelect < 96){
 		var x = userSelect % 12;
@@ -76,9 +76,6 @@ function slowGameUpdate(){
 }
 document.onkeyup = function(e){
 	var letter = e.key.toLowerCase();
-	if(canvas != document.activeElement){
-		return;
-	}
 	if(userSelect < 96){ //On game board...
 		switch(letter){ //No matter what...
 			case "w": //up
@@ -100,11 +97,15 @@ document.onkeyup = function(e){
 					}
 					var inputs = "", outputs = "";
 					if(userItem[1][1] > 0){
-						inputs = prompt("Input DIRS: (n,s,e,w)\nTHE LAST LETTER IS THE OUTPUT\nExample:w,e");
+						do{
+							inputs = prompt("Input DIRS: (n,s,e,w)\nTHE LAST LETTER IS THE OUTPUT\nExample:w,e");
+						}while(inputs.split(",").length != userItem[1][1]);
 					}
 					inputs = inputs == "" ? null : inputs;
 					if(userItem[1][2] > 0){
-						outputs = prompt("Output DIRS: (n,s,e,w)\nTHE LAST LETTER IS THE OUTPUT\nExample:w,e");
+						do{
+							outputs = prompt("Output DIRS: (n,s,e,w)\nTHE LAST LETTER IS THE OUTPUT\nExample:w,e");
+						}while(outputs.split(",").length != userItem[1][2]);
 					}
 					outputs = outputs == "" ? null : outputs;
 					var x = userSelect % 12;
@@ -164,4 +165,33 @@ document.onkeyup = function(e){
 				break;
 		}
 	}
+};
+document.getElementsByTagName("button")[0].onclick = function(){
+	level.name = document.getElementsByTagName("input")[0].value;
+	level.hints = document.getElementsByTagName("input")[1].value.split(", ");
+	document.getElementsByTagName("textarea")[0].value = JSON.stringify(level);
+};
+document.getElementsByTagName("button")[1].onclick = function(){
+	var tempLevel = document.getElementsByTagName("textarea")[0].value;
+	tempLevel = JSON.parse(tempLevel);
+	for(var i = 0; i < tempLevel.level.length; i++){
+		var item = tempLevel.level[i];
+		switch(item[0]){ //Item name
+			case "button":
+				tempLevel.level[i][5] = buttonSwitch[0];
+				break;
+			case "battery":
+				tempLevel.level[i][5] = battery[0];
+				break;
+			case "input":
+				tempLevel.level[i][5] = inputImg;
+				break;
+			case "output":
+				tempLevel.level[i][5] = outputImg;
+				break;
+		}
+	}
+	document.getElementsByTagName("input")[0].value = tempLevel.name;
+	document.getElementsByTagName("input")[1].value = tempLevel.hints.splice(", ");
+	level = tempLevel;
 };

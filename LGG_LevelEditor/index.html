@@ -11,31 +11,29 @@
 				height: 100%;
 				overflow:hidden;
 			}
-			form{
+			ul{
 				position:fixed;
 				transform:translate(-50%, -50%);
-			}
-			form ul{
 				list-style:none;
 			}
-			form ul li{
+			ul li{
 				padding-top:10px;
 				padding-bottom:10px;
+			}
+			textarea{
+				resize:none;
 			}
 		</style>
 	<head>
 	<body>
 		<canvas id="main"></canvas>
-		<form>
-			<ul>
-				<li><input type="text" name="title" placeholder="Title..."/></li>
-				<li><input type="text" name="hints" placeholder="Hints..."/></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-		</form>
+		<ul>
+			<li><input type="text" name="title" placeholder="Title..."/></li>
+			<li><input type="text" name="hints" placeholder='Hints (split by ", ")...'/></li>
+			<li><textarea placeholder="Level Data..." rows="4" cols="30"></textarea></li>
+			<li><button>SAVE</button></li>
+			<li><button>LOAD</button></li>
+		</ul>
 		<script>
 			//Global Variables (WILL RESET EVERY REFRESH)
 			var canvas = document.getElementById("main");
