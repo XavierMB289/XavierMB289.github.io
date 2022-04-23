@@ -29,7 +29,11 @@ function gameInit(){
 		currentLevel = parseInt(currentLevel);
 	}
 	
-	getLevel("level/"+currentLevel+".json", loadGameLevel);
+	if(!isCustomGame){
+		getLevel("level/"+currentLevel+".json", loadGameLevel);
+	}else{
+		customGameInit();
+	}
 }
 function loadGameLevel(obj, firstTime=true){
 	//getting the level obj from ajax workaround

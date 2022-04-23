@@ -10,6 +10,13 @@ function gateInit(){
 	bufferGate = getImage("img/buffer_gate.png");
 	orGate = getImage("img/or_gate.png");
 	omniImg = getImage("img/omni_gate.png");
+	winFunction = function(level, currentLevel){
+		batteryTimer = 7;
+		prevItemIndex = null;
+		currentLevel++;
+		getLevel("level/"+currentLevel+".json", loadGameLevel);
+		batteryItem = getItemByName(level, "battery");
+	};
 }
 
 function batteryUpdate(level, currentLevel){
@@ -20,11 +27,7 @@ function batteryUpdate(level, currentLevel){
 	if(batteryItem != null){
 		if(batteryItem[4] != false){
 			if(--batteryTimer <= 0 && nodes.length < 1){
-				batteryTimer = 7;
-				prevItemIndex = null;
-				currentLevel++;
-				getLevel("level/"+currentLevel+".json", loadGameLevel);
-				batteryItem = getItemByName(level, "battery");
+				winFunction(level, currentLevel);
 			}else{
 				level = alterItem(level, batteryItem, [battery[2]]);
 			}
