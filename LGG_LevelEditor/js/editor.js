@@ -195,3 +195,16 @@ document.getElementsByTagName("button")[1].onclick = function(){
 	document.getElementsByTagName("input")[1].value = tempLevel.hints.splice(", ");
 	level = tempLevel;
 };
+document.getElementsByTagName("button")[2].onclick = function(){
+	var tempLevel = document.getElementsByTagName("textarea")[0].value;
+	if(tempLevel != null && tempLevel != ""){
+		setCookie("customLevel", tempLevel, 2);
+		var li = document.getElementsByTagName("li")[6];
+		li.innerHTML = "Level SAVED...";
+		li.style.visibility = "visible";
+	}else{
+		var li = document.getElementsByTagName("li")[6];
+		li.innerHTML = "No Level SAVED...";
+		li.style.visibility = "visible";
+	}
+}

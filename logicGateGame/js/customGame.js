@@ -14,8 +14,11 @@ winFunction = function(level, currentLevel){
 	ctx.translate(-(canvasW/2), -(canvasH/4));
 };
 customGameInit = function(){
-	navigator.clipboard.readText().then(text => {
-		console.log('Pasted content: ', text);
+	var lvl = getCookie("customLevel");
+	console.log("Level: "+lvl);
+	if(lvl != null && lvl != ""){
 		loadGameLevel(JSON.parse(text));
-	});
+	}else{
+		titlePage = "No Game Found..."
+	}
 };
