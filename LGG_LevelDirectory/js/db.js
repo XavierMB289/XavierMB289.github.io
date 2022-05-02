@@ -1,4 +1,7 @@
 var config;
+var page = 0;
+var loopIndex = 0;
+var r = null;
 
 function ajaxRequest(path, callback){
 	path = "https://xaviermb289.github.io/LGG_LevelDirectory/" + path;
@@ -16,13 +19,36 @@ function ajaxRequest(path, callback){
 }
 function db_init(oauth){
 	config = oauth;
-	console.log(config);
-	const r = new snoowrap({
+	r = new snoowrap({
 		userAgent: "Logistics Game Directory by u/SilverNeon123",
 		clientId: config.clientID,
 		clientSecret: config.clientSecret,
 		refreshToken: config.refreshToken
 	});
-	r.getNew().map(post => post.title).then(console.log);
+	getData();
+}
+function getData(){
+	r.getSubreddit('logistics_lgg').getNew().then(tableLoop);
+}
+function tableLoop(input){
+	if(!(page*10 <= loopIndex && page*10+10 > loopIndex)){
+		return;
+	}
+	var level = toLevel(input[0].selftext);
+	console.log(input[0]);
+	var tb = document.getElementsByTagName("tbody")[0];
+	document.getElementsByTagName("tbody")[0].innerHTML = document.getElementsByTagName("tbody")[0].innerHTML + "<tr><td>"+level.name+"</td><td>"+input[0].author.name+"</td><td><button onclick='playLevel(\""+input[0].name.split("_")[1]+"\")'>PLAY</button></td></tr>";
+	loopIndex++;
+}
+function playLevel(postID){
+	var data = r.getSubmission(postID).selftext.then(post => {
+		setCookie("customLevel", toLevel(post), 2);
+		window.location = "../LGG_LevelEditor/index.html"
+	});
+}
+function toLevel(input){
+	var level = input.replaceAll("\\", "");
+	level = JSON.parse(level);
+	return level;
 }
 ajaxRequest("oauth_config.json", db_init);

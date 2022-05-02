@@ -172,7 +172,11 @@ document.getElementsByTagName("button")[0].onclick = function(){
 	document.getElementsByTagName("textarea")[0].value = JSON.stringify(level);
 };
 document.getElementsByTagName("button")[1].onclick = function(){
-	var tempLevel = document.getElementsByTagName("textarea")[0].value;
+	var tempLevel = getCookie("customLevel");
+	if(tempLevel == "" || tempLevel == null){
+		tempLevel = document.getElementsByTagName("textarea")[0].value;
+		setCookie("customLevel", null, -1);
+	}
 	tempLevel = JSON.parse(tempLevel);
 	for(var i = 0; i < tempLevel.level.length; i++){
 		var item = tempLevel.level[i];
