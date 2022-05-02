@@ -11,9 +11,27 @@
 				height: 100%;
 				overflow:hidden;
 			}
+			table{
+				position:absolute;
+				left:0%;
+				top:0%;
+				background-color:gray;
+			}
 		</style>
 	<head>
 	<body>
+		<table>
+			<thead>
+				<tr>
+					<td>Name</td>
+					<td>Description</td>
+					<td>Author</td>
+					<td>Play</td>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
 		<canvas id="main"></canvas>
 		<script>
 			//Global Variables (WILL RESET EVERY REFRESH)
@@ -21,7 +39,7 @@
 			var ctx = canvas.getContext("2d");
 			var canvasW, canvasH;
 		</script>
-		<p>I'm trying to work on this... sorry....</p>
+		<script src="https://not-an-aardvark.github.io/snoowrap/snoowrap-v1.js"></script>
 		<script src="js/db.js"></script>
 		<script src="js/loop.js"></script>
 	</body>
