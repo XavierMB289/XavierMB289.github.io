@@ -16,16 +16,13 @@ function ajaxRequest(path, callback){
 }
 function db_init(oauth){
 	config = oauth;
-	var user = document.getElementsByTagName("input")[0].value;
-	var pass = document.getElementsByTagName("input")[1].value;
-	if(user != "" && pass != ""){
-		const r = new snoowrap({
+	console.log(config);
+	const r = new snoowrap({
 		userAgent: "Logistics Game Directory by u/SilverNeon123",
 		clientId: config.clientID,
 		clientSecret: config.clientSecret,
 		refreshToken: config.refreshToken
 	});
-		r.getNew().map(post => post.title).then(console.log);
-	}
+	r.getNew().map(post => post.title).then(console.log);
 }
 ajaxRequest("oauth_config.json", db_init);
