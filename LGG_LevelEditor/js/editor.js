@@ -74,6 +74,14 @@ function slowGameUpdate(){
 	}
 	ctx.translate(-(canvasW-7*selW-7), -(canvasH/2-4*selW-4));
 }
+function showError(message){
+	var li = document.getElementById("errorCode");
+	li.innerHTML = message;
+	li.style.visibility = "visible";
+	setTimeout(function(){
+		document.getElementById("errorCode").style.visibility = "hidden";
+	}, 2000);
+}
 document.onkeyup = function(e){
 	var letter = e.key.toLowerCase();
 	if(userSelect < 96){ //On game board...
@@ -166,16 +174,38 @@ document.onkeyup = function(e){
 		}
 	}
 };
-document.getElementsByTagName("button")[0].onclick = function(){
-	level.name = document.getElementsByTagName("input")[0].value;
-	level.hints = document.getElementsByTagName("input")[1].value.split(", ");
-	document.getElementsByTagName("textarea")[0].value = JSON.stringify(level);
+document.getElementById("hasInv").onclick = function(){ //Adding the inventory to the level
+	var li = this.parentElement.parentElement; //gets the li surrounding it... badly.
+	if(this.checked){
+		var vals = ["NOTHING HERE", "wire", "andGate", "orGate", "battery", "bufferGate", "notGate"];
+		var check = document.createElement("select");
+		for(var i = 0; i < vals.length; i++){
+			var opt = document.createElement("option");
+			opt.setAttribute("value", vals[i]);
+			opt.innerHTML = vals[i];
+			check.appendChild(opt);
+		}
+		for(var i = 0; i < 6; i++){
+			var checkClone = check.cloneNode(true);
+			checkClone.setAttribute("name", i);
+			li.appendChild(checkClone);
+		}
+	}else{
+		for(var i = 0; i < 6; i++){
+			li.removeChild(li.children[1]);
+		}
+	}
+}
+document.getElementById("saveButton").onclick = function(){ //SAVE
+	level.name = document.getElementsByName("title")[0].value;
+	level.hints = document.getElementsByName("hints")[0].value.split(", ");
+	setCookie("customLevel", level, 2);
 };
-document.getElementsByTagName("button")[1].onclick = function(){
+document.getElementById("loadButton").onclick = function(){ //LOAD
 	var tempLevel = getCookie("customLevel");
 	if(tempLevel == "" || tempLevel == null){
-		tempLevel = document.getElementsByTagName("textarea")[0].value;
-		setCookie("customLevel", null, -1);
+		showError("No Level Found...");
+		return;
 	}
 	tempLevel = JSON.parse(tempLevel);
 	for(var i = 0; i < tempLevel.level.length; i++){
@@ -195,20 +225,10 @@ document.getElementsByTagName("button")[1].onclick = function(){
 				break;
 		}
 	}
-	document.getElementsByTagName("input")[0].value = tempLevel.name;
-	document.getElementsByTagName("input")[1].value = tempLevel.hints.splice(", ");
+	document.getElementsByName("title")[0].value = tempLevel.name;
+	document.getElementsByName("hints")[0].value = tempLevel.hints.splice(", ");
 	level = tempLevel;
 };
-document.getElementsByTagName("button")[2].onclick = function(){
-	var tempLevel = document.getElementsByTagName("textarea")[0].value;
-	if(tempLevel != null && tempLevel != ""){
-		setCookie("customLevel", tempLevel, 2);
-		var li = document.getElementsByTagName("li")[6];
-		li.innerHTML = "Level SAVED...";
-		li.style.visibility = "visible";
-	}else{
-		var li = document.getElementsByTagName("li")[6];
-		li.innerHTML = "No Level SAVED...";
-		li.style.visibility = "visible";
-	}
+document.getElementById("playButton").onclick = function(){ //PLAY
+	window.location = "../logicGateGame/custom.html";
 }

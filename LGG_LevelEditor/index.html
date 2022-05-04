@@ -10,10 +10,11 @@
 				width: 100%;
 				height: 100%;
 				overflow:hidden;
+				color:white;
 			}
 			ul{
 				position:fixed;
-				transform:translate(-50%, -50%);
+				transform:translate(-50%, 0%);
 				list-style:none;
 			}
 			ul li{
@@ -23,6 +24,13 @@
 			textarea{
 				resize:none;
 			}
+			li select{
+				display: block;
+				margin-top:5px;
+			}
+			.inline{
+				display:inline-block;
+			}
 		</style>
 	<head>
 	<body>
@@ -30,11 +38,21 @@
 		<ul>
 			<li><input type="text" name="title" placeholder="Title..."/></li>
 			<li><input type="text" name="hints" placeholder='Hints (split by ", ")...'/></li>
-			<li><textarea placeholder="Level Data..." rows="4" cols="30"></textarea></li>
-			<li><button>SAVE</button></li>
-			<li><button>LOAD</button></li>
-			<li><button>PLAY</button></li>
-			<li style="visibility:hidden;">SECRET TUNNEL!</li>
+			<li><input type="text" name="keys" placeholder="Disabled Keys (same split)..."/></li>
+			<li>
+				<label for="hasInv">
+					<input type="checkbox" name="hasInv" id="hasInv"/> Has Inventory?
+				</label>
+			</li>
+			<li>
+				<label for="gridStart">
+					<input type="checkbox" name="gridStart" id="gridStart"/> Start in Grid?
+				</label>
+			</li>
+			<li class="inline"><button id="saveButton">SAVE</button></li>
+			<li class="inline"><button id="loadButton">LOAD</button></li>
+			<li class="inline"><button id="playButton">PLAY</button></li>
+			<li style="visibility:hidden;" id="errorCode">SECRET TUNNEL!</li>
 		</ul>
 		<script>
 			//Global Variables (WILL RESET EVERY REFRESH)
