@@ -31,14 +31,20 @@
 			.inline{
 				display:inline-block;
 			}
+			#bottom{
+				position:absolute;
+				left:10px;
+				top:10px;
+				transform:translate(0%, 50%);
+			}
 		</style>
 	<head>
 	<body>
 		<canvas id="main"></canvas>
 		<ul>
 			<li><input type="text" name="title" placeholder="Title..."/></li>
-			<li><input type="text" name="hints" placeholder='Hints (split by ", ")...'/></li>
-			<li><input type="text" name="keys" placeholder="Disabled Keys (same split)..."/></li>
+			<li><input type="text" name="hints" placeholder='Hints...'/></li>
+			<li><input type="text" name="keys" placeholder="Disabled Keys..."/></li>
 			<li>
 				<label for="hasInv">
 					<input type="checkbox" name="hasInv" id="hasInv"/> Has Inventory?
@@ -54,6 +60,9 @@
 			<li class="inline"><button id="playButton">PLAY</button></li>
 			<li style="visibility:hidden;" id="errorCode">SECRET TUNNEL!</li>
 		</ul>
+		<div id="bottom" title="New level inside omniN brackets...">
+			For OMNIGATES, look at the code <a href="https://xaviermb289.github.io/logicGateGame/level/11.json">here</a> or <a href="https://xaviermb289.github.io/logicGateGame/level/10.json">here</a> to see what to do
+		</div>
 		<script>
 			//Global Variables (WILL RESET EVERY REFRESH)
 			var canvas = document.getElementById("main");

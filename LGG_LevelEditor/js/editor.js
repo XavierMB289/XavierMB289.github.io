@@ -10,7 +10,7 @@ function gameInit(){
 		"names": ["andGate", "notGate", "bufferGate", "orGate", "omniGate", "battery", "button", "wire", "input", "output"],
 		"andGate": [getImage("img/and_gate.png"), 2, 1], //each gate [img, # of inputs, # of outputs]
 		"notGate": [getImage("img/not_gate.png"), 2, 1],
-		"bufferGate": [getImage("img/buffer_gate.png"), 1, 3],
+		"bufferGate": [getImage("img/buffer_gate.png"), 1, 2],
 		"orGate": [getImage("img/or_gate.png"), 2, 1],
 		"omniGate": [getImage("img/omni_gate.png"), 1, 1], //TODO: Fix this line after changing omnigate
 		"battery": [getImage("img/battery_empty.png"), 1, 0],
@@ -29,8 +29,8 @@ function gameInit(){
 		"name": "Unnamed Level",
 		"hints": [],
 		"level": [],
-		"inv": [],
-		"startInGrid": [],
+		"inv": [null, null, null, null, null, null],
+		"startInGrid": [false, 0, 0],
 		"disabledKeys": []
 	};
 }
@@ -196,9 +196,49 @@ document.getElementById("hasInv").onclick = function(){ //Adding the inventory t
 		}
 	}
 }
+document.getElementById("gridStart").onclick = function(){
+	var li = this.parentElement.parentElement; //gets the li surrounding it... badly.
+	if(this.checked){
+		var input = document.createElement("input");
+		input.setAttribute("type", "text");
+		input.setAttribute("name", "startCoords");
+		input.setAttribute("placeholder", "Grid Start Coords...");
+		input.setAttribute("style", "display:block;margin-top:10px;");
+		li.appendChild(input);
+	}else{
+		li.removeChild(li.children[1]);
+	}
+}
 document.getElementById("saveButton").onclick = function(){ //SAVE
-	level.name = document.getElementsByName("title")[0].value;
-	level.hints = document.getElementsByName("hints")[0].value.split(", ");
+	var elm = document.getElementsByName("title")[0];
+	if(elm.value == "") return;
+	level.name = elm.value;
+	elm = document.getElementsByName("hints")[0];
+	if(elm.value == "") return;
+	level.hints = elm.value.split(", ");
+	elm = document.getElementsByName("keys")[0];
+	if(elm.value == ""){
+		level.disabledKeys = elm.value.contains(", ") ? elm.value.split(", ") : elm.value;
+	}
+	elm = document.getElementsByName("hasInv")[0];
+	if(elm.checked){
+		var children = elm.parentElement.parentElement.children;
+		for(var i = 0; i < children.length; i++){
+			if(children[i].value != "NOTHING HERE"){
+				var count = prompt("How many "+children[i].value+" would you like in slot "+i+"?");
+				var input = prompt("Input Direction(s)\nPlease be nice... I didn't want to code a check for this...");
+				var output = prompt("Output Direction(s)....\nYeah... No check for this either...");
+				var item = [children[i].value.toLowerCase(), [input, output], "inv", count];
+				level.inv[i] = item;
+			}
+		}
+	}
+	elm = document.getElementsByName("gridStart")[0];
+	if(elm.checked){
+		var child = elm.parentElement.parentElement.children[1].split(", ");
+		level.startInGrid = [true, child[0], child[1]];
+	}
+	
 	setCookie("customLevel", level, 2);
 };
 document.getElementById("loadButton").onclick = function(){ //LOAD
