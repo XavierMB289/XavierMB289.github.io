@@ -43,7 +43,7 @@ function tableLoop(input){
 function playLevel(postID){
 	var data = r.getSubmission(postID).selftext.then(post => {
 		setCookie("customLevel", toLevel(post), 2);
-		window.location = "../LGG_LevelEditor/index.html"
+		window.location = "../logicGateGame/custom.html";
 	});
 }
 function toLevel(input){
