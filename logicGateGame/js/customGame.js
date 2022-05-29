@@ -16,7 +16,7 @@ winFunction = function(level, currentLevel){
 customGameInit = function(){
 	var lvl = getCookie("customLevel");
 	if(lvl != null && lvl != ""){
-		loadGameLevel(JSON.parse(lvl));
+		loadGameLevel(lvl);
 	}else{
 		titlePage = "No Game Found..."
 	}
