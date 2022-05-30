@@ -104,6 +104,7 @@ function menuKeyUp(e){
 	switch(keyName){
 		case "enter":
 			if(currentMenu == 0){
+				document.onkeyup = gameKeyUp;
 				loopState = loopGame;
 				return;
 			}else if(currentMenu == 1){
