@@ -18,17 +18,17 @@ function getLevel(path, callback){
 	xhttp.send();
 }
 function setCookie(cname, cvalue, exdays) {
-	const d = new Date();
+	var d = new Date();
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));
-	let expires = "expires="+ d.toUTCString();
-	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=https://xaviermb289.github.io/";
+	var expires = "expires="+ d.toUTCString();
+	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 function getCookie(cname) {
-	let name = cname + "=";
-	let decodedCookie = decodeURIComponent(document.cookie);
-	let ca = decodedCookie.split(';');
-	for(let i = 0; i <ca.length; i++) {
-		let c = ca[i];
+	var name = cname + "=";
+	var decodedCookie = decodeURIComponent(document.cookie);
+	var ca = decodedCookie.split(';');
+	for(var i = 0; i <ca.length; i++) {
+		var c = ca[i];
 		while (c.charAt(0) == ' ') {
 			c = c.substring(1);
 		}
