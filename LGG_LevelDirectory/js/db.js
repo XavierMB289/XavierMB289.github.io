@@ -42,7 +42,7 @@ function tableLoop(input){
 }
 function playLevel(postID){
 	var data = r.getSubmission(postID).selftext.then(post => {
-		setCookie("customLevel", JSON.toString(post.replaceAll("\\", "")), 2);
+		setCookie("customLevel", JSON.stringify(post.replaceAll("\\", "")), 2);
 		window.location = "../logicGateGame/custom.html";
 	});
 }
