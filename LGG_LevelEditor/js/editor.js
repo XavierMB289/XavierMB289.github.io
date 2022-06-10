@@ -209,7 +209,8 @@ document.getElementById("gridStart").onclick = function(){
 		li.removeChild(li.children[1]);
 	}
 }
-document.getElementById("saveButton").onclick = function(){ //SAVE
+document.getElementById("saveButton").onclick = saveButtonPressed;
+function saveButtonPressed(){ //SAVE
 	var elm = document.getElementsByName("title")[0];
 	if(elm.value == "") return;
 	level.name = elm.value;
@@ -241,34 +242,8 @@ document.getElementById("saveButton").onclick = function(){ //SAVE
 	
 	setCookie("customLevel", level, 2);
 };
-document.getElementById("loadButton").onclick = function(){ //LOAD
-	var tempLevel = getCookie("customLevel");
-	if(tempLevel == "" || tempLevel == null){
-		showError("No Level Found...");
-		return;
-	}
-	tempLevel = JSON.parse(tempLevel);
-	for(var i = 0; i < tempLevel.level.length; i++){
-		var item = tempLevel.level[i];
-		switch(item[0]){ //Item name
-			case "button":
-				tempLevel.level[i][5] = buttonSwitch[0];
-				break;
-			case "battery":
-				tempLevel.level[i][5] = battery[0];
-				break;
-			case "input":
-				tempLevel.level[i][5] = inputImg;
-				break;
-			case "output":
-				tempLevel.level[i][5] = outputImg;
-				break;
-		}
-	}
-	document.getElementsByName("title")[0].value = tempLevel.name;
-	document.getElementsByName("hints")[0].value = tempLevel.hints.splice(", ");
-	level = tempLevel;
-};
 document.getElementById("playButton").onclick = function(){ //PLAY
+	saveButtonPressed();
+	setCookie("uploadable", true, 2);
 	window.location = "../logicGateGame/custom.html";
 }

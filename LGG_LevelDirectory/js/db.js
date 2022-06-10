@@ -25,7 +25,6 @@ function db_init(oauth){
 		clientSecret: config.clientSecret,
 		refreshToken: config.refreshToken
 	});
-	getData();
 }
 function getData(){
 	r.getSubreddit('logistics_lgg').getNew().then(tableLoop);
@@ -54,3 +53,4 @@ function toLevel(input){
 	return level;
 }
 ajaxRequest("oauth_config.json", db_init);
+getData();
