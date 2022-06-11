@@ -9,7 +9,7 @@ function gameInit(){
 	items = { //dictionary containing gate data
 		"names": ["andGate", "notGate", "bufferGate", "orGate", "omniGate", "battery", "button", "wire", "input", "output"],
 		"andGate": [getImage("img/and_gate.png"), 2, 1], //each gate [img, # of inputs, # of outputs]
-		"notGate": [getImage("img/not_gate.png"), 2, 1],
+		"notGate": [getImage("img/not_gate.png"), 1, 1],
 		"bufferGate": [getImage("img/buffer_gate.png"), 1, 2],
 		"orGate": [getImage("img/or_gate.png"), 2, 1],
 		"omniGate": [getImage("img/omni_gate.png"), 1, 1], //TODO: Fix this line after changing omnigate
