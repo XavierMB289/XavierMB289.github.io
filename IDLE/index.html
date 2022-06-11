@@ -40,24 +40,13 @@
 		</style>
 	<head>
 	<body>
-		<table>
-			<thead>
-				<tr>
-					<td>NAME</td>
-					<td>DESC</td>
-					<td>COST</td>
-					<td>PROGRESS</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>ROCK</td>
-					<td>It's... a rock.</td>
-					<td>FREE</td>
-					<td><progress value="32" max="100"></progress></td>
-				</tr>
-			</tbody>
-		<table>
+		<canvas id="game"></canvas>
+		<script>
+			//Global Variables (WILL RESET EVERY REFRESH)
+			var canvas = document.getElementById("game");
+			var ctx = canvas.getContext("2d");
+			var canvasW, canvasH;
+		</script>
 		<script src="js/game.js"></script>
 		<script src="js/loop.js"></script>
 	</body>
