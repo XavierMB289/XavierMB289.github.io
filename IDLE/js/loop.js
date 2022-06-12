@@ -21,6 +21,7 @@ function update() {
 	
 	if(loopDelay-- <= 0){
 		slowGameUpdate();
+		updateAudio();
 		loopDelay = loopDelaySet;
 	}
 	
