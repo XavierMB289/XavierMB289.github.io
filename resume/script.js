@@ -5,7 +5,7 @@ var main = function(){
 		currentLi = $('.selected');
 		nextLi = currentLi.next();
 		prevLi = currentLi.prev();
-		temp = currentLi.html();
+		temp = currentLi.text();
 		menu = $('#menu-wrapper');
 		submenu = currentLi.attr("goto");
     
@@ -82,8 +82,6 @@ var main = function(){
 			}else{
 				alert("You seemed to have found a hidden button");
 			}
-      
-			$(currentMenu).first().addClass('selected');
 		}else if(event.which === 97){
 			if(currentMenu == '.hidden'){
 				if(animateDir === "top"){
