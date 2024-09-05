@@ -1,1 +1,41 @@
-
+@import url(https://fonts.googleapis.com/css?family=Megrim);
+body{
+	font-family: 'Megrim', cursive;
+}
+#menu-wrapper{
+	position:fixed;
+	left:50%;
+	top:50%;
+	transform:translate(-50%,-50%);
+	width:50%;
+	height:50%;
+}
+#menu-header{
+	text-align:center;
+	font-size:64px;
+}
+#menu-selectors{
+	position:fixed;
+	left:50%;
+	top:70%;
+	transform:translate(-50%,-50%);
+	list-style-type:none;
+}
+#menu-selectors li{
+	text-align:center;
+	margin:15px;
+	margin-left:-40px;
+}
+.selected{
+	background-color:#4183D7;
+	color:white;
+}
+#hidden{
+	position:fixed;
+	left:50%;
+	top:50%;
+	transform:translate(-50%,-50%);
+	width:50%;
+	height:50%;
+	visibility:hidden;
+}
