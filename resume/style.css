@@ -30,7 +30,7 @@ body{
 	background-color:#4183D7;
 	color:white;
 }
-#hidden{
+.hidden{
 	position:fixed;
 	left:50%;
 	top:50%;
