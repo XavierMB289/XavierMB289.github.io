@@ -1,9 +1,3 @@
-var play = function(){
-	alert("Put something here");
-};
-var credits = function(){
-	alert("Put something here");
-};
 var main = function(){
 	animateDir = "";
 	currentMenu = '.main-menu';
@@ -29,7 +23,7 @@ var main = function(){
 			currentLi.removeClass('selected');
 			nextLi.addClass('selected');
 		}else if(event.which === 100){
-			if(temp === 'Top'){
+			if(temp === 'About Me'){
 				menu.animate({
 					top: "-50%"
 				});
@@ -43,7 +37,7 @@ var main = function(){
 				}, 600);
 				animateDir = "top";
 				currentMenu = '.hidden';
-			}else if(temp === "Bottom"){
+			}else if(temp === "Projects"){
 				menu.animate({
 					top: "150%"
 				});
@@ -57,7 +51,7 @@ var main = function(){
 				}, 600);
 				animateDir = "bottom";
 				currentMenu = '.hidden';
-			}else if(temp === "Left"){
+			}else if(temp === "Skills"){
 				menu.animate({
 					left: "-50%"
 				});
@@ -71,7 +65,7 @@ var main = function(){
 				}, 600);
 				animateDir = "left";
 				currentMenu = '.hidden';
-			}else if(temp === "Right"){
+			}else if(temp === "Work History"){
 				menu.animate({
 					left: "150%"
 				});
@@ -85,10 +79,6 @@ var main = function(){
 				}, 600);
 				animateDir = "right";
 				currentMenu = '.hidden';
-			}else if(temp === 'Play'){
-				play;
-			}else if(temp === 'Credits'){
-				credits;
 			}else{
 				alert("You seemed to have found a hidden button");
 			}
