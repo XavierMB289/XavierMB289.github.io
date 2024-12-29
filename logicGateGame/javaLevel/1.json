@@ -9,6 +9,6 @@
     ["wire", ["w", "e"], 7, 2],
     ["battery", ["w", "e"], 8, 2]
   ]
-  "startInGrid": [true, 3, 2],
+  "startInGrid": [3, 2],
   "disabledKeys": ["backspace", "w", "a", "s", "d", "e"]
 }
