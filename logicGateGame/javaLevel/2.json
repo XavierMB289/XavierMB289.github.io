@@ -1,0 +1,14 @@
+{
+  "name": "Movin' On Up",
+  "hints": ["Use WASD to Move"],
+  "level": [
+    ["button", [null,"e"], 3, 2],
+    ["wire", ["w","e"], 4, 2],
+    ["wire", ["w","e"], 8, 5],
+    ["wire", ["w","e"], 6, 2],
+    ["wire", ["w","e"], 7, 2],
+    ["battery", ["w",null], 8, 2]
+  ],
+  "startInGrid": [5,2],
+  "disabledKeys": ["backspace", "e"]
+}
