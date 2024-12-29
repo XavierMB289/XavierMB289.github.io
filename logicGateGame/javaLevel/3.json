@@ -1,0 +1,21 @@
+{
+  "name": "Inventory Management",
+  "hints": ["<SWITCH_KEY> will toggle between INV and GAME"],
+  "level": [
+    ["button", [null,"e"], 3, 2],
+    ["wire", ["w", "e"], 4, 2],
+    ["wire", ["w", "e"], 6, 2],
+    ["wire", ["w", "e"], 7, 2],
+    ["battery", ["w",null], 8, 2]
+  ],
+  "inv": [
+    null,
+    null,
+    null,
+    null,
+    ["wire", ["w","e"], "inv", 1],
+    null
+  ],
+  "startInGrid": [5,2],
+  "disabledKeys": ["e"]
+}
