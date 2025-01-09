@@ -12,11 +12,11 @@
     ["battery", ["s",null], 5, 2]
   ],
   "inv":[
-    ["wire", ["e","s"], "inv", 1],
+    ["wire", ["e","s"], 1],
     null,
-    ["wire", ["n", "s"], "inv", 2],
+    ["wire", ["n", "s"], 2],
     null,
     null,
-    ["wire", ["s", "n"], "inv", 2]
+    ["wire", ["s", "n"], 2]
   ]
 }
