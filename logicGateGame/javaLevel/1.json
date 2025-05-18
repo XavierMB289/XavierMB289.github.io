@@ -1,14 +1,12 @@
 {
   "name":"Baby Steps",
   "hints":["Use <SELECT_KEY> to Activate/Pickup/Putdown"],
+  "gridSize": 3,
   "level": [
-    ["button", [null,"e"], 3, 2],
-    ["wire", ["w", "e"], 4, 2],
-    ["wire", ["w", "e"], 5, 2],
-    ["wire", ["w", "e"], 6, 2],
-    ["wire", ["w", "e"], 7, 2],
-    ["battery", ["w", "e"], 8, 2]
+    ["button", [null,"e"], 0],
+    ["wire", ["w", "e"], 1],
+    ["battery", ["w", "e"], 2]
   ],
-  "startInGrid": [3, 2],
+  "startInGrid": 0,
   "disabledKeys": ["backspace", "w", "a", "s", "d", "e"]
 }
