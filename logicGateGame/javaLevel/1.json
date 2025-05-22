@@ -3,9 +3,9 @@
   "hints":["Use <SELECT_KEY> to Activate/Pickup/Putdown"],
   "gridSize": 3,
   "level": [
-    ["button", null, "e", 0],
-    ["wire", "w", "e", 1],
-    ["battery", "w", "e", 2]
+    ["Button", null, "e", 0],
+    ["Wire", "w", "e", 1],
+    ["Battery", "w", "e", 2]
   ],
   "startInGrid": 0,
   "disabledKeys": ["backspace", "w", "a", "s", "d", "e"]
