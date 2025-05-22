@@ -5,7 +5,7 @@
   "level": [
     ["Button", null, "e", 0],
     ["Wire", "w", "e", 1],
-    ["Battery", "w", "e", 2]
+    ["Battery", "w", null, 2]
   ],
   "startInGrid": 0,
   "disabledKeys": ["backspace", "w", "a", "s", "d", "e"]
