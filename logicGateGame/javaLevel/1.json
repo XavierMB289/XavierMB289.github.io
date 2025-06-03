@@ -8,5 +8,5 @@
     ["Battery", "w", null, 2]
   ],
   "startInGrid": 0,
-  "disabledKeys": ["backspace", "w", "a", "s", "d", "e"]
+  "disabledKeys": ["<INV_CHANGE>", "<LEFT>", "<RIGHT>", "<UP>", "<DOWN>", "<CHANGE_HINTS>"]
 }
